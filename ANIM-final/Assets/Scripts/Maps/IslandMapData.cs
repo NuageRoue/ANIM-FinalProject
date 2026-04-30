@@ -32,9 +32,22 @@ public class IslandMapData : ScriptableObject
             dict.Add(keys[i], values[i]);
         return dict;
     }
+
+    public List<GameObjectList> props;
 }
 
 public enum CellType
 {
-    water, coast, grass, mountain
+    water, coast, grass, mountain, tower, Forest
+}
+
+[System.Serializable]
+public class GameObjectList
+{
+    public List<GameObject> items = new List<GameObject>();
+    public int Count { get { return items.Count;  } }
+
+    public GameObject Get(int id) { 
+        return items[id];
+    }
 }

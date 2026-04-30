@@ -35,6 +35,7 @@ public class HexGrid : MonoBehaviour
             HexCell cell = Instantiate(cellPrefabs[(int)type], worldPos, Quaternion.identity, transform);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
             cellMap[coords] = cell;
+            cell.SpawnProps(mapData.props[(int)type]);
             
         }
         foreach (var kvp in cellMap)

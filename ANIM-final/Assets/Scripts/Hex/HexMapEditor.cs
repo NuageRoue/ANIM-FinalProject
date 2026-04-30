@@ -109,6 +109,7 @@ public class HexMapEditor : MonoBehaviour
         IslandMapData instance = ScriptableObject.CreateInstance<IslandMapData>();
 
         instance.SetCells(posDict);
+        instance.props = props;
 
         AssetDatabase.CreateAsset(instance, path);
         AssetDatabase.SaveAssets();
@@ -116,4 +117,8 @@ public class HexMapEditor : MonoBehaviour
         Debug.Log("not in the editor: how are you working here?");
 #endif
     }
+
+
+    [SerializeField]
+    public List<GameObjectList> props;
 }
