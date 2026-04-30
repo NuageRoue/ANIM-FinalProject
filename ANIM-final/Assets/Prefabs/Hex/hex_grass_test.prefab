@@ -108,6 +108,13 @@ MonoBehaviour:
     x: 0
     z: 0
   color: {r: 0, g: 0, b: 0, a: 0}
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!64 &6141765832631868984
 MeshCollider:
   m_ObjectHideFlags: 0
