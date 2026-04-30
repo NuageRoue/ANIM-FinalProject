@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -83,5 +84,21 @@ public struct HexCoordinates
 
 
         return new HexCoordinates(iX, iZ);
+    }
+
+    internal Vector3Int ToVector()
+    {
+        return new Vector3Int(X, Y, Z);
+    }
+
+    public static Vector3 CoordsToWorldPosition(Vector3Int coords)
+    {
+        int z = coords.z;
+        int x = coords.x + z / 2;
+        return new Vector3(
+            (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f),
+            0f,
+            z * (HexMetrics.outerRadius * 1.5f)
+        );
     }
 }

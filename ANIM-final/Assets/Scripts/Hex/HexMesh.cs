@@ -4,17 +4,15 @@ using System.Collections.Generic;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class HexMesh : MonoBehaviour
 {
-
     Mesh hexMesh;
     List<Vector3> vertices;
     List<int> triangles;
-
-    MeshCollider meshCollider;
     List<Color> colors;
+    MeshCollider meshCollider;
 
     public const float solidFactor = 0.75f;
-
     public const float blendFactor = 1f - solidFactor;
+
     void Awake()
     {
         GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
@@ -25,16 +23,16 @@ public class HexMesh : MonoBehaviour
         triangles = new List<int>();
     }
 
-    public void Triangulate(HexCell[] cells)
+    public void Triangulate(HexCellData[] cells)
     {
         hexMesh.Clear();
         vertices.Clear();
         colors.Clear();
         triangles.Clear();
-        for (int i = 0; i < cells.Length; i++)
-        {
-            Triangulate(cells[i]);
-        }
+
+        foreach (var cell in cells)
+            Triangulate(cell);
+
         hexMesh.vertices = vertices.ToArray();
         hexMesh.colors = colors.ToArray();
         hexMesh.triangles = triangles.ToArray();
@@ -42,17 +40,15 @@ public class HexMesh : MonoBehaviour
         meshCollider.sharedMesh = hexMesh;
     }
 
-    void Triangulate(HexCell cell)
+    void Triangulate(HexCellData cell)
     {
         for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-        {
             Triangulate(d, cell);
-        }
     }
 
-    void Triangulate(HexDirection direction, HexCell cell)
+    void Triangulate(HexDirection direction, HexCellData cell)
     {
-        Vector3 center = cell.transform.localPosition;
+        Vector3 center = cell.Position;
         Vector3 v1 = center + HexMetrics.GetFirstSolidCorner(direction);
         Vector3 v2 = center + HexMetrics.GetSecondSolidCorner(direction);
 
@@ -62,15 +58,10 @@ public class HexMesh : MonoBehaviour
         TriangulateConnection(direction, cell, v1, v2);
     }
 
-    void TriangulateConnection(
-        HexDirection direction, HexCell cell, Vector3 v1, Vector3 v2
-    )
+    void TriangulateConnection(HexDirection direction, HexCellData cell, Vector3 v1, Vector3 v2)
     {
-        HexCell neighbor = cell.GetNeighbor(direction);
-        if (neighbor == null)
-        {
-            return;
-        }
+        HexCellData neighbor = cell.GetNeighbor(direction);
+        if (neighbor == null) return;
 
         Vector3 bridge = HexMetrics.GetBridge(direction);
         Vector3 v3 = v1 + bridge;
@@ -79,7 +70,7 @@ public class HexMesh : MonoBehaviour
         AddQuad(v1, v2, v3, v4);
         AddQuadColor(cell.color, neighbor.color);
 
-        HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
+        HexCellData nextNeighbor = cell.GetNeighbor(direction.Next());
         if (direction <= HexDirection.E && nextNeighbor != null)
         {
             AddTriangle(v2, v4, v2 + HexMetrics.GetBridge(direction.Next()));
@@ -87,12 +78,6 @@ public class HexMesh : MonoBehaviour
         }
     }
 
-    void AddTriangleColor(Color color)
-    {
-        colors.Add(color);
-        colors.Add(color);
-        colors.Add(color);
-    }
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
     {
         int vertexIndex = vertices.Count;
@@ -104,12 +89,8 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex + 2);
     }
 
-    void AddTriangleColor(Color c1, Color c2, Color c3)
-    {
-        colors.Add(c1);
-        colors.Add(c2);
-        colors.Add(c3);
-    }
+    void AddTriangleColor(Color c1) { colors.Add(c1); colors.Add(c1); colors.Add(c1); }
+    void AddTriangleColor(Color c1, Color c2, Color c3) { colors.Add(c1); colors.Add(c2); colors.Add(c3); }
 
     void AddQuad(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4)
     {
@@ -126,19 +107,6 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex + 3);
     }
 
-    void AddQuadColor(Color c1, Color c2, Color c3, Color c4)
-    {
-        colors.Add(c1);
-        colors.Add(c2);
-        colors.Add(c3);
-        colors.Add(c4);
-    }
-
-    void AddQuadColor(Color c1, Color c2)
-    {
-        colors.Add(c1);
-        colors.Add(c1);
-        colors.Add(c2);
-        colors.Add(c2);
-    }
+    void AddQuadColor(Color c1, Color c2) { colors.Add(c1); colors.Add(c1); colors.Add(c2); colors.Add(c2); }
+    void AddQuadColor(Color c1, Color c2, Color c3, Color c4) { colors.Add(c1); colors.Add(c2); colors.Add(c3); colors.Add(c4); }
 }
