@@ -18,7 +18,8 @@ public class IslandMapData : ScriptableObject
             if (kvp.Value != 0)
             {
                 keys.Add(kvp.Key);
-                values.Add(new Cell(data[kvp.Value]));
+                Debug.Log(kvp.Value - 1);
+                values.Add(new Cell(data[kvp.Value - 1]));
                 if (kvp.Value != 0)
                     landCounter++;
             }        

@@ -330,16 +330,13 @@ MonoBehaviour:
   - {r: 0.6037736, g: 0.12246352, b: 0.12246352, a: 0}
   - {r: 0.06421325, g: 0.3490566, b: 0.10095285, a: 0}
   hexMesh: {fileID: 0}
+  data:
+  - {fileID: 11400000, guid: 0b111ae7ba1476ed1961c5c85ff7d4bb, type: 2}
+  - {fileID: 11400000, guid: 40cf7b4355a7d9ceaabfdfdd8c245dbc, type: 2}
+  - {fileID: 11400000, guid: bd10617981da2e509835aa70232cc125, type: 2}
+  - {fileID: 11400000, guid: 200a4d18f0cd751478fe38d00fb0689e, type: 2}
+  - {fileID: 11400000, guid: cf9086b36bf608be08061ed90dbeee95, type: 2}
   inputField: {fileID: 187498662}
-  props:
-  - items: []
-  - items: []
-  - items: []
-  - items: []
-  - items: []
-  - items:
-    - {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
-    - {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
 --- !u!1 &187498660
 GameObject:
   m_ObjectHideFlags: 0

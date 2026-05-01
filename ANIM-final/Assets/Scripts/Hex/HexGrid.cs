@@ -24,21 +24,20 @@ public class HexGrid : MonoBehaviour
             Debug.Log("no MapData");
         else
             Debug.Log("mapData");
-        /*
+        
         foreach (var kvp in mapData.GetDict())
         {
             Vector3Int coords = kvp.Key;
-            CellType type = kvp.Value;
+            Cell cellData = kvp.Value;
 
-            if (type == CellType.water) continue;
             
             Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
-            HexCell cell = Instantiate(cellPrefabs[(int)type], worldPos, Quaternion.identity, transform);
+
+            HexCell cell = Instantiate(cellData.data.cell, worldPos, Quaternion.identity, transform);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
             cellMap[coords] = cell;
-            cell.SpawnProps(mapData.props[(int)type]);
-            
         }
+        /*
         foreach (var kvp in cellMap)
         {
             Vector3Int coords = kvp.Key;
