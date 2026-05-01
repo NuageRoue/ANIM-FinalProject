@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class CellEvent : MonoBehaviour // la classe est bateau mais à voir
+public abstract class CallEvent : MonoBehaviour // la classe est bateau mais à voir
 {
     public abstract bool CanTrigger(Survivor survivor);
 

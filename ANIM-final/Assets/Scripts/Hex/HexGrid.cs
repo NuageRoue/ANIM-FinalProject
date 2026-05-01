@@ -24,6 +24,7 @@ public class HexGrid : MonoBehaviour
             Debug.Log("no MapData");
         else
             Debug.Log("mapData");
+        /*
         foreach (var kvp in mapData.GetDict())
         {
             Vector3Int coords = kvp.Key;
@@ -49,6 +50,7 @@ public class HexGrid : MonoBehaviour
                     cell.SetNeighbor((HexDirection)i, neighbor);
             }
         }
+        */
     }
 
     

@@ -10,6 +10,8 @@ public class HexMapEditor : MonoBehaviour
     public Color[] colors;
     public HexMesh hexMesh;
 
+    public List<CellData> data;
+
     HexCellData[] cells;
     Color activeColor;
     int activeIndex;
@@ -108,8 +110,7 @@ public class HexMapEditor : MonoBehaviour
         string path = $"Assets/Maps/{mapName}.asset";
         IslandMapData instance = ScriptableObject.CreateInstance<IslandMapData>();
 
-        instance.SetCells(posDict);
-        instance.props = props;
+        instance.SetCells(posDict, data);
 
         AssetDatabase.CreateAsset(instance, path);
         AssetDatabase.SaveAssets();
@@ -119,6 +120,4 @@ public class HexMapEditor : MonoBehaviour
     }
 
 
-    [SerializeField]
-    public List<GameObjectList> props;
 }

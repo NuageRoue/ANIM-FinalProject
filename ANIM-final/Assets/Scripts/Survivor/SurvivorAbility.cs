@@ -6,7 +6,7 @@ public abstract class SurvivorAbility : MonoBehaviour
 
     public virtual void OnMove(Survivor survivor, HexCell target) { }
 
-    public virtual void OnEventEntered(Survivor survivor, CellEvent cellEvent) { }
+    public virtual void OnEventEntered(Survivor survivor, CallEvent callEvent) { }
 
     public virtual bool CanUseSpecialAction(Survivor survivor) => false;
 

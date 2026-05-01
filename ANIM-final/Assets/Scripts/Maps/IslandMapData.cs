@@ -6,9 +6,9 @@ public class IslandMapData : ScriptableObject
 {
     public int landCounter = 0;
     public List<Vector3Int> keys = new();
-    public List<CellType> values = new();
+    public List<Cell> values = new();
 
-    public void SetCells(Dictionary<Vector3Int, int> indexes)
+    public void SetCells(Dictionary<Vector3Int, int> indexes, List<CellData> data)
     {
         keys.Clear();
         values.Clear();
@@ -18,36 +18,19 @@ public class IslandMapData : ScriptableObject
             if (kvp.Value != 0)
             {
                 keys.Add(kvp.Key);
-                values.Add((CellType)kvp.Value);
-                    if (kvp.Value != 0)
-                        landCounter++;
+                values.Add(new Cell(data[kvp.Value]));
+                if (kvp.Value != 0)
+                    landCounter++;
             }        
         }
     }
 
-    public Dictionary<Vector3Int, CellType> GetDict()
+    public Dictionary<Vector3Int, Cell> GetDict()
     {
-        Dictionary<Vector3Int, CellType> dict = new();
+        Dictionary<Vector3Int, Cell> dict = new();
         for (int i = 0; i < keys.Count; i++)
             dict.Add(keys[i], values[i]);
         return dict;
     }
-
-    public List<GameObjectList> props;
 }
 
-public enum CellType
-{
-    water, coast, grass, mountain, tower, Forest
-}
-
-[System.Serializable]
-public class GameObjectList
-{
-    public List<GameObject> items = new List<GameObject>();
-    public int Count { get { return items.Count;  } }
-
-    public GameObject Get(int id) { 
-        return items[id];
-    }
-}

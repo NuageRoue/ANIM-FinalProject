@@ -5,7 +5,7 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
 
-    private CellEvent _currentEvent;
+    private CallEvent _currentEvent;
     private Survivor _currentSurvivor;
 
     private void Awake()
@@ -15,7 +15,7 @@ public class EventManager : MonoBehaviour
         Instance = this;
     }
 
-    public void TriggerEvent(CellEvent cellEvent, Survivor survivor)
+    public void TriggerEvent(CallEvent cellEvent, Survivor survivor)
     {
     }
 
