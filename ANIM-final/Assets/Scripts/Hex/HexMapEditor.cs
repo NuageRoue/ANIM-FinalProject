@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class HexMapEditor : MonoBehaviour
     public HexMesh hexMesh;
 
     public List<CellData> data;
+    public Transform waypoint;
 
     HexCellData[] cells;
     Color activeColor;
@@ -19,6 +21,10 @@ public class HexMapEditor : MonoBehaviour
     [SerializeField] TMP_InputField inputField;
 
     public Dictionary<Vector3Int, int> posDict;
+    Vector3Int[] raftParts = new Vector3Int[3];
+    Transform[] waypoints = new Transform[3];
+
+
     string mapName = "default";
 
     void Awake()
@@ -32,7 +38,6 @@ public class HexMapEditor : MonoBehaviour
         for (int z = 0, i = 0; z < height; z++)
             for (int x = 0; x < width; x++)
                 CreateCell(x, z, i++);
-
     }
 
     void Start()
@@ -43,7 +48,7 @@ public class HexMapEditor : MonoBehaviour
     void CreateCell(int x, int z, int i)
     {
         HexCellData cell = cells[i] = new HexCellData(x, z, activeColor);
-        posDict.Add(HexCoordinates.FromOffsetCoordinates(x, z).ToVector(), 0);
+        // posDict.Add(HexCoordinates.FromOffsetCoordinates(x, z).ToVector(), 0);
 
         if (x > 0)
             cell.SetNeighbor(HexDirection.W, cells[i - 1]);
@@ -87,7 +92,10 @@ public class HexMapEditor : MonoBehaviour
         HexCellData cell = cells[index];
         cell.color = activeColor;
 
-        posDict[coordinates.ToVector()] = activeIndex; 
+        if (activeIndex == 0 && posDict.ContainsKey(coordinates.ToVector()))
+          posDict.Remove(coordinates.ToVector());
+        else if (activeIndex != 0)
+          posDict[coordinates.ToVector()] = activeIndex; 
         
 
         hexMesh.Triangulate(cells);
@@ -104,6 +112,42 @@ public class HexMapEditor : MonoBehaviour
             mapName = inputField.text;
     }
 
+    public void RandomRaftParts() {
+      if (posDict.Count < 3)
+      {
+        Debug.Log("not enough tiles");
+        return;
+      }
+      Vector3Int posA, posB, posC;
+
+      do {
+        posA = posDict.Keys.ToList()[Random.Range(0, posDict.Count)];
+        posB = posDict.Keys.ToList()[Random.Range(0, posDict.Count)];
+        posC = posDict.Keys.ToList()[Random.Range(0, posDict.Count)];
+      } while (!differentEnough(posA, posB, posC));
+
+      raftParts[0] = posA;
+      raftParts[1] = posB;
+      raftParts[2] = posC;
+
+      Debug.Log($"position des pièces du radeau : {posA}, {posB} et {posC}");
+
+      for (int i = 0; i < waypoints.Count(); i++) {
+
+        if (waypoints[i] != null) {
+          Destroy(waypoints[i].gameObject);
+          waypoints[i] = null;
+        }
+      }
+      waypoints[0] = Instantiate(waypoint, HexCoordinates.CoordsToWorldPosition(posA), Quaternion.identity, transform);
+      waypoints[1] = Instantiate(waypoint, HexCoordinates.CoordsToWorldPosition(posB), Quaternion.identity, transform);
+      waypoints[2] = Instantiate(waypoint, HexCoordinates.CoordsToWorldPosition(posC), Quaternion.identity, transform);
+    }
+
+    bool differentEnough(Vector3Int posA, Vector3Int posB, Vector3Int posC) {
+        return (posA != posB && posA != posC && posB != posC) && (posDict[posA] == 2 && posDict[posB] == 2 && posDict[posC] == 2);
+    }
+
     public void SaveMap() {
 #if UNITY_EDITOR
         GetNewName();
@@ -111,6 +155,7 @@ public class HexMapEditor : MonoBehaviour
         IslandMapData instance = ScriptableObject.CreateInstance<IslandMapData>();
 
         instance.SetCells(posDict, data);
+        instance.SetRaft(raftParts);
 
         AssetDatabase.CreateAsset(instance, path);
         AssetDatabase.SaveAssets();

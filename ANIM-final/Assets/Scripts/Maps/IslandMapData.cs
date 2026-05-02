@@ -33,5 +33,10 @@ public class IslandMapData : ScriptableObject
             dict.Add(keys[i], values[i]);
         return dict;
     }
+
+    public void SetRaft(Vector3Int[] raftPos) {
+        foreach(Vector3Int pos in raftPos)
+        values[keys.IndexOf(pos)].ForceEvent(null);
+    }
 }
 

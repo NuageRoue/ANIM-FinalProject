@@ -33,9 +33,10 @@ public class HexGrid : MonoBehaviour
             
             Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
 
-            HexCell cell = Instantiate(cellData.data.cell, worldPos, Quaternion.identity, transform);
+            /*HexCell cell = Instantiate(cellData.data.cell, worldPos, Quaternion.identity, transform);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
-            cellMap[coords] = cell;
+            cellMap[coords] = cell;*/
+
         }
         /*
         foreach (var kvp in cellMap)

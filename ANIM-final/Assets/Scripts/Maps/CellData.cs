@@ -12,6 +12,19 @@ public class CellData : ScriptableObject
   public List<CallEvent> potentialEvents;
 
   public HexCell cell;
+
+  public GameObject getRandomProp() {
+    if (propSpawn == 0 || potentialProps.Count == 0)
+      return null;
+    return potentialProps[Random.Range(0, potentialProps.Count)];
+  }
+
+
+  public CallEvent getRandomEvent() {
+    if (eventSpawn == 0 || potentialEvents.Count == 0)
+      return null;
+    return potentialEvents[Random.Range(0, potentialEvents.Count)];
+  }
 }
 
 
@@ -24,12 +37,27 @@ public enum CellType
 public class Cell {
 
   public Cell(CellData data) {
-    this.data = data;
+    LoadFromCellData(data);
   }
 
+  public void ForceEvent(CallEvent selectedEvent) {
+    this.selectedEvent = selectedEvent;
+    hasEvent = true;
+  }
+  void LoadFromCellData(CellData data) 
+  {
+    type = data.type;
+    selectedProp = data.getRandomProp();
+    selectedEvent = data.getRandomEvent();
+    cell = data.cell;
+    hasEvent = (selectedEvent != null);
+  }
 
-  public CellData data;
+  bool hasEvent;
+  public HexCell cell;
+  CellType type;
 
-  public GameObject forcedProp;
-  public CallEvent forcedEvent;
+  public GameObject selectedProp;
+  public CallEvent selectedEvent;
 }
+
