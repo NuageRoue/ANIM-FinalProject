@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/IslandMapData")]
 public class IslandMapData : ScriptableObject
@@ -35,8 +37,17 @@ public class IslandMapData : ScriptableObject
     }
 
     public void SetRaft(Vector3Int[] raftPos) {
-        foreach(Vector3Int pos in raftPos)
-        values[keys.IndexOf(pos)].ForceEvent(null);
+        foreach (Vector3Int pos in raftPos)
+        {
+            Debug.Log($"{pos} now has a raft part.");
+            values[keys.IndexOf(pos)].ForceEvent(null);
+        }
+    }
+
+    internal void SetStartingPos(Vector3Int startingPoint)
+    {
+        if (startingPoint != null)
+            values[keys.IndexOf(startingPoint)].SetAsStartingPoint();
     }
 }
 

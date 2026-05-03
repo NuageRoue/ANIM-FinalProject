@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -5,14 +6,16 @@ public class HexCell : MonoBehaviour
 {
 
     public HexCoordinates coordinates;
-    int height = 0;
+    public float height = 0;
     GameObject prop;
-
-
-    public Color color;
 
     [SerializeField]
     HexCell[] neighbors;
+
+    private void Awake()
+    {
+        neighbors = new HexCell[6];
+    }
 
     public HexCell GetNeighbor(HexDirection direction)
     {
@@ -22,12 +25,22 @@ public class HexCell : MonoBehaviour
     public void SetNeighbor(HexDirection direction, HexCell cell)
     {
         neighbors[(int)direction] = cell;
-        cell.neighbors[(int)direction.Opposite()] = this;
+        // cell.neighbors[(int)direction.Opposite()] = this;
     }
 
-    /*internal void SpawnProps(GameObjectList gameObjectList)
+    public void SetAsRaftPart() // temporary until I fix CallEvent
     {
-        if (gameObjectList.Count > 0)
-            prop = GameObject.Instantiate(gameObjectList.Get(Random.Range(0, gameObjectList.Count)), transform.position + new Vector3(0, height, 0), Quaternion.identity, transform);
-    }*/
+        name += " (raft part)";
+    }
+
+    public void SetAsStartingPos()
+    {
+        name += " (starting pos)";
+    }
+    internal void Setup(GameObject selectedProp, CallEvent selectedEvent)
+    {
+        if (selectedProp != null)
+            prop = GameObject.Instantiate(selectedProp, transform.position + Vector3.up * height, Quaternion.identity, transform);
+        //TODO: take care of the callEVent
+    }
 }

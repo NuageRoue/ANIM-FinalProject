@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Coast
   m_EditorClassIdentifier: Assembly-CSharp::CellData
   type: 0
+  isTraversable: 1
   propSpawn: 0
   eventSpawn: 0
   potentialProps: []
   potentialEvents: []
   cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+  isFreeForEvents: 1

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Mountain
   m_EditorClassIdentifier: Assembly-CSharp::CellData
   type: 2
-  propSpawn: 0
+  propSpawn: 1
   eventSpawn: 0
-  potentialProps: []
+  potentialProps:
+  - {fileID: 919132149155446097, guid: 22b26a6340351754d9ad6bb5df292213, type: 3}
+  - {fileID: 919132149155446097, guid: a324aa9462dc52c4683680f444c7ec31, type: 3}
+  - {fileID: 919132149155446097, guid: 316c0a85f7fed1747b4134a85ea62ae9, type: 3}
   potentialEvents: []
-  cell: {fileID: 5636091927098177984, guid: 93ae5a7722b830148ad224e0ff82f679, type: 3}
+  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}

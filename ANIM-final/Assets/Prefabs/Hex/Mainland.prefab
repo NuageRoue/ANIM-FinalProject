@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5636091927098177984}
   - component: {fileID: 6141765832631868984}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Mainland
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,8 +32,7 @@ Transform:
   m_LocalPosition: {x: 68.01384, y: 34.37489, z: 7.55541}
   m_LocalScale: {x: 9, y: 9, z: 9}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 2311099349071192579}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8546485543354662061
@@ -138,81 +137,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 703726867841230225, guid: dcc586d78b4a328709c020b7a2a54088, type: 3}
---- !u!1001 &2853054422210774504
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3549459610226951181}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.044325937
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.00000042563892
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.010947811
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-      propertyPath: m_Name
-      value: building_tower_A_blue
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
---- !u!4 &2311099349071192579 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3fb597909f1343d43ab71aff475393bd, type: 3}
-  m_PrefabInstance: {fileID: 2853054422210774504}
-  m_PrefabAsset: {fileID: 0}

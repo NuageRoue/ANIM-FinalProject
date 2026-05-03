@@ -6,14 +6,16 @@ using System.Collections.Generic;
 public class CellData : ScriptableObject
 {
   public CellType type;
+  public bool isTraversable;
 
   public float propSpawn = 1, eventSpawn = 0;
   public List<GameObject> potentialProps;
   public List<CallEvent> potentialEvents;
 
   public HexCell cell;
+  public bool isFreeForEvents;
 
-  public GameObject getRandomProp() {
+    public GameObject getRandomProp() {
     if (propSpawn == 0 || potentialProps.Count == 0)
       return null;
     return potentialProps[Random.Range(0, potentialProps.Count)];
@@ -53,7 +55,13 @@ public class Cell {
     hasEvent = (selectedEvent != null);
   }
 
-  bool hasEvent;
+    internal void SetAsStartingPoint()
+    {
+        isStartingPoint = true;
+    }
+
+    public bool hasEvent;
+    public bool isStartingPoint = false;
   public HexCell cell;
   CellType type;
 

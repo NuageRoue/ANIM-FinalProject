@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Tower
   m_EditorClassIdentifier: Assembly-CSharp::CellData
   type: 4
-  propSpawn: 0
+  isTraversable: 1
+  propSpawn: 1
   eventSpawn: 0
-  potentialProps: []
+  potentialProps:
+  - {fileID: 7382740561823812314, guid: c4bf00b797c117b46b8a8ff9d0299211, type: 3}
   potentialEvents: []
-  cell: {fileID: 5636091927098177984, guid: 3506ed0af26368743b5420f780731374, type: 3}
+  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+  isFreeForEvents: 0

@@ -32,13 +32,21 @@ public class HexGrid : MonoBehaviour
 
             
             Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
-
-            /*HexCell cell = Instantiate(cellData.data.cell, worldPos, Quaternion.identity, transform);
+            HexCell cell = Instantiate(cellData.cell, worldPos, Quaternion.identity, transform);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
-            cellMap[coords] = cell;*/
+            cellMap[coords] = cell;
 
+            cell.Setup(cellData.selectedProp, cellData.selectedEvent);
+
+            if (cellData.hasEvent) {
+                cell.SetAsRaftPart(); // temporary
+            }
+            if (cellData.isStartingPoint)
+            {
+                cell.SetAsStartingPos(); // temporary
+            }
         }
-        /*
+        
         foreach (var kvp in cellMap)
         {
             Vector3Int coords = kvp.Key;
@@ -50,7 +58,7 @@ public class HexGrid : MonoBehaviour
                     cell.SetNeighbor((HexDirection)i, neighbor);
             }
         }
-        */
+        
     }
 
     

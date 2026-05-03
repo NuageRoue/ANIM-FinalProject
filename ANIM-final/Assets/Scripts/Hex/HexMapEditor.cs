@@ -14,6 +14,7 @@ public class HexMapEditor : MonoBehaviour
     public List<CellData> data;
     public Transform waypoint;
 
+
     HexCellData[] cells;
     Color activeColor;
     int activeIndex;
@@ -23,7 +24,8 @@ public class HexMapEditor : MonoBehaviour
     public Dictionary<Vector3Int, int> posDict;
     Vector3Int[] raftParts = new Vector3Int[3];
     Transform[] waypoints = new Transform[3];
-
+    Transform startingWaypoint;
+    Vector3Int startingPoint;
 
     string mapName = "default";
 
@@ -85,8 +87,20 @@ public class HexMapEditor : MonoBehaviour
 
     void ColorCell(Vector3 position)
     {
+        
         position = transform.InverseTransformPoint(position);
         HexCoordinates coordinates = HexCoordinates.FromPosition(position);
+
+        if (activeIndex == -1)
+        {
+            if (posDict.ContainsKey(coordinates.ToVector()) && (CellType)(posDict[coordinates.ToVector()] - 1) == CellType.coast) { 
+                startingPoint = coordinates.ToVector();
+                if (startingWaypoint != null)
+                    Destroy(startingWaypoint.gameObject);
+                startingWaypoint = Instantiate(waypoint, HexCoordinates.CoordsToWorldPosition(coordinates.ToVector()), Quaternion.identity, transform);
+            }// starting point
+            return;
+        }
 
         int index = coordinates.X + coordinates.Z * width + coordinates.Z / 2;
         HexCellData cell = cells[index];
@@ -101,9 +115,15 @@ public class HexMapEditor : MonoBehaviour
         hexMesh.Triangulate(cells);
     }
 
+    private bool IsFreeForEvents(Vector3Int pos)
+    {
+        return (data[posDict[pos] - 1].isFreeForEvents && startingPoint != pos && !raftParts.Contains(pos));
+    }
+
     public void SelectColor(int index)
     {
-        activeColor = colors[index];
+        if (index >= 0)
+            activeColor = colors[index];
         activeIndex = index;
     }
 
@@ -145,7 +165,7 @@ public class HexMapEditor : MonoBehaviour
     }
 
     bool differentEnough(Vector3Int posA, Vector3Int posB, Vector3Int posC) {
-        return (posA != posB && posA != posC && posB != posC) && (posDict[posA] == 2 && posDict[posB] == 2 && posDict[posC] == 2);
+        return (posA != posB && posA != posC && posB != posC) && (IsFreeForEvents(posA) && IsFreeForEvents(posB) && IsFreeForEvents(posC));
     }
 
     public void SaveMap() {
@@ -156,6 +176,7 @@ public class HexMapEditor : MonoBehaviour
 
         instance.SetCells(posDict, data);
         instance.SetRaft(raftParts);
+        instance.SetStartingPos(startingPoint);
 
         AssetDatabase.CreateAsset(instance, path);
         AssetDatabase.SaveAssets();
