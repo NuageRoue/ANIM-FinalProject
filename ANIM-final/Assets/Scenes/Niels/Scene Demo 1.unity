@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176394633}
   - component: {fileID: 176394634}
+  - component: {fileID: 176394635}
   m_Layer: 0
   m_Name: ScenePassingManager
   m_TagString: Untagged
@@ -168,6 +169,29 @@ MonoBehaviour:
   - {fileID: 102900000, guid: 2d34d35b335e5c7009582564ea98fbdf, type: 3}
   data:
     color: {r: 1, g: 0, b: 0, a: 0}
+--- !u!114 &176394635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176394632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea7275e74b91a846892ce5a55ed3a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingSystem
+  recipes:
+  - inputs:
+    - type: 0
+      amount: 2
+    outputs:
+    - type: 1
+      amount: 1
+  inventoy:
+    ressources:
+    - type: 0
+      amount: 4
 --- !u!1 &1077028197
 GameObject:
   m_ObjectHideFlags: 0

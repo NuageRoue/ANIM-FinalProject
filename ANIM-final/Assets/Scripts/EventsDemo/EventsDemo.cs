@@ -41,6 +41,5 @@ public class EventDemo : MonoBehaviour
         var sceneName = scenes[sceneIndex].name;
         var scene = SceneManager.GetSceneByName(sceneName);
         SceneManager.LoadScene(sceneName);
-        SceneManager.SetActiveScene(scene);
     }
 }
