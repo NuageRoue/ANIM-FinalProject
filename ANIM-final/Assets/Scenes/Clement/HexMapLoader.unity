@@ -164,14 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed6e90866633fd44861257b82e299af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HexGrid
-  mapData: {fileID: 11400000, guid: 3350118b9cd48344fba039660872a1c2, type: 2}
-  cellPrefabs:
-  - {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-  - {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
-  - {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-  - {fileID: 5636091927098177984, guid: 93ae5a7722b830148ad224e0ff82f679, type: 3}
-  - {fileID: 5636091927098177984, guid: 3506ed0af26368743b5420f780731374, type: 3}
-  - {fileID: 6156900601981629009, guid: ae2a726285dd6ed4c83269396c2ff482, type: 3}
+  mapData: {fileID: 11400000, guid: a4cbf79181a090445af7b12242b2b007, type: 2}
 --- !u!1 &305153225
 GameObject:
   m_ObjectHideFlags: 0

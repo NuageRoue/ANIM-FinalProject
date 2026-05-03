@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5e30ec7c4dc8498ac21780bde1999d, type: 3}
   m_Name: Forest
   m_EditorClassIdentifier: Assembly-CSharp::CellData
-  type: 4
+  cellType: 0
   isTraversable: 1
+  canHaveEvent: 1
+  cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
   propSpawn: 0.8
   eventSpawn: 0
   potentialProps:
   - {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
   - {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
   potentialEvents: []
-  cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
-  isFreeForEvents: 1

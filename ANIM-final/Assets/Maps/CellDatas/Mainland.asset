@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5e30ec7c4dc8498ac21780bde1999d, type: 3}
   m_Name: Mainland
   m_EditorClassIdentifier: Assembly-CSharp::CellData
-  type: 1
+  cellType: 0
   isTraversable: 1
+  canHaveEvent: 1
+  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
   propSpawn: 0
   eventSpawn: 0
   potentialProps: []
   potentialEvents: []
-  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-  isFreeForEvents: 1

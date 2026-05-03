@@ -23,7 +23,7 @@ public class HexMesh : MonoBehaviour
         triangles = new List<int>();
     }
 
-    public void Triangulate(HexCellData[] cells)
+    public void Triangulate(HexMeshCell[] cells)
     {
         hexMesh.Clear();
         vertices.Clear();
@@ -40,13 +40,13 @@ public class HexMesh : MonoBehaviour
         meshCollider.sharedMesh = hexMesh;
     }
 
-    void Triangulate(HexCellData cell)
+    void Triangulate(HexMeshCell cell)
     {
         for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
             Triangulate(d, cell);
     }
 
-    void Triangulate(HexDirection direction, HexCellData cell)
+    void Triangulate(HexDirection direction, HexMeshCell cell)
     {
         Vector3 center = cell.Position;
         Vector3 v1 = center + HexMetrics.GetFirstSolidCorner(direction);
@@ -58,9 +58,9 @@ public class HexMesh : MonoBehaviour
         TriangulateConnection(direction, cell, v1, v2);
     }
 
-    void TriangulateConnection(HexDirection direction, HexCellData cell, Vector3 v1, Vector3 v2)
+    void TriangulateConnection(HexDirection direction, HexMeshCell cell, Vector3 v1, Vector3 v2)
     {
-        HexCellData neighbor = cell.GetNeighbor(direction);
+        HexMeshCell neighbor = cell.GetNeighbor(direction);
         if (neighbor == null) return;
 
         Vector3 bridge = HexMetrics.GetBridge(direction);
@@ -70,7 +70,7 @@ public class HexMesh : MonoBehaviour
         AddQuad(v1, v2, v3, v4);
         AddQuadColor(cell.color, neighbor.color);
 
-        HexCellData nextNeighbor = cell.GetNeighbor(direction.Next());
+        HexMeshCell nextNeighbor = cell.GetNeighbor(direction.Next());
         if (direction <= HexDirection.E && nextNeighbor != null)
         {
             AddTriangle(v2, v4, v2 + HexMetrics.GetBridge(direction.Next()));
@@ -109,4 +109,35 @@ public class HexMesh : MonoBehaviour
 
     void AddQuadColor(Color c1, Color c2) { colors.Add(c1); colors.Add(c1); colors.Add(c2); colors.Add(c2); }
     void AddQuadColor(Color c1, Color c2, Color c3, Color c4) { colors.Add(c1); colors.Add(c2); colors.Add(c3); colors.Add(c4); }
+}
+
+public class HexMeshCell
+{
+    public HexCoordinates coordinates;
+    public Color color;
+    public Vector3 Position { get; private set; }
+
+    HexMeshCell[] neighbors = new HexMeshCell[6];
+
+    public HexMeshCell(int x, int z, Color defaultColor)
+    {
+        coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
+        color = defaultColor;
+        Position = new Vector3(
+            (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f),
+            0f,
+            z * (HexMetrics.outerRadius * 1.5f)
+        );
+    }
+
+    public HexMeshCell GetNeighbor(HexDirection direction)
+    {
+        return neighbors[(int)direction];
+    }
+
+    public void SetNeighbor(HexDirection direction, HexMeshCell cell)
+    {
+        neighbors[(int)direction] = cell;
+        cell.neighbors[(int)direction.Opposite()] = this;
+    }
 }

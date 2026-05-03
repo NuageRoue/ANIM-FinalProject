@@ -86,7 +86,7 @@ public struct HexCoordinates
         return new HexCoordinates(iX, iZ);
     }
 
-    internal Vector3Int ToVector()
+    public Vector3Int ToVector()
     {
         return new Vector3Int(X, Y, Z);
     }

@@ -6,27 +6,8 @@ using static UnityEditor.PlayerSettings;
 [CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/IslandMapData")]
 public class IslandMapData : ScriptableObject
 {
-    public int landCounter = 0;
     public List<Vector3Int> keys = new();
     public List<Cell> values = new();
-
-    public void SetCells(Dictionary<Vector3Int, int> indexes, List<CellData> data)
-    {
-        keys.Clear();
-        values.Clear();
-        landCounter = 0;
-        foreach (var kvp in indexes)
-        {
-            if (kvp.Value != 0)
-            {
-                keys.Add(kvp.Key);
-                Debug.Log(kvp.Value - 1);
-                values.Add(new Cell(data[kvp.Value - 1]));
-                if (kvp.Value != 0)
-                    landCounter++;
-            }        
-        }
-    }
 
     public Dictionary<Vector3Int, Cell> GetDict()
     {
@@ -36,18 +17,36 @@ public class IslandMapData : ScriptableObject
         return dict;
     }
 
-    public void SetRaft(Vector3Int[] raftPos) {
-        foreach (Vector3Int pos in raftPos)
+    #region build
+    public void SetCells(Dictionary<Vector3Int, CellType> indexes, List<CellData> data)
+    {
+        keys.Clear();
+        values.Clear();
+        
+        foreach (var kvp in indexes)
         {
-            Debug.Log($"{pos} now has a raft part.");
-            values[keys.IndexOf(pos)].ForceEvent(null);
+                keys.Add(kvp.Key);
+                values.Add(new Cell(data[(int)kvp.Value]));        
         }
     }
-
-    internal void SetStartingPos(Vector3Int startingPoint)
-    {
-        if (startingPoint != null)
-            values[keys.IndexOf(startingPoint)].SetAsStartingPoint();
+    public void SetRaftPos(Vector3Int[] raftPos) {
+        foreach (Vector3Int pos in raftPos)
+        {
+            Debug.Log($"raft pos: {pos}");
+            if (!keys.Contains(pos))
+                Debug.Log("fak");
+            else
+            values[keys.IndexOf(pos)].SetAsRaftPos();
+        }
     }
-}
+    public void SetStartingPos(Vector3Int startingPoint)
+    {
+        Debug.Log($"starting pos: {startingPoint}");
+        if (!keys.Contains(startingPoint))
+            Debug.Log("fak");
+        if (startingPoint != null)
+            values[keys.IndexOf(startingPoint)].SetAsStartPos();
+    }
 
+    #endregion
+}

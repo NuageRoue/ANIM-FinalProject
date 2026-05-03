@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5e30ec7c4dc8498ac21780bde1999d, type: 3}
   m_Name: Coast
   m_EditorClassIdentifier: Assembly-CSharp::CellData
-  type: 0
+  cellType: 0
   isTraversable: 1
+  canHaveEvent: 1
+  cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
   propSpawn: 0
   eventSpawn: 0
   potentialProps: []
   potentialEvents: []
-  cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
-  isFreeForEvents: 1
