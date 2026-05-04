@@ -1,4 +1,10 @@
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
+public class EventTarget
+{
+    public string sceneName;
+}
 
 public class EventContext
 {
@@ -8,7 +14,7 @@ public class EventContext
     // public Inventory CampInventory;
 }
 
-public struct EventResult
+public class EventResult
 {
     public Dictionary<ResourceType, int> ResourcesGained;
     public int DamageDealt;
@@ -20,5 +26,5 @@ public enum ResourceType
 {
     Wood,
     Stone,
-    Food
+    Food,
 }
