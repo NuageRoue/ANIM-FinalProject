@@ -16,6 +16,8 @@ public class HexCell : MonoBehaviour
     [SerializeField]
     HexCell[] neighbors;
 
+    public HexCell[] Neighbors { get { return neighbors; } }
+
     [SerializeField]
     public Vector3[] SurvivorCoordinates = new Vector3[3]
     {
@@ -28,6 +30,8 @@ public class HexCell : MonoBehaviour
     {
         false, false, false
     };
+
+    public Survivor[] survivorOnTiles = new Survivor[3] { null, null, null };
 
     bool isStartingPoint = false;
     public bool IsStartingCell
@@ -95,7 +99,7 @@ public class HexCell : MonoBehaviour
         hasBeenExplored = false;
 }
 
-    Vector3 GetAvailablePosition() 
+    int GetAvailablePosition() 
     {
         bool nothingAvailable = true;
         foreach (bool b in coordOccupied) 
@@ -106,27 +110,43 @@ public class HexCell : MonoBehaviour
         if (nothingAvailable)
         {
             Debug.Log("why");
-            return Vector3.zero;
+            return -1;
         }
         int i;
         do { i = Random.Range(0, 3); } while (coordOccupied[i]);
 
         coordOccupied[i] = true;
         hasBeenExplored = true;
-        return scale * (SurvivorCoordinates[i] + Vector3.up * height);
+        return i; // scale * (SurvivorCoordinates[i] + Vector3.up * height);
     }
     public void PlaceSurvivors(Survivor[] s) 
     {
         Debug.Log("placing survivors");
         foreach (Survivor survivor in s)
         {
-            survivor.transform.position = transform.position + GetAvailablePosition();
-            survivor.currentCell = this;
+            survivor.transform.position = PlaceSurvivor(survivor);
         }
     }
 
-    public Vector3 GetSnappingPoint() { 
-        return transform.position + GetAvailablePosition();
+    public Vector3 PlaceSurvivor(Survivor s) 
+    {
+        int i = GetAvailablePosition();
+        survivorOnTiles[i] = s;
+        s.currentCell?.FreePosition(i);
+        s.currentCell = this;
+        return GetSnappingPoint(i);
+    }
+
+    private void FreePosition(int i)
+    {
+                survivorOnTiles[i] = null;
+        coordOccupied[i] = false;
+    }
+
+
+    public Vector3 GetSnappingPoint(int i) 
+    { 
+        return transform.position + scale * (SurvivorCoordinates[i] + Vector3.up * height);
     }
 }
 

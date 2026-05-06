@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed6e90866633fd44861257b82e299af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HexGrid
-  mapData: {fileID: 11400000, guid: bb9ef9c678bb0fe46b5daf36b5c50e55, type: 2}
+  mapData: {fileID: 11400000, guid: a4cbf79181a090445af7b12242b2b007, type: 2}
 --- !u!1 &305153225
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 802760862}
   - component: {fileID: 802760861}
   - component: {fileID: 802760864}
+  - component: {fileID: 802760865}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -455,8 +456,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 32
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -480,13 +481,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802760860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
   m_LocalPosition: {x: 257.33, y: 107.97, z: 277.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
 --- !u!114 &802760864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +532,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &802760865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802760860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31174b0ea4edeb44692ddfc6f5bfc8a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  offset: {x: 0, y: 0, z: -40}
+  trackingSpeed: 5
 --- !u!1 &862293977
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b617ede16faba9798a5ced23ba3e0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnController
+  cam: {fileID: 802760865}
   survivors:
   - {fileID: 0}
   - {fileID: 0}

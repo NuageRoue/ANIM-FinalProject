@@ -17,6 +17,8 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
 {
     public event Action OnDayEnded;
     public TurnState CurrentTurnState { get; private set; }
+    public CameraController cam;
+
 
     [SerializeField] private Survivor[] survivors = new Survivor[3];
     private int _activeSurvivorIndex;
@@ -52,14 +54,26 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
 
     public void SetSurvivors(Survivor[] s)
     {
-        for (int i = 0; i < survivors.Length; i++)
+        for (int i = 0; i < survivors.Length; i++) 
+        {        
             survivors[i] = s[i];
+        }
+    }
+
+    void ResetMoveRanges()
+    {
+        foreach (var survivor in survivors)
+        {
+            survivor.ResetMoveRange();
+        }
     }
 
     public void StartDay()
     {
         Debug.Log("starting a new day");
         EnableControls();
+        ResetMoveRanges();
+        cam.SnapTo(survivors[0].currentCell.transform.position);
         SetTurnState(TurnState.Survivor1Turn);
     }
 
@@ -71,19 +85,40 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
 
     void NextSurvivor() 
     {
-        switch (_activeSurvivorIndex)
+        if (survivors[_activeSurvivorIndex].CanMove)
         {
-            case 0:
-                SetTurnState(TurnState.Survivor2Turn);
-                break;
-            case 1:
-                SetTurnState(TurnState.Survivor3Turn);
-                break;
-            case 2:
-                SetTurnState(TurnState.NightTransition);
-                break;
-            default:
-                throw new IndexOutOfRangeException();
+            switch (_activeSurvivorIndex)
+            {
+                case 0:
+                    SetTurnState(TurnState.Survivor1Turn);
+                    break;
+                case 1:
+                    SetTurnState(TurnState.Survivor2Turn);
+                    break;
+                case 2:
+                    SetTurnState(TurnState.Survivor3Turn);
+                    break;
+                default:
+                    throw new IndexOutOfRangeException();
+            }
+        }
+        else
+        {
+            Debug.Log($"no movement available for the survivor {_activeSurvivorIndex}");
+            switch (_activeSurvivorIndex)
+            {
+                case 0:
+                    SetTurnState(TurnState.Survivor2Turn);
+                    break;
+                case 1:
+                    SetTurnState(TurnState.Survivor3Turn);
+                    break;
+                case 2:
+                    SetTurnState(TurnState.NightTransition);
+                    break;
+                default:
+                    throw new IndexOutOfRangeException();
+            }
         }
     }
 
@@ -109,7 +144,7 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
                 break;
 
             case TurnState.DirectionSelection:
-                Debug.Log("yeehaw");
+                cam.Track(survivors[_activeSurvivorIndex].transform);
                 break;
 
             case TurnState.NightTransition:
@@ -117,7 +152,7 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
                 break;
 
             case TurnState.InMovement:
-                NextSurvivor();
+                
                 break;
         }
     }
@@ -133,11 +168,24 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
 
         Vector2 input = ctx.ReadValue<Vector2>();
         HexDirection? direction = ResolveDirection(input);
-
+        
         if (direction == null) return;
+        Vector3Int directionCoordinates = HexDirectionExtensions.ToCoords((HexDirection)direction);
+        Vector3Int currentPos = ActiveSurvivor.currentCell.coordinates.ToVector();
 
-        HexCell candidate = ActiveSurvivor.currentCell.GetNeighbor(direction.Value);
-        if (candidate == null || !candidate.IsTraversable) return;
+        Debug.Log($"on va vers le {direction}, soit vers {currentPos + directionCoordinates}");
+
+        HexCell candidate = null;
+        foreach (var cell in ActiveSurvivor.currentCell.Neighbors) 
+        {
+            if (cell != null && cell.coordinates.ToVector().Equals(currentPos + directionCoordinates)) 
+            {
+                candidate = cell; break;
+            }
+        }
+        if (candidate == null || !candidate.IsTraversable){
+            return;
+        }
 
         SetHighlight(candidate);
     }
@@ -155,7 +203,7 @@ public class TurnController : MonoBehaviour, MainController.IMapActions
         if (CurrentTurnState != TurnState.DirectionSelection) return;
         if (_highlightedCell == null) return;
 
-        survivors[_activeSurvivorIndex].MoveTo(_highlightedCell);
+        survivors[_activeSurvivorIndex].MoveTo(_highlightedCell, () => NextSurvivor());
         ClearHighlight();
         
         SetTurnState(TurnState.InMovement);
