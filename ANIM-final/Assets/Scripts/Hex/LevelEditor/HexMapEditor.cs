@@ -197,6 +197,7 @@ public class HexMapEditor : MonoBehaviour
     [Header("parameters:")]
     public Color[] colors;
     public List<CellData> data;
+    public CallEvent raftPart;
 
 
     [Header("other gameobjects:")]
@@ -409,7 +410,7 @@ public class HexMapEditor : MonoBehaviour
         IslandMapData instance = ScriptableObject.CreateInstance<IslandMapData>();
 
         instance.SetCells(cellPositions, data);
-        instance.SetRaftPos(raftPos);
+        instance.SetRaftPos(raftPos, raftPart);
         instance.SetStartingPos(startingPos);
 
         AssetDatabase.CreateAsset(instance, path);

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5e30ec7c4dc8498ac21780bde1999d, type: 3}
   m_Name: Tower
   m_EditorClassIdentifier: Assembly-CSharp::CellData
-  type: 4
+  cellType: 0
   isTraversable: 1
+  canHaveEvent: 0
+  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
   propSpawn: 1
-  eventSpawn: 0
+  eventSpawn: 1
   potentialProps:
   - {fileID: 7382740561823812314, guid: c4bf00b797c117b46b8a8ff9d0299211, type: 3}
-  potentialEvents: []
-  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-  isFreeForEvents: 0
+  potentialEvents:
+  - {fileID: 11400000, guid: b0172eec5e7179f428bc068c768ae0c7, type: 2}

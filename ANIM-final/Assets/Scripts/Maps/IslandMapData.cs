@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-[CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/IslandMapData")]
+[CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/Map/IslandMapData")]
 public class IslandMapData : ScriptableObject
 {
     public List<Vector3Int> keys = new();
@@ -29,14 +29,15 @@ public class IslandMapData : ScriptableObject
                 values.Add(new Cell(data[(int)kvp.Value]));        
         }
     }
-    public void SetRaftPos(Vector3Int[] raftPos) {
+    public void SetRaftPos(Vector3Int[] raftPos, CallEvent raftEvent) {
         foreach (Vector3Int pos in raftPos)
         {
             Debug.Log($"raft pos: {pos}");
             if (!keys.Contains(pos))
                 Debug.Log("fak");
             else
-            values[keys.IndexOf(pos)].SetAsRaftPos();
+                values[keys.IndexOf(pos)].SetAsRaftPos();
+            values[keys.IndexOf(pos)].SetEvent(raftEvent);
         }
     }
     public void SetStartingPos(Vector3Int startingPoint)

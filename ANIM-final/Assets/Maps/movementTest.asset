@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cd01305f5afa14a94b0f0bfa39247c, type: 3}
+  m_Name: movementTest
+  m_EditorClassIdentifier: Assembly-CSharp::IslandMapData
+  keys:
+  - {x: 6, y: -21, z: 15}
+  - {x: 7, y: -22, z: 15}
+  - {x: 6, y: -22, z: 16}
+  - {x: 7, y: -21, z: 14}
+  - {x: 6, y: -20, z: 14}
+  - {x: 5, y: -20, z: 15}
+  - {x: 5, y: -21, z: 16}
+  values:
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 1
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1

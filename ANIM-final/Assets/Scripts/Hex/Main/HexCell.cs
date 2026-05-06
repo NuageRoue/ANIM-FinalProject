@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 
@@ -7,14 +6,46 @@ public class HexCell : MonoBehaviour
 
     public HexCoordinates coordinates;
     public float height = 0;
+    float scale = 7;
     GameObject prop;
+    bool isTraversable = true;
+    public bool IsTraversable { get { return isTraversable; } }
+
+    public bool hasBeenExplored = false;
 
     [SerializeField]
     HexCell[] neighbors;
 
+    [SerializeField]
+    public Vector3[] SurvivorCoordinates = new Vector3[3]
+    {
+        new Vector3(0.75f, 0, 0.45f),
+        new Vector3(-0.75f, 0, 0.45f),
+        new Vector3(0, 0, -0.75f)
+    };
+
+    public bool[] coordOccupied = new bool[3]
+    {
+        false, false, false
+    };
+
+    bool isStartingPoint = false;
+    public bool IsStartingCell
+    {
+        get { return isStartingPoint; }}
+
+    [SerializeField]
+    public CallEvent callEvent;
     private void Awake()
     {
         neighbors = new HexCell[6];
+
+        for (int i = 0; i < coordOccupied.Length; i++) {
+            if (coordOccupied[i])
+            {
+                Debug.Log("why is it occupied");
+            }
+        }
     }
 
     public HexCell GetNeighbor(HexDirection direction)
@@ -36,11 +67,67 @@ public class HexCell : MonoBehaviour
     public void SetAsStartingPos()
     {
         name += " (starting pos)";
+        isStartingPoint = true;
     }
-    internal void Setup(GameObject selectedProp, CallEvent selectedEvent)
+    internal void Setup(GameObject selectedProp, CallEvent selectedEvent, bool isTraversable, bool startingCell = false)
     {
         if (selectedProp != null)
             prop = GameObject.Instantiate(selectedProp, transform.position + Vector3.up * height, Quaternion.identity, transform);
-        //TODO: take care of the callEVent
+
+        if (selectedEvent != null) {
+            name += $"(event: {selectedEvent.name})";
+            callEvent = selectedEvent;
+        }
+
+        if (startingCell) 
+        {
+            SetAsStartingPos();
+        }
+
+        if (!isTraversable)
+        {
+            this.isTraversable = false;
+        }
+        else
+            this.isTraversable = true;
+
+
+        hasBeenExplored = false;
+}
+
+    Vector3 GetAvailablePosition() 
+    {
+        bool nothingAvailable = true;
+        foreach (bool b in coordOccupied) 
+        { 
+            if (!b)
+                nothingAvailable = false;
+        }
+        if (nothingAvailable)
+        {
+            Debug.Log("why");
+            return Vector3.zero;
+        }
+        int i;
+        do { i = Random.Range(0, 3); } while (coordOccupied[i]);
+
+        coordOccupied[i] = true;
+        hasBeenExplored = true;
+        return scale * (SurvivorCoordinates[i] + Vector3.up * height);
+    }
+    public void PlaceSurvivors(Survivor[] s) 
+    {
+        Debug.Log("placing survivors");
+        foreach (Survivor survivor in s)
+        {
+            survivor.transform.position = transform.position + GetAvailablePosition();
+            survivor.currentCell = this;
+        }
+    }
+
+    public Vector3 GetSnappingPoint() { 
+        return transform.position + GetAvailablePosition();
     }
 }
+
+

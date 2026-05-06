@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ed6e90866633fd44861257b82e299af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HexGrid
-  mapData: {fileID: 11400000, guid: a4cbf79181a090445af7b12242b2b007, type: 2}
+  mapData: {fileID: 11400000, guid: bb9ef9c678bb0fe46b5daf36b5c50e55, type: 2}
 --- !u!1 &305153225
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 802760860}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 45.7, y: 107.97, z: 34.38}
+  m_LocalPosition: {x: 257.33, y: 107.97, z: 277.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -531,6 +531,75 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &862293977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862293979}
+  - component: {fileID: 862293978}
+  - component: {fileID: 862293980}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &862293978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862293977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e26fc2474328c37b4c6a1d079dc21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  turnController: {fileID: 862293980}
+  eventManager: {fileID: 0}
+  hexGrid: {fileID: 142204837}
+  startingCell: {fileID: 0}
+  survivors:
+  - {fileID: 366019752900257321, guid: abdf7f8a8cf77dc46b2d4a9f0c76c9a7, type: 3}
+  - {fileID: 366019752900257321, guid: abdf7f8a8cf77dc46b2d4a9f0c76c9a7, type: 3}
+  - {fileID: 366019752900257321, guid: abdf7f8a8cf77dc46b2d4a9f0c76c9a7, type: 3}
+--- !u!4 &862293979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862293977}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 307.439, y: 10.38049, z: 262.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &862293980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862293977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b617ede16faba9798a5ced23ba3e0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnController
+  survivors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1638060305
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,3 +687,4 @@ SceneRoots:
   - {fileID: 305153227}
   - {fileID: 142204836}
   - {fileID: 1638060308}
+  - {fileID: 862293979}

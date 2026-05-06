@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public abstract class CallEvent : MonoBehaviour // la classe est bateau mais à voir
+[CreateAssetMenu(fileName = "CallEvent", menuName = "Scriptable Objects/Map/CallEvent")]
+public class CallEvent : ScriptableObject // la classe est bateau mais à voir
 {
-    public abstract bool CanTrigger(Survivor survivor);
-
-    public abstract EventResult Trigger(Survivor survivor, EventContext context);
-
-    public abstract string GetSceneToLoad();
+    public string SceneName;
+    public EventType eventType;
+    public Sprite sprite;
 }
+
+public enum EventType { }

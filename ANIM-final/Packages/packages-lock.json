@@ -28,7 +28,7 @@
     },
     "com.unity.collections": {
       "version": "6.4.0",
-      "depth": 2,
+      "depth": 1,
       "source": "builtin",
       "dependencies": {
         "com.unity.burst": "1.8.23",
@@ -88,7 +88,7 @@
     },
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.6",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -168,7 +168,7 @@
     },
     "com.unity.test-framework.performance": {
       "version": "3.2.0",
-      "depth": 3,
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.33",
@@ -216,12 +216,13 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.walcht.ide.neovim": {
-      "version": "https://github.com/walcht/com.walcht.ide.neovim.git",
+    "dev.ameye.linework-lite": {
+      "version": "file:dev.ameye.linework-lite",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "cfdc509d240571766924a00d8477512e7f323509"
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.collections": "1.0.0"
+      }
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

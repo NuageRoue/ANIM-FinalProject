@@ -85,9 +85,27 @@ public class HexGrid : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    public HexCell Setup() 
+    {
         InstantiateMap();
         SetNeighbors();
-        SetNeighbors();
+        return GetStartingCell();
+    }
+
+    HexCell GetStartingCell() 
+    {
+        HexCell startCell = null;
+        foreach (var cell in cellMap.Values) 
+        {
+            if (cell.IsStartingCell)
+            {
+                Debug.Log("wawawiwa");
+                startCell = cell;
+            }
+        }
+        return startCell;
     }
 
     void InstantiateMap() 
@@ -99,20 +117,9 @@ public class HexGrid : MonoBehaviour
 
 
             Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
-            HexCell cell = Instantiate(cellData.cell, worldPos, Quaternion.identity, transform);
+            HexCell cell = cellData.Instantiate(worldPos, transform);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
             cellMap[coords] = cell;
-
-            cell.Setup(cellData.selectedProp, cellData.selectedEvent);
-
-            if (cellData.hasEvent)
-            {
-                cell.SetAsRaftPart(); // temporary
-            }
-            if (cellData.isStartPos)
-            {
-                cell.SetAsStartingPos(); // temporary
-            }
         }
     }
 
@@ -125,7 +132,7 @@ public class HexGrid : MonoBehaviour
             for (int i = 0; i < 6; i++)
             {
                 Vector3Int neighborCoords = coords + neighborOffsets[i];
-                if (cellMap.TryGetValue(neighborCoords, out HexCell neighbor))
+                if (cellMap.TryGetValue(neighborCoords, out HexCell neighbor) && neighbor.IsTraversable)
                     cell.SetNeighbor((HexDirection)i, neighbor);
             }
         }

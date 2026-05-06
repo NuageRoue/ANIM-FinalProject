@@ -24,6 +24,7 @@ public class Survivor : MonoBehaviour
 
     public void MoveTo(HexCell target)
     {
+        MoveTo(target.GetSnappingPoint());
     }
 
     public void ApplyDamage(int amount)
@@ -32,5 +33,9 @@ public class Survivor : MonoBehaviour
 
     public void ConsumeFood(int amount)
     {
+    }
+
+    public void MoveTo(Vector3 pos) {
+        transform.position = pos; 
     }
 }

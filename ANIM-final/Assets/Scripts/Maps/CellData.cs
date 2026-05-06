@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-[CreateAssetMenu(fileName = "CellData", menuName = "Scriptable Objects/CellData")]
+[CreateAssetMenu(fileName = "CellData", menuName = "Scriptable Objects/Map/CellData")]
 public class CellData : ScriptableObject
 {
     /*public CellType type;
@@ -43,7 +43,7 @@ public class CellData : ScriptableObject
 
     public GameObject GetRandomProp()
     {
-        if (propSpawn == 0 || potentialProps.Count == 0)
+        if (propSpawn < Random.value || potentialProps.Count == 0)
             return null;
         return potentialProps[Random.Range(0, potentialProps.Count)];
     }
@@ -51,7 +51,7 @@ public class CellData : ScriptableObject
 
     public CallEvent GetRandomEvent()
     {
-        if (eventSpawn == 0 || potentialEvents.Count == 0)
+        if (eventSpawn < Random.value || potentialEvents.Count == 0)
             return null;
         return potentialEvents[Random.Range(0, potentialEvents.Count)];
     }
@@ -105,7 +105,7 @@ public class Cell {
     public CallEvent selectedEvent;
     public GameObject selectedProp;
 
-    public bool hasEvent = false, isStartPos = false;
+    public bool hasEvent = false, isStartPos = false, isTraversable = true;
     public Cell(CellData data) 
     { 
         LoadFromCellData(data);
@@ -120,6 +120,8 @@ public class Cell {
         selectedProp = data.GetRandomProp();
 
         hasEvent = selectedEvent != null;
+
+        isTraversable = data.isTraversable;
     }
 
     public void SetAsStartPos() { 
@@ -130,6 +132,16 @@ public class Cell {
         hasEvent = true;
     }
 
-    public HexCell Instantiate(Vector3 pos, Transform parent) { return null; } 
+    public void SetEvent(CallEvent _event) { 
+            selectedEvent = _event;
+        hasEvent = true;
+    }
+
+    public HexCell Instantiate(Vector3 pos, Transform parent) { 
+        
+        var instance = GameObject.Instantiate(cell, pos, Quaternion.identity, parent); 
+        instance.Setup(selectedProp, selectedEvent, isTraversable, isStartPos);
+        return instance;
+    } 
 }
 
