@@ -50,6 +50,8 @@ public class HexCell : MonoBehaviour
                 Debug.Log("why is it occupied");
             }
         }
+
+        hasBeenExplored = false ;
     }
 
     public HexCell GetNeighbor(HexDirection direction)
@@ -130,23 +132,50 @@ public class HexCell : MonoBehaviour
 
     public Vector3 PlaceSurvivor(Survivor s) 
     {
+        for (int j = 0; j < coordOccupied.Length; j++)
+        {
+            if (survivorOnTiles[j] == s)
+                return GetSnappingPoint(j);
+        }
+        s.currentCell?.FreePosition(s);
         int i = GetAvailablePosition();
         survivorOnTiles[i] = s;
-        s.currentCell?.FreePosition(i);
         s.currentCell = this;
         return GetSnappingPoint(i);
     }
 
-    private void FreePosition(int i)
+    private void FreePosition(Survivor s)
     {
+        Debug.Log("freeing the pos");
+        for (int i = 0; i < 3; i++)
+        {
+            if (survivorOnTiles[i] == s)
+            {
                 survivorOnTiles[i] = null;
-        coordOccupied[i] = false;
+                coordOccupied[i] = false;
+
+                return;
+            }
+        }
     }
 
 
     public Vector3 GetSnappingPoint(int i) 
     { 
         return transform.position + scale * (SurvivorCoordinates[i] + Vector3.up * height);
+    }
+
+
+    public void SetHighlight(int layer) 
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in transform)
+            child.gameObject.layer = layer;
+    }
+
+    public bool HasEvent() 
+    { 
+        return callEvent != null;
     }
 }
 

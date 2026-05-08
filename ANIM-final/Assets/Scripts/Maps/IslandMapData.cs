@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 [CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/Map/IslandMapData")]
 public class IslandMapData : ScriptableObject

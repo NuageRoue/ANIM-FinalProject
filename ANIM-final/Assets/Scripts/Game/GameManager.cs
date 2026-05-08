@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; }
 
     [Header("managers")]
-    [SerializeField] private TurnController turnController;
+    [SerializeField] private DayController turnController;
+    [SerializeField] private NightController nightController;
     [SerializeField] private EventManager eventManager;
     [SerializeField] private HexGrid hexGrid;
 
@@ -47,14 +48,18 @@ public class GameManager : MonoBehaviour
         switch (CurrentState)
         {
             case GameState.StartPhase:
-                StartPhase();            
+                StartPhase();
+                UpdateState();
                 break;
 
             case GameState.DayPhase:
+                PlaceSurvivorsAtStart();
                 turnController.StartDay();
                 break;
 
             case GameState.NightPhase:
+                UpdateState();
+                //nightPhase.StartNightPhase(turnController.LastVisitedCell);
                 break;
 
             case GameState.Victory:
@@ -70,10 +75,9 @@ public class GameManager : MonoBehaviour
         startingCell = hexGrid?.Setup();
         InstantiateSurvivors();
         turnController.SetSurvivors(survivors);
-        UpdateState();
     }
 
-    void UpdateState()
+    public void UpdateState()
     {
         switch (CurrentState)
         {
@@ -82,10 +86,11 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.DayPhase:
-                turnController?.StartDay();
+                SetState(GameState.NightPhase);
                 break;
 
             case GameState.NightPhase:
+                SetState(GameState.DayPhase);
                 break;
 
             case GameState.Victory:
@@ -104,6 +109,17 @@ public class GameManager : MonoBehaviour
             survivors[i] = Instantiate(survivors[i], Vector3.zero, Quaternion.identity);
             
         }
+    }
+
+    void PlaceSurvivorsAtStart() 
+    {
         startingCell.PlaceSurvivors(survivors);
+    }
+
+    public void EndDay() 
+    {
+        Debug.Log("day ended");
+        startingCell = nightController.UpdateStartingCell();
+        UpdateState();
     }
 }
