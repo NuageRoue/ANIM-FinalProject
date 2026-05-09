@@ -1,29 +1,33 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class Inventory
 {
-    public List<ResourcePair> ressources = new();
+    [SerializeField]
+    public ListMap<ResourceType> baseResources = new();
 
-    public void Add(ResourceType type, int amount)
+    [SerializeField]
+    public ListMap<RessourceObjectType> objectResources = new();
+
+    public bool CanCraft(CraftingRecipe recipe)
     {
-        ResourcePair.FindOrCreate(ressources, type).amount += amount;
+        return baseResources.ContainsAll(recipe.inputResources)
+            && !objectResources.Contains(recipe.outputObject, 1);
     }
 
-    public bool Remove(ResourceType type, int amount)
+    public bool Craft(CraftingRecipe recipe)
     {
-        ResourcePair current = ResourcePair.Find(ressources, type);
-        if (current == null)
+        if (!CanCraft(recipe))
             return false;
 
-        if (current.amount < amount)
-            return false;
+        foreach (var item in recipe.inputResources.items)
+        {
+            baseResources.Remove(item.type, item.count);
+        }
 
-        current.amount -= amount;
-
-        if (current.amount <= 0)
-            ressources.Remove(current);
+        objectResources.Add(recipe.outputObject, 1);
 
         return true;
     }

@@ -1,9 +1,13 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class CraftingRecipe
 {
-    public List<ResourcePair> inputs = new();
-    public List<ResourcePair> outputs = new();
+    [SerializeField]
+    public ListMap<ResourceType> inputResources = new();
+
+    [SerializeField]
+    public RessourceObjectType outputObject;
 }
