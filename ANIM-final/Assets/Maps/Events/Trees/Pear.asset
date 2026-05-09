@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CallEvent
   SceneName: Fruit Tree
   eventType: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -1034509063, guid: 70ed1d709034ece4799149eff40725f9, type: 3}

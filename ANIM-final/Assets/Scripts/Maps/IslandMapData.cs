@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "IslandMapData", menuName = "Scriptable Objects/Map/IslandMapData")]
 public class IslandMapData : ScriptableObject
 {
+    public string levelName;
+    public int totalDays;
+
     public List<Vector3Int> keys = new();
     public List<Cell> values = new();
 
@@ -39,13 +42,16 @@ public class IslandMapData : ScriptableObject
             values[keys.IndexOf(pos)].SetEvent(raftEvent);
         }
     }
-    public void SetStartingPos(Vector3Int startingPoint)
+    public void SetStartingPos(Vector3Int startingPoint, GameObject prop)
     {
         Debug.Log($"starting pos: {startingPoint}");
         if (!keys.Contains(startingPoint))
             Debug.Log("fak");
         if (startingPoint != null)
+        {
             values[keys.IndexOf(startingPoint)].SetAsStartPos();
+            values[keys.IndexOf(startingPoint)].SetProp(prop);
+        }
     }
 
     #endregion

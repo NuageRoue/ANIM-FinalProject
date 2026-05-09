@@ -68,9 +68,15 @@ public class HexGrid : MonoBehaviour
     #region parameters
     [Header("Parameters")]
     public IslandMapData mapData;
+    Canvas canvas;
 
     Dictionary<Vector3Int, HexCell> cellMap = new();
     #endregion
+
+    private void Awake()
+    {
+        canvas = GetComponentInChildren<Canvas>();
+    }
 
     static readonly Vector3Int[] neighborOffsets = new Vector3Int[]
 {
@@ -83,12 +89,10 @@ public class HexGrid : MonoBehaviour
 };
 
 
-    private void Awake()
-    {
-    }
 
-    public HexCell Setup() 
+    public HexCell Setup(IslandMapData data) 
     {
+        mapData = data;
         InstantiateMap();
         SetNeighbors();
         return GetStartingCell();
@@ -101,7 +105,6 @@ public class HexGrid : MonoBehaviour
         {
             if (cell.IsStartingCell)
             {
-                Debug.Log("wawawiwa");
                 startCell = cell;
             }
         }
@@ -117,7 +120,7 @@ public class HexGrid : MonoBehaviour
 
 
             Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
-            HexCell cell = cellData.Instantiate(worldPos, transform);
+            HexCell cell = cellData.Instantiate(worldPos, transform, canvas);
             cell.coordinates = new HexCoordinates(coords.x, coords.z);
             cellMap[coords] = cell;
         }

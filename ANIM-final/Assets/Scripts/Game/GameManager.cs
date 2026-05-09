@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public enum GameState
 {
@@ -12,35 +11,29 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
     public static GameManager Instance { get; private set; }
 
-    public GameState CurrentState { get; private set; }
-
-    [Header("managers")]
-    [SerializeField] private DayController turnController;
-    [SerializeField] private NightController nightController;
-    [SerializeField] private EventManager eventManager;
-    [SerializeField] private HexGrid hexGrid;
-
-    // CampManager à brancher
-    // [SerializeField] private CampManager campManager;
-
-    [Header("Survivors")]
-    public HexCell startingCell;
-    public Survivor[] survivors;
-
-
-    private void Awake()
+    private void SetSingleton()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    #endregion
 
-    private void Start()
-    {
-        SetState(GameState.StartPhase);
-    }
+    #region References
+    [Header("Managers")]
+    [SerializeField] private DayController turnController;
+    [SerializeField] private NightController nightController;
+    [SerializeField] private EventManager eventManager;
+    [SerializeField] private HexGrid hexGrid;
+    // [SerializeField] private CampManager campManager;
+    #endregion
+
+    #region State
+    public GameState CurrentState { get; private set; }
+    int remainingDays;
 
     public void SetState(GameState newState)
     {
@@ -51,75 +44,94 @@ public class GameManager : MonoBehaviour
                 StartPhase();
                 UpdateState();
                 break;
-
             case GameState.DayPhase:
-                PlaceSurvivorsAtStart();
-                turnController.StartDay();
+                DayPhase();
                 break;
-
             case GameState.NightPhase:
+                remainingDays--;
                 UpdateState();
-                //nightPhase.StartNightPhase(turnController.LastVisitedCell);
                 break;
-
             case GameState.Victory:
                 break;
-
             case GameState.Defeat:
                 break;
         }
-    }
-
-    void StartPhase() 
-    {
-        startingCell = hexGrid?.Setup();
-        InstantiateSurvivors();
-        turnController.SetSurvivors(survivors);
     }
 
     public void UpdateState()
     {
         switch (CurrentState)
         {
-            case GameState.StartPhase:
-                SetState(GameState.DayPhase);
-                break;
-
-            case GameState.DayPhase:
-                SetState(GameState.NightPhase);
-                break;
-
-            case GameState.NightPhase:
-                SetState(GameState.DayPhase);
-                break;
-
-            case GameState.Victory:
-                break;
-
-            case GameState.Defeat:
-                break;
+            case GameState.StartPhase: SetState(GameState.DayPhase); break;
+            case GameState.DayPhase: SetState(GameState.NightPhase); break;
+            case GameState.NightPhase: SetState(GameState.DayPhase); break;
         }
     }
 
-    void InstantiateSurvivors() 
+    void DayPhase() 
     {
-        Debug.Log("instantiating survivors");
-        for (int i = 0; i < survivors.Length; i++)
+        if (remainingDays > 0)
         {
-            survivors[i] = Instantiate(survivors[i], Vector3.zero, Quaternion.identity);
-            
+            Debug.Log($"il reste {remainingDays} jours");
+            PlaceSurvivorsAtStart();
+            turnController.StartDay();
+        }
+        else
+        {
+            Debug.Log("plus de jours...");
+            SetState(GameState.Defeat);
         }
     }
+    #endregion
 
-    void PlaceSurvivorsAtStart() 
+    #region Survivors
+    [Header("Survivors")]
+    public HexCell startingCell;
+    public Survivor[] survivors;
+
+    void InstantiateSurvivors()
+    {
+        Debug.Log("Instantiating survivors");
+        for (int i = 0; i < survivors.Length; i++)
+            survivors[i] = Instantiate(survivors[i], Vector3.zero, Quaternion.identity);
+    }
+
+    void PlaceSurvivorsAtStart()
     {
         startingCell.PlaceSurvivors(survivors);
     }
+    #endregion
 
-    public void EndDay() 
+    #region Phases
+    private void Start() => SetState(GameState.StartPhase);
+
+    void StartPhase()
     {
-        Debug.Log("day ended");
+        InstantiateSurvivors();
+        turnController.SetSurvivors(survivors);
+    }
+
+    public void EndDay()
+    {
+        Debug.Log("Day ended");
         startingCell = nightController.UpdateStartingCell();
         UpdateState();
     }
+    #endregion
+
+
+    #region startup
+
+    public IslandMapData selectedLevel;
+    private void Awake()
+    {
+        SetSingleton();
+
+        startingCell = hexGrid?.Setup(selectedLevel);
+
+        remainingDays = selectedLevel.totalDays;
+
+    }
+
+    #endregion
 }

@@ -458,6 +458,7 @@ MonoBehaviour:
   hexMesh: {fileID: 1110130455}
   waypoint: {fileID: 865210945698804416, guid: e8d6da94cce3cc9169ea5f7a3df76f9e, type: 3}
   inputField: {fileID: 187498662}
+  startProp: {fileID: 6415448571470057907, guid: 9f0cb6d101b75bb408c6471ce6562e8b, type: 3}
 --- !u!1 &187498660
 GameObject:
   m_ObjectHideFlags: 0

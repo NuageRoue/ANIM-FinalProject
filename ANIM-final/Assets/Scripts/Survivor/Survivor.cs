@@ -11,37 +11,31 @@ public enum SurvivorState
 
 public class Survivor : MonoBehaviour
 {
+    #region Stats
     [Header("Stats")]
     public int moveRange;
     public int foodPerTurn;
     public int visionRadius;
+    #endregion
 
+    #region Runtime
     [Header("Runtime")]
-    public int remainingMoves;
     public HexCell currentCell;
     public SurvivorState state;
+    #endregion
 
+    #region Move Range
+    private int _moveRange;
+    public bool CanMove => _moveRange > 0;
+
+    public void ResetMoveRange() => _moveRange = moveRange;
+    private void DecreaseMoveRange() => _moveRange--;
+    #endregion
+
+    #region Movement
     [Header("Movement")]
     [SerializeField] private float moveDuration = 0.6f;
     [SerializeField] private float arcHeight = 1.5f;
-
-
-    int _moveRange;
-    public bool CanMove { get { return _moveRange > 0; }  }
-
-    [Header("Ability")]
-    public SurvivorAbility ability;
-
-    void DecreaseMoveRange() 
-    {
-        _moveRange--;
-    }
-
-    public void ResetMoveRange() { 
-        _moveRange = moveRange;
-    }
-
-    
 
     public void MoveTo(HexCell target, Action onComplete)
     {
@@ -68,8 +62,14 @@ public class Survivor : MonoBehaviour
                 DecreaseMoveRange();
                 state = SurvivorState.Idle;
                 onComplete?.Invoke();
+                currentCell.CleanFog(visionRadius);
             }
         );
     }
+    #endregion
 
+    #region Ability
+    [Header("Ability")]
+    public SurvivorAbility ability;
+    #endregion
 }

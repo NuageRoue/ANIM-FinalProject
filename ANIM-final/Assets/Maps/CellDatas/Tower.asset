@@ -15,7 +15,7 @@ MonoBehaviour:
   cellType: 0
   isTraversable: 1
   canHaveEvent: 0
-  cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+  cell: {fileID: 5636091927098177984, guid: 6c36271681c954f44b6efbf6864fee78, type: 3}
   propSpawn: 1
   eventSpawn: 1
   potentialProps:

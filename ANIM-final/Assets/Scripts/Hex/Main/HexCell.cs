@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class HexCell : MonoBehaviour
@@ -8,6 +9,17 @@ public class HexCell : MonoBehaviour
     public float height = 0;
     float scale = 7;
     GameObject prop;
+
+    [SerializeField]
+    Image eventUI;
+    Image _eventUI;
+
+    public float UIOffset;
+
+    [SerializeField]
+    Cloud cloud;
+    Cloud _cloud;
+
     bool isTraversable = true;
     public bool IsTraversable { get { return isTraversable; } }
 
@@ -75,7 +87,7 @@ public class HexCell : MonoBehaviour
         name += " (starting pos)";
         isStartingPoint = true;
     }
-    internal void Setup(GameObject selectedProp, CallEvent selectedEvent, bool isTraversable, bool startingCell = false)
+    internal void Setup(GameObject selectedProp, CallEvent selectedEvent, bool isTraversable, Canvas canvas, bool startingCell = false)
     {
         if (selectedProp != null)
             prop = GameObject.Instantiate(selectedProp, transform.position + Vector3.up * height, Quaternion.identity, transform);
@@ -83,6 +95,8 @@ public class HexCell : MonoBehaviour
         if (selectedEvent != null) {
             name += $"(event: {selectedEvent.name})";
             callEvent = selectedEvent;
+            _eventUI = Instantiate(eventUI, new Vector3(transform.position.x, UIOffset, transform.position.z), Quaternion.Euler(50, 0, 0), canvas.transform);
+            _eventUI.sprite = callEvent.sprite;
         }
 
         if (startingCell) 
@@ -99,6 +113,8 @@ public class HexCell : MonoBehaviour
 
 
         hasBeenExplored = false;
+
+        _cloud = Instantiate(cloud, transform);
 }
 
     int GetAvailablePosition() 
@@ -141,6 +157,8 @@ public class HexCell : MonoBehaviour
         int i = GetAvailablePosition();
         survivorOnTiles[i] = s;
         s.currentCell = this;
+
+        CleanFog(s.visionRadius);
         return GetSnappingPoint(i);
     }
 
@@ -176,6 +194,17 @@ public class HexCell : MonoBehaviour
     public bool HasEvent() 
     { 
         return callEvent != null;
+    }
+
+    public void CleanFog(int dist) 
+    {
+        if (dist < 0) return;
+        if (_cloud != null) _cloud.CleanCloud();
+
+        foreach (var neighbor in neighbors)
+        {
+            neighbor?.CleanFog(dist - 1);
+        }
     }
 }
 

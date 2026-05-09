@@ -1,38 +1,44 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
 public class NightController : MonoBehaviour, MainController.IMapActions
 {
+    #region References
     public CameraMovement cam;
-
     public UnityEvent OnDayEnded;
+    #endregion
 
-    private MainController _controls;
-    private bool _isBumperLeftHeld;
-    private bool _isBumperRightHeld;
+    #region State
     private HexCell _currentCell;
     private HexCell CurrentCell
     {
         get => _currentCell;
-        set 
+        set
         {
             _currentCell?.SetHighlight(HighlightVisitedLayer);
             _currentCell = value;
             _currentCell.SetHighlight(HighlightCurrent);
-
             cam.Track(_currentCell.transform);
         }
     }
+    private HashSet<HexCell> _visitedCells;
+    #endregion
 
-    HashSet<HexCell> _visitedCells;
+    #region Input
+    private MainController _controls;
+    private bool _isBumperLeftHeld;
+    private bool _isBumperRightHeld;
+    #endregion
 
+    #region Layers
     private static int DefaultLayer;
     private static int HighlightVisitedLayer;
     private static int HighlightCurrent;
+    #endregion
 
+    #region Lifecycle
     private void Awake()
     {
         DefaultLayer = LayerMask.NameToLayer("Default");
@@ -48,20 +54,24 @@ public class NightController : MonoBehaviour, MainController.IMapActions
         _controls.Map.RemoveCallbacks(this);
         _controls.Dispose();
     }
+    #endregion
 
+    #region Controls
     public void EnableControls() => _controls.Map.Enable();
     public void DisableControls() => _controls.Map.Disable();
+    #endregion
 
+    #region Night Flow
     public void StartNightPhase(HashSet<HexCell> visitedTiles, HexCell lastVisited)
     {
         _visitedCells.UnionWith(visitedTiles);
         HighlightVisitedCells();
         CurrentCell = lastVisited;
-        Debug.Log("starting the night phase");
+        Debug.Log("Starting the night phase");
         EnableControls();
     }
 
-    void TileSelected() 
+    void TileSelected()
     {
         Debug.Log($"Tile sélectionnée : {CurrentCell.coordinates}");
         DisableControls();
@@ -69,8 +79,10 @@ public class NightController : MonoBehaviour, MainController.IMapActions
         OnDayEnded?.Invoke();
     }
 
-    // --- IMapActions implementation ---
+    public HexCell UpdateStartingCell() => CurrentCell;
+    #endregion
 
+    #region Input Handlers
     public void OnMove(InputAction.CallbackContext ctx)
     {
         if (!ctx.performed) return;
@@ -85,14 +97,11 @@ public class NightController : MonoBehaviour, MainController.IMapActions
         foreach (var cell in CurrentCell.Neighbors)
         {
             if (cell != null && cell.coordinates.ToVector().Equals(currentPos + directionCoordinates))
-            {
-                candidate = cell; break;
-            }
+            { candidate = cell; break; }
         }
         if (candidate == null || !candidate.hasBeenExplored) return;
 
         CurrentCell = candidate;
-        cam.Track(CurrentCell.transform);
     }
 
     public void OnMoveModifier(InputAction.CallbackContext ctx)
@@ -106,10 +115,8 @@ public class NightController : MonoBehaviour, MainController.IMapActions
     {
         if (!ctx.performed) return;
         if (CurrentCell == null) return;
-
         TileSelected();
     }
-    // --- Direction resolution ---
 
     private HexDirection? ResolveDirection(Vector2 input)
     {
@@ -128,23 +135,19 @@ public class NightController : MonoBehaviour, MainController.IMapActions
 
         return null;
     }
+    #endregion
 
-    void HighlightVisitedCells() 
+    #region Highlight
+    void HighlightVisitedCells()
     {
         foreach (var cell in _visitedCells)
-        {
             cell.SetHighlight(HighlightVisitedLayer);
-        }
     }
 
     void ClearVisitedCells()
     {
         foreach (var cell in _visitedCells)
-        {
             cell.SetHighlight(DefaultLayer);
-        }
     }
-
-    public HexCell UpdateStartingCell() => CurrentCell; 
-    
+    #endregion
 }

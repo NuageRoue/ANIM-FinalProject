@@ -204,6 +204,7 @@ public class HexMapEditor : MonoBehaviour
     public HexMesh hexMesh;
     public Transform waypoint;
     public TMP_InputField inputField;
+    public GameObject startProp;
     #endregion
 
     #region values
@@ -411,7 +412,7 @@ public class HexMapEditor : MonoBehaviour
 
         instance.SetCells(cellPositions, data);
         instance.SetRaftPos(raftPos, raftPart);
-        instance.SetStartingPos(startingPos);
+        instance.SetStartingPos(startingPos, startProp);
 
         AssetDatabase.CreateAsset(instance, path);
         AssetDatabase.SaveAssets();

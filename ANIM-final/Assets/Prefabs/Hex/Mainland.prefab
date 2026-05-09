@@ -109,6 +109,10 @@ MonoBehaviour:
     x: 0
     z: 0
   height: 0
+  eventUI: {fileID: 8319777367573535941, guid: cf1e549f4dfb0564587ed5e0b640444f, type: 3}
+  UIOffset: 6
+  cloud: {fileID: -2246432779130221497, guid: 0580c87ef6127f6468a0a3ac59a5e853, type: 3}
+  hasBeenExplored: 0
   neighbors:
   - {fileID: 0}
   - {fileID: 0}
@@ -121,6 +125,10 @@ MonoBehaviour:
   - {x: -0.75, y: 0, z: 0.45}
   - {x: 0, y: 0, z: -0.75}
   coordOccupied: 000000
+  survivorOnTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   callEvent: {fileID: 0}
 --- !u!64 &6141765832631868984
 MeshCollider:

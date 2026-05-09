@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3025597285325726061}
   - component: {fileID: 5636091927098177984}
   - component: {fileID: 6141765832631868984}
+  - component: {fileID: -1635630691227524180}
   m_Layer: 0
   m_Name: Mainland 1
   m_TagString: Untagged
@@ -108,6 +109,10 @@ MonoBehaviour:
     x: 0
     z: 0
   height: 0
+  eventUI: {fileID: 8319777367573535941, guid: cf1e549f4dfb0564587ed5e0b640444f, type: 3}
+  UIOffset: 6
+  cloud: {fileID: -2246432779130221497, guid: 0580c87ef6127f6468a0a3ac59a5e853, type: 3}
+  hasBeenExplored: 0
   neighbors:
   - {fileID: 0}
   - {fileID: 0}
@@ -116,10 +121,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   SurvivorCoordinates:
-  - {x: 0.75, y: 0, z: 0.45}
-  - {x: -0.75, y: 0, z: 0.45}
-  - {x: 0, y: 0, z: -0.75}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   coordOccupied: 000000
+  survivorOnTiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   callEvent: {fileID: 0}
 --- !u!64 &6141765832631868984
 MeshCollider:
@@ -143,3 +152,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 703726867841230225, guid: dcc586d78b4a328709c020b7a2a54088, type: 3}
+--- !u!114 &-1635630691227524180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120888397836002231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1

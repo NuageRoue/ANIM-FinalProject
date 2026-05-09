@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Survivor
   moveRange: 2
   foodPerTurn: 0
-  visionRadius: 0
+  visionRadius: 2
   remainingMoves: 0
   currentCell: {fileID: 0}
   state: 0

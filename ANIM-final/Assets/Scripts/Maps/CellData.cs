@@ -137,11 +137,15 @@ public class Cell {
         hasEvent = true;
     }
 
-    public HexCell Instantiate(Vector3 pos, Transform parent) { 
-        
+    public HexCell Instantiate(Vector3 pos, Transform parent, Canvas canvas) { 
         var instance = GameObject.Instantiate(cell, pos, Quaternion.identity, parent); 
-        instance.Setup(selectedProp, selectedEvent, isTraversable, isStartPos);
+        instance.Setup(selectedProp, selectedEvent, isTraversable, canvas, isStartPos);
         return instance;
-    } 
+    }
+
+    public void SetProp(GameObject prop)
+    {
+        selectedProp = prop;
+    }
 }
 
