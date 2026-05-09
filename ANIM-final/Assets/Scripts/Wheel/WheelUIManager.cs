@@ -1,10 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
-public class WheelUIManager : Graphic
+public class WheelUIManager : MonoBehaviour
 {
     [SerializeField]
     List<SegmentAttribute> segments = new();
@@ -18,14 +18,14 @@ public class WheelUIManager : Graphic
     [SerializeField]
     AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
+    [SerializeField]
     WheelUIMeshBuilder wmb;
 
-    protected override void Awake()
-    {
-        wmb = GetComponentInChildren<WheelUIMeshBuilder>();
-        CleanSegments();
-        wmb.Build(segments);
-    }
+    [SerializeField]
+    UnityEvent onSpinFinish = null;
+
+    [SerializeField]
+    CanvasGroup canvasGroup;
 
     public void Build(List<SegmentAttribute> segments)
     {
@@ -33,13 +33,13 @@ public class WheelUIManager : Graphic
         {
             this.segments.Clear();
             this.segments.AddRange(segments);
-            CleanSegments();
         }
 
+        CleanSegments();
         wmb.Build(this.segments);
     }
 
-    public async Task<SegmentAttribute> Speen()
+    public SegmentAttribute Speen()
     {
         SegmentAttribute result = segments[0];
 
@@ -62,30 +62,51 @@ public class WheelUIManager : Graphic
             sum = nextSum;
         }
 
-        float startAngle = wmb.rectTransform.rotation.eulerAngles.z;
-        await Speening(startAngle, endAngle);
+        var speen = Speening(endAngle);
+        StartCoroutine(speen);
 
         return result;
     }
 
-    private async Task Speening(float startAngle, float endAngle)
+    public void Hide()
     {
-        endAngle += speen * 360f + startAngle;
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+    }
 
+    public void Reveal()
+    {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+    }
+
+    public void OnSpinFinish(UnityAction call)
+    {
+        onSpinFinish.RemoveAllListeners();
+        onSpinFinish.AddListener(call);
+    }
+
+    private IEnumerator Speening(float endAngle)
+    {
         float elapsed = 0;
+
+        wmb.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
+        endAngle += speen * 360f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float current = curve.Evaluate(elapsed / duration);
-            float angle = Mathf.Lerp(startAngle, endAngle, current);
+            float angle = Mathf.Lerp(0, endAngle, current);
             wmb.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
-            await Task.Yield();
+            yield return null;
         }
 
         wmb.rectTransform.rotation = Quaternion.Euler(0, 0, endAngle);
 
-        float dt = Time.deltaTime;
+        onSpinFinish?.Invoke();
     }
 
     private void CleanSegments()
