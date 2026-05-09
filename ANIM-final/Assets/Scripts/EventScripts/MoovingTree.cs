@@ -5,9 +5,6 @@ using UnityEngine.Events;
 public class MoovingTree : MonoBehaviour
 {
     [SerializeField]
-    GameObject foodContainer;
-
-    [SerializeField]
     float animationDuration = 5;
 
     [SerializeField]
@@ -21,13 +18,7 @@ public class MoovingTree : MonoBehaviour
 
     UnityAction onAnimationFinish;
 
-    void Awake()
-    {
-        foreach (var item in foodContainer.GetComponentsInChildren<Rigidbody>())
-        {
-            item.isKinematic = true;
-        }
-    }
+    void Awake() { }
 
     public void SetOnAnimationFinish(UnityAction call)
     {
@@ -86,11 +77,6 @@ public class MoovingTree : MonoBehaviour
             transform.localRotation = Quaternion.Euler(0, 0, r);
             time += Time.deltaTime;
             yield return null;
-        }
-
-        foreach (var item in foodContainer.GetComponentsInChildren<Rigidbody>())
-        {
-            item.isKinematic = false;
         }
 
         transform.localRotation = Quaternion.Euler(0, 0, 0);

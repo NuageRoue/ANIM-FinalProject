@@ -28,6 +28,6 @@ class WheelUITest : Editor
 
     private async void Speen(WheelUIManager wheel)
     {
-        Debug.Log((await wheel.Speen()).name);
+        // Debug.Log((await wheel.Speen()).name);
     }
 }
