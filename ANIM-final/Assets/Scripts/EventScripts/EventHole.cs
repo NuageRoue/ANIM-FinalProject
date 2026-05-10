@@ -17,9 +17,6 @@ public class EventHole : EventBase
     NewUIDialog dialog;
 
     [SerializeField]
-    Inventory inventory;
-
-    [SerializeField]
     TaggedWheelSegments<EventHoleTag> defaultSegments = new();
 
     [SerializeField]
@@ -29,15 +26,8 @@ public class EventHole : EventBase
 
     bool hasLadder = false;
 
-    void Start()
+    protected override void InternalStartEvent()
     {
-        StartEvent();
-    }
-
-    public override void StartEvent()
-    {
-        base.StartEvent();
-
         dialog.Hide();
         wheel.Hide();
         hasLadder = inventory.objectResources.Contains(RessourceObjectType.LADDER, 1);
@@ -52,14 +42,25 @@ public class EventHole : EventBase
         }
 
         OnFirstMessage();
-
-        base.EndEvent();
     }
 
-    public override void EndEvent()
+    protected override void InernalEndEvent()
     {
         dialog.Hide();
         wheel.Hide();
+
+        if (result != null)
+        {
+            switch (result.tag)
+            {
+                case EventHoleTag.IN_HOLE:
+                    survivor.isIncapacitated = true;
+                    break;
+
+                case EventHoleTag.SAFE:
+                    break;
+            }
+        }
     }
 
     private void OnFirstMessage()

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public enum EventEnemyTag
@@ -18,9 +19,6 @@ public class EventEnemy : EventBase
     NewUIDialog dialog;
 
     [SerializeField]
-    Inventory inventory;
-
-    [SerializeField]
     TaggedWheelSegments<EventEnemyTag> defaultSegments = new();
 
     [SerializeField]
@@ -32,28 +30,18 @@ public class EventEnemy : EventBase
     TagSegment<EventEnemyTag> result = null;
 
     [SerializeField]
-    bool hasAbility = false;
-
-    [SerializeField]
     Sprite sneakyAbilitySprite;
 
     bool hasBow = false;
 
-    void Start()
+    protected override void InternalStartEvent()
     {
-        StartEvent();
-    }
-
-    public override void StartEvent()
-    {
-        base.StartEvent();
-
         wheel.Hide();
         dialog.Hide();
 
         hasBow = inventory.objectResources.Contains(RessourceObjectType.BOW, 1);
 
-        if (hasAbility)
+        if (survivor.hasSneakyAbility)
         {
             wheel.Create(sneakySegments);
         }
@@ -67,14 +55,27 @@ public class EventEnemy : EventBase
         }
 
         OnFirstMessage();
-
-        base.EndEvent();
     }
 
-    public override void EndEvent()
+    protected override void InernalEndEvent()
     {
         wheel.Hide();
         dialog.Hide();
+
+        if (result != null)
+        {
+            switch (result.tag)
+            {
+                case EventEnemyTag.SAFE:
+                    SetCompletion(true);
+                    break;
+                case EventEnemyTag.SKIP:
+                    break;
+                case EventEnemyTag.HURT:
+                    survivor.isHurt = true;
+                    break;
+            }
+        }
     }
 
     private void OnFirstMessage()
@@ -84,7 +85,7 @@ public class EventEnemy : EventBase
 
     private void OnSelectSneaky()
     {
-        if (hasAbility)
+        if (survivor.hasSneakyAbility)
         {
             dialog.Launch(
                 OnStartSneakWheel,
@@ -133,7 +134,7 @@ public class EventEnemy : EventBase
                 dialog.Launch(
                     OnStartFightingWheel,
                     "Oh no, the enemy saw you! But you have the perfect tool for this kind of situation.",
-                    ResouceLoader.instance.FindByType(RessourceObjectType.BOW)?.sprite
+                    ResouceLoader.instance.FindByType(RessourceObjectType.BOW).sprite
                 );
             }
             else

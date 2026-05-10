@@ -32,8 +32,13 @@ public class Inventory
         return true;
     }
 
-    public void AddItem(ResourceType item, int amount = 1) 
-    { 
+    public void AddItem(ResourceType item, int amount = 1)
+    {
         baseResources.Add(item, amount);
+    }
+
+    public void AddFood(int amount)
+    {
+        baseResources.Add(ResourceType.Food, amount);
     }
 }

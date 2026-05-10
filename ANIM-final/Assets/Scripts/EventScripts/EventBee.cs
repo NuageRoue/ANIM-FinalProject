@@ -1,12 +1,13 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum EventBeeTag
 {
     POISONED,
-    FOOD,
+    FOOD_1,
+    FOOD_2,
+    FOOD_3,
 }
 
 public class EventBee : EventBase
@@ -18,9 +19,6 @@ public class EventBee : EventBase
     NewUIDialog dialog;
 
     [SerializeField]
-    Inventory inventory;
-
-    [SerializeField]
     TaggedWheelSegments<EventBeeTag> defaultSegments = new();
 
     [SerializeField]
@@ -30,17 +28,14 @@ public class EventBee : EventBase
 
     bool hasBow = false;
 
-    void Start()
+    void Awake()
     {
         wheel.Hide();
         dialog.Hide();
-        StartEvent();
     }
 
-    public override void StartEvent()
+    protected override void InternalStartEvent()
     {
-        base.StartEvent();
-
         wheel.Hide();
         dialog.Hide();
 
@@ -58,31 +53,48 @@ public class EventBee : EventBase
         OnFirstMessage();
     }
 
-    public override void EndEvent()
+    protected override void InernalEndEvent()
     {
         wheel.Hide();
         dialog.Hide();
 
-        base.EndEvent();
+        if (result != null)
+        {
+            switch (result.tag)
+            {
+                case EventBeeTag.POISONED:
+                    survivor.isHurt = true;
+                    break;
+
+                case EventBeeTag.FOOD_1:
+                    inventory.AddFood(1);
+                    SetCompletion(true);
+                    break;
+
+                case EventBeeTag.FOOD_2:
+                    inventory.AddFood(2);
+                    SetCompletion(true);
+                    break;
+
+                case EventBeeTag.FOOD_3:
+                    inventory.AddFood(3);
+                    SetCompletion(true);
+                    break;
+            }
+        }
     }
 
     private void OnFirstMessage()
     {
+        UnityAction next = OnWheelTurn;
+
+        if (hasBow)
+        {
+            next = OnBowMessage;
+        }
+
         wheel.Hide();
-        dialog.Launch(
-            () =>
-            {
-                if (hasBow)
-                {
-                    OnBowMessage();
-                }
-                else
-                {
-                    OnNoBowMessage();
-                }
-            },
-            "You have discovered a beehive!"
-        );
+        dialog.Launch(next, "You have discovered a beehive!");
     }
 
     private void OnBowMessage()
@@ -92,11 +104,6 @@ public class EventBee : EventBase
             "You can use your bow.",
             ResouceLoader.instance.FindByType(RessourceObjectType.BOW).sprite
         );
-    }
-
-    private void OnNoBowMessage()
-    {
-        OnWheelTurn();
     }
 
     private void OnWheelTurn()

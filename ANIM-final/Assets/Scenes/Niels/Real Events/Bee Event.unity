@@ -905,15 +905,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3880e93cad689dfe696748e50245d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventBee
-  wheel: {fileID: 1761279658}
-  dialog: {fileID: 1048673636}
   inventory:
     baseResources:
       items: []
     objectResources:
-      items:
-      - type: 2
-        count: 1
+      items: []
+  survivor: {fileID: 0}
+  wheel: {fileID: 1761279658}
+  dialog: {fileID: 1048673636}
   defaultSegments:
     items:
     - tag: 0
@@ -922,7 +921,7 @@ MonoBehaviour:
         color: {r: 0.6320754, g: 0.22957455, b: 0.5693407, a: 0}
         name: poisned
         sprite: {fileID: 1675216122, guid: 03b8ef2c7953d70798741de6d8480d7a, type: 3}
-    - tag: 1
+    - tag: 2
       segment:
         coef: 1
         color: {r: 1, g: 0.85540086, b: 0.19339621, a: 0}
@@ -942,13 +941,13 @@ MonoBehaviour:
         color: {r: 1, g: 0.85490197, b: 0.19215687, a: 0}
         name: 1 food
         sprite: {fileID: 418961059, guid: b8ddfd74c8476548784cf32a3e1e9785, type: 3}
-    - tag: 1
+    - tag: 2
       segment:
         coef: 2
         color: {r: 1, g: 0.69411767, b: 0.23137255, a: 0}
         name: 2 food
         sprite: {fileID: -357881446, guid: 1be9ff66ca0189505bd263503dd301e9, type: 3}
-    - tag: 1
+    - tag: 3
       segment:
         coef: 1
         color: {r: 1, g: 0.45837483, b: 0.23137254, a: 0}

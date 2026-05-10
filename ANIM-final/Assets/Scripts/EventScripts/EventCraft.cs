@@ -4,29 +4,16 @@ using UnityEngine;
 public class EventCraft : EventBase
 {
     [SerializeField]
-    Inventory inventory = new();
-
-    [SerializeField]
     UICraftingSystem uics;
 
-    void Awake()
+    protected override void InternalStartEvent()
     {
-        StartEvent();
-    }
-
-    public override void StartEvent()
-    {
-        base.StartEvent();
-
         uics.SetInventory(inventory);
 
         StartCoroutine(OnEventStart());
     }
 
-    public override void EndEvent()
-    {
-        base.EndEvent();
-    }
+    protected override void InernalEndEvent() { }
 
     private IEnumerator OnEventStart()
     {

@@ -2,52 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EventFoodTag
+{
+    FOOD_1,
+    FOOD_2,
+    FOOD_3,
+}
+
 public class EventFood : EventBase
 {
     [SerializeField]
-    MoovingTree moovingTree;
+    NewUIDialog dialog;
 
     [SerializeField]
-    UIDialog dialog;
+    EventFoodUIWheel wheel;
 
     [SerializeField]
-    WheelUIManager wheelManager;
+    TaggedWheelSegments<EventFoodTag> foodSegments = new();
 
-    [SerializeField]
-    List<SegmentAttribute> foodSegments;
+    TagSegment<EventFoodTag> result;
 
-    SegmentAttribute result;
-
-    void Start()
+    protected override void InternalStartEvent()
     {
-        //StartEvent();
-        dialog.Hide();
-        wheelManager.Hide();
-    }
-
-    public override void StartEvent()
-    {
-        base.StartEvent();
         StartCoroutine(OnEventStarted());
     }
 
-    public override void EndEvent()
+    protected override void InernalEndEvent()
     {
         dialog.Hide();
-        wheelManager.Hide();
+        wheel.Hide();
 
-        base.EndEvent();
+        if (result != null)
+        {
+            switch (result.tag)
+            {
+                case EventFoodTag.FOOD_1:
+                    inventory.AddFood(1);
+                    SetCompletion(true);
+                    break;
 
-        Debug.Log(result.name);
-        EventManager.Instance.UnloadEventScene();
+                case EventFoodTag.FOOD_2:
+                    inventory.AddFood(2);
+                    SetCompletion(true);
+                    break;
+
+                case EventFoodTag.FOOD_3:
+                    inventory.AddFood(3);
+                    SetCompletion(true);
+                    break;
+            }
+        }
     }
 
     private IEnumerator OnEventStarted()
     {
         dialog.Hide();
-        wheelManager.Hide();
+        wheel.Hide();
 
-        wheelManager.Build(foodSegments);
+        wheel.Create(foodSegments);
 
         float time = 0;
 
@@ -57,52 +69,23 @@ public class EventFood : EventBase
             yield return null;
         }
 
-        dialog.Reveal();
-        dialog.NextText(OnTreeAnimation, "You found food !");
+        dialog.Launch(OnWheelStartSpinning, "You found food !");
     }
 
-    private void OnTreeAnimation()
+    private void OnWheelStartSpinning()
     {
         dialog.Hide();
-
-        moovingTree.SetOnAnimationFinish(() =>
-        {
-            StartCoroutine(OnWheelStartSpinning());
-        });
-        moovingTree.StartAnimation();
-    }
-
-    private IEnumerator OnWheelStartSpinning()
-    {
-        wheelManager.Reveal();
-
-        float time = 0;
-
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        wheelManager.OnSpinFinish(() =>
+        result = wheel.Launch(() =>
         {
             StartCoroutine(OnWheelEndSpinning());
         });
-        result = wheelManager.Speen();
     }
 
     private IEnumerator OnWheelEndSpinning()
     {
-        float time = 0;
+        yield return new WaitForSeconds(2.0f);
+        wheel.Hide();
 
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        wheelManager.Hide();
-        dialog.Reveal();
-        dialog.NextText(EndEvent, "You won: " + result.name + " food !");
+        dialog.Launch(EndEvent, "You won: " + result.segment.name + "!", result.segment.sprite);
     }
 }

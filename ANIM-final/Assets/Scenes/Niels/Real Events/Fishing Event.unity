@@ -801,8 +801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6671f2bc948b279a5e3574b4b19986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventFishing
-  wheel: {fileID: 773448726}
-  dialog: {fileID: 2073158955}
   inventory:
     baseResources:
       items: []
@@ -810,6 +808,9 @@ MonoBehaviour:
       items:
       - type: 0
         count: 1
+  survivor: {fileID: 0}
+  wheel: {fileID: 773448726}
+  dialog: {fileID: 2073158955}
   fishingRodSegments:
     items:
     - tag: 0
@@ -832,7 +833,7 @@ MonoBehaviour:
         sprite: {fileID: 1667055900, guid: 32089ab98d1bdbb5aa8bcffd555bbc5d, type: 3}
   abilitySegments:
     items:
-    - tag: 0
+    - tag: 1
       segment:
         coef: 1
         color: {r: 0.44705883, g: 0.54509807, b: 1, a: 0}
@@ -845,7 +846,6 @@ MonoBehaviour:
         name: 2 fish
         sprite: {fileID: -1001079744, guid: d1a7c61571352d15eaf94b28eadf1557, type: 3}
   fishingAbilitySprite: {fileID: 978086488, guid: 5815508a8763769f287dd7a6be372a91, type: 3}
-  hasFishingAbility: 1
 --- !u!4 &1952678078
 Transform:
   m_ObjectHideFlags: 0

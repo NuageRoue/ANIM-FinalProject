@@ -2,10 +2,15 @@ using UnityEngine;
 
 public abstract class EventBase : MonoBehaviour
 {
+    [SerializeField]
+    protected Inventory inventory;
+
+    [SerializeField]
+    protected Survivor survivor;
+
     public static EventBase instance { get; private set; }
 
-    public bool isFinish { get; protected set; } = false;
-    public bool isRunning { get; protected set; } = false;
+    public bool isCompleted { get; private set; }
 
     void Awake()
     {
@@ -17,15 +22,43 @@ public abstract class EventBase : MonoBehaviour
         instance = this;
     }
 
-    public virtual void StartEvent()
+    void Start()
     {
-        isRunning = true;
-        isFinish = false;
+        StartEvent(); // Debug
     }
 
-    public virtual void EndEvent()
+    public void StartEvent(Inventory inventory = null, Survivor survivor = null)
     {
-        isRunning = false;
-        isFinish = true;
+        Debug.Log("Started");
+
+        if (inventory != null)
+            this.inventory = inventory;
+
+        if (survivor != null)
+            this.survivor = survivor;
+        else
+        {
+            this.survivor = gameObject.AddComponent<Survivor>();
+        }
+
+        InternalStartEvent();
+    }
+
+    protected void EndEvent()
+    {
+        InernalEndEvent();
+
+        Debug.Log("Finished");
+
+        // EventManager.Instance.UnloadEventScene();
+    }
+
+    protected abstract void InternalStartEvent();
+
+    protected abstract void InernalEndEvent();
+
+    protected void SetCompletion(bool value = true)
+    {
+        isCompleted = value;
     }
 }

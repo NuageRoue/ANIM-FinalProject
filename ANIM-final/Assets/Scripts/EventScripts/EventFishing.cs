@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public enum EventFishingTag
 {
-    FISH,
+    FISH_2,
+    FISH_1,
     NO_FISH,
 }
 
@@ -15,9 +17,6 @@ public class EventFishing : EventBase
 
     [SerializeField]
     NewUIDialog dialog;
-
-    [SerializeField]
-    Inventory inventory;
 
     [SerializeField]
     TaggedWheelSegments<EventFishingTag> fishingRodSegments = new();
@@ -32,24 +31,14 @@ public class EventFishing : EventBase
 
     bool hasFishingRod = false;
 
-    [SerializeField]
-    bool hasFishingAbility = false;
-
-    void Start()
+    protected override void InternalStartEvent()
     {
-        StartEvent();
-    }
-
-    public override void StartEvent()
-    {
-        base.StartEvent();
-
         hasFishingRod = inventory.objectResources.Contains(RessourceObjectType.FISHING_ROD, 1);
 
         wheel.Hide();
         dialog.Hide();
 
-        if (hasFishingAbility)
+        if (survivor.hasFishingAbility)
         {
             wheel.Create(abilitySegments);
         }
@@ -61,19 +50,34 @@ public class EventFishing : EventBase
         OnFirstMessage();
     }
 
-    public override void EndEvent()
+    protected override void InernalEndEvent()
     {
         wheel.Hide();
         dialog.Hide();
 
-        base.EndEvent();
+        if (result != null)
+        {
+            switch (result.tag)
+            {
+                case EventFishingTag.FISH_2:
+                    SetCompletion(true);
+                    inventory.AddFood(2);
+                    break;
+                case EventFishingTag.FISH_1:
+                    SetCompletion(true);
+                    inventory.AddFood(1);
+                    break;
+                case EventFishingTag.NO_FISH:
+                    break;
+            }
+        }
     }
 
     private void OnFirstMessage()
     {
         UnityAction next = OnHasNoFishingRod;
 
-        if (hasFishingAbility)
+        if (survivor.hasFishingAbility)
         {
             next = OnHasAbility;
         }
@@ -138,6 +142,9 @@ public class EventFishing : EventBase
 
     private bool GotFish()
     {
-        return result != null && result.tag == EventFishingTag.FISH;
+        return result != null
+            && (new EventFishingTag[] { EventFishingTag.FISH_1, EventFishingTag.FISH_2 }).Contains(
+                result.tag
+            );
     }
 }
