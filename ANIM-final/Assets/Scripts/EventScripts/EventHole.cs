@@ -83,7 +83,10 @@ public class EventHole : EventBase
     {
         dialog.Hide();
 
-        result = wheel.Launch(() => StartCoroutine(OnWheelFinish()));
+        result = wheel.Launch(() =>
+        {
+            StartCoroutine(OnWheelFinish());
+        });
     }
 
     private IEnumerator OnWheelFinish()

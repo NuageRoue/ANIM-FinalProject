@@ -106,7 +106,10 @@ public class EventEnemy : EventBase
     {
         dialog.Hide();
 
-        result = wheel.Launch(() => StartCoroutine(OnEndSneakWheel()));
+        result = wheel.Launch(() =>
+        {
+            StartCoroutine(OnEndSneakWheel());
+        });
     }
 
     private IEnumerator OnEndSneakWheel()
@@ -123,12 +126,17 @@ public class EventEnemy : EventBase
             if (hasBow)
             {
                 wheel.Create(bowSegments);
+                dialog.Launch(
+                    OnStartFightingWheel,
+                    "Oh no, the enemy saw you! But you have the perfect tool for this kind of situation.",
+                    ResouceLoader.instance.FindByType(RessourceObjectType.BOW)?.sprite
+                );
             }
             else
             {
                 wheel.Create(defaultSegments);
+                dialog.Launch(OnStartFightingWheel, "Oh no, the enemy saw you!");
             }
-            dialog.Launch(OnStartFightingWheel, "Oh no, the enemy saw you!");
         }
     }
 
@@ -136,7 +144,10 @@ public class EventEnemy : EventBase
     {
         dialog.Hide();
 
-        result = wheel.Launch(() => StartCoroutine(OnEndFightingWheel()));
+        result = wheel.Launch(() =>
+        {
+            StartCoroutine(OnEndFightingWheel());
+        });
     }
 
     private IEnumerator OnEndFightingWheel()

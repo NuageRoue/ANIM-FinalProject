@@ -98,7 +98,10 @@ public class EventBee : EventBase
     private void OnWheelTurn()
     {
         dialog.Hide();
-        result = wheel.Launch(() => StartCoroutine(OnWheelFinish()));
+        result = wheel.Launch(() =>
+        {
+            StartCoroutine(OnWheelFinish());
+        });
     }
 
     private IEnumerator OnWheelFinish()
