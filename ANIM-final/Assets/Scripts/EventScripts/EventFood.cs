@@ -27,6 +27,7 @@ public class EventFood : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
         StartCoroutine(OnEventStarted());
     }
 
@@ -34,6 +35,9 @@ public class EventFood : EventBase
     {
         dialog.Hide();
         wheelManager.Hide();
+
+        base.EndEvent();
+
         Debug.Log(result.name);
         EventManager.Instance.UnloadEventScene();
     }

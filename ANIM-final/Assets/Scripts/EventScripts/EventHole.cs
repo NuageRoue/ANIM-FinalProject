@@ -36,6 +36,8 @@ public class EventHole : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
+
         dialog.Hide();
         wheel.Hide();
         hasLadder = inventory.objectResources.Contains(RessourceObjectType.LADDER, 1);
@@ -50,6 +52,8 @@ public class EventHole : EventBase
         }
 
         OnFirstMessage();
+
+        base.EndEvent();
     }
 
     public override void EndEvent()

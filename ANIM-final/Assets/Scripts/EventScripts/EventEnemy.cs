@@ -46,6 +46,8 @@ public class EventEnemy : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
+
         wheel.Hide();
         dialog.Hide();
 
@@ -65,6 +67,8 @@ public class EventEnemy : EventBase
         }
 
         OnFirstMessage();
+
+        base.EndEvent();
     }
 
     public override void EndEvent()

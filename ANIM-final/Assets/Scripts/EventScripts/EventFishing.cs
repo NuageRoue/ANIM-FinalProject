@@ -42,6 +42,8 @@ public class EventFishing : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
+
         hasFishingRod = inventory.objectResources.Contains(RessourceObjectType.FISHING_ROD, 1);
 
         wheel.Hide();
@@ -63,6 +65,8 @@ public class EventFishing : EventBase
     {
         wheel.Hide();
         dialog.Hide();
+
+        base.EndEvent();
     }
 
     private void OnFirstMessage()

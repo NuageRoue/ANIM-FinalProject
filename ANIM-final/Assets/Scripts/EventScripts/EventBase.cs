@@ -4,6 +4,9 @@ public abstract class EventBase : MonoBehaviour
 {
     public static EventBase instance { get; private set; }
 
+    public bool isFinish { get; protected set; } = false;
+    public bool isRunning { get; protected set; } = false;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -14,7 +17,15 @@ public abstract class EventBase : MonoBehaviour
         instance = this;
     }
 
-    public abstract void StartEvent();
+    public virtual void StartEvent()
+    {
+        isRunning = true;
+        isFinish = false;
+    }
 
-    public abstract void EndEvent();
+    public virtual void EndEvent()
+    {
+        isRunning = false;
+        isFinish = true;
+    }
 }

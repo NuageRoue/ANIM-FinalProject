@@ -39,6 +39,8 @@ public class EventBee : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
+
         wheel.Hide();
         dialog.Hide();
 
@@ -60,6 +62,8 @@ public class EventBee : EventBase
     {
         wheel.Hide();
         dialog.Hide();
+
+        base.EndEvent();
     }
 
     private void OnFirstMessage()

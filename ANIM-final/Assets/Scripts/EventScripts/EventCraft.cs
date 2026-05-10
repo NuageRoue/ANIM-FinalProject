@@ -16,12 +16,17 @@ public class EventCraft : EventBase
 
     public override void StartEvent()
     {
+        base.StartEvent();
+
         uics.SetInventory(inventory);
 
         StartCoroutine(OnEventStart());
     }
 
-    public override void EndEvent() { }
+    public override void EndEvent()
+    {
+        base.EndEvent();
+    }
 
     private IEnumerator OnEventStart()
     {
