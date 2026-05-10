@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Clement/HexMapLoader.unity
     guid: 5d7c5977de649aa4d9bd3c93139986a4
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Food Event.unity
+    guid: 499f162c38cba59499da785f5956c30d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

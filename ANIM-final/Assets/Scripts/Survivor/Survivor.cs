@@ -16,6 +16,11 @@ public class Survivor : MonoBehaviour
     public int moveRange;
     public int foodPerTurn;
     public int visionRadius;
+    public bool hasFishingAbility = false;
+    public bool hasSneakyAbility = false;
+
+    public bool isHurt = false; // si battu par un ennemi, son tour prend fin + ne joue pas au tour suivant
+    public bool isIncapacitated = false; // si coincé dans un trou, son tour prend fin
     #endregion
 
     #region Runtime

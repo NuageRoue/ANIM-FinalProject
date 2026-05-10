@@ -7,14 +7,14 @@ public abstract class CallEvent : ScriptableObject
 
     [SerializeField]
     bool oneTimer = true; // wether the events stays after or not (by default it disappears after)
-    public bool Trigger() 
+    public bool Trigger(System.Action unloadEvent) 
     {
-        OnTrigger();
+        OnTrigger(unloadEvent);
 
         return oneTimer;
     }
 
-    protected abstract void OnTrigger();
+    protected abstract void OnTrigger(System.Action unloadEvent);
 
 
 }

@@ -5,8 +5,9 @@ public class TowerEvent : CallEvent
 {
     int view = 10;
 
-    protected override void OnTrigger()
+    protected override void OnTrigger(System.Action unloadEvent)
     {
         Debug.Log($"Unveilling a {view} radius around the tower");
+        unloadEvent?.Invoke();
     }
 }

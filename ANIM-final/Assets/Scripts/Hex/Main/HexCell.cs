@@ -216,9 +216,9 @@ public class HexCell : MonoBehaviour
         Destroy(_eventUI);
     }
 
-    internal void CallEvent()
+    internal void CallEvent(System.Action unloadEvent)
     {
-        if (callEvent.Trigger())
+        if (callEvent.Trigger(unloadEvent))
             ClearEvent();
     }
 }

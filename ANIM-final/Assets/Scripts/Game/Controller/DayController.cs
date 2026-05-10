@@ -71,9 +71,16 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     #endregion
 
     #region Controls
-    public void EnableControls() => _controls.Map.Enable();
-    public void DisableControls() => _controls.Map.Disable();
-
+    public void EnableControls()
+    {
+        Debug.Log("enabling the controls");
+        _controls.Map.Enable();
+    }
+    public void DisableControls()
+    {
+        Debug.Log("disabling the controls");
+        _controls.Map.Disable();
+    }
     public void SetSurvivors(Survivor[] s)
     {
         for (int i = 0; i < survivors.Length; i++)
@@ -165,9 +172,19 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     {
         if (survivors[_activeSurvivorIndex].currentCell.HasEvent())
         {
-            ActiveSurvivor.currentCell.CallEvent();
-
+            DisableControls();
+            ActiveSurvivor.currentCell.CallEvent(() => EndEvent());
         }
+        else 
+        {
+            NextSurvivor();
+        }
+    }
+
+    void EndEvent()
+    {
+        Debug.Log("event completed");
+        EnableControls();
         NextSurvivor();
     }
     #endregion

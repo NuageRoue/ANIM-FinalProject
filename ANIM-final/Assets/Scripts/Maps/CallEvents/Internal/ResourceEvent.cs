@@ -7,9 +7,10 @@ public class ResourceEvent : CallEvent
     ResourceType resourceType;
     int amount = 1;
 
-    protected override void OnTrigger()
+    protected override void OnTrigger(System.Action unloadEvent)
     {
         Debug.Log($"adding {amount} {resourceType} to the inventory");
         GameManager.Instance.AddItem(resourceType, amount);
+        unloadEvent?.Invoke();
     }
 }

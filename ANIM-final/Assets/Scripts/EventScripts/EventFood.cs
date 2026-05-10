@@ -20,7 +20,9 @@ public class EventFood : EventBase
 
     void Start()
     {
-        StartEvent();
+        //StartEvent();
+        dialog.Hide();
+        wheelManager.Hide();
     }
 
     public override void StartEvent()
@@ -33,6 +35,7 @@ public class EventFood : EventBase
         dialog.Hide();
         wheelManager.Hide();
         Debug.Log(result.name);
+        EventManager.Instance.UnloadEventScene();
     }
 
     private IEnumerator OnEventStarted()

@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     #region Singleton
     public static GameManager Instance { get; private set; }
 
+    [SerializeField]
+    Transform root;
+
     private void SetSingleton()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -95,7 +98,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Instantiating survivors");
         for (int i = 0; i < survivors.Length; i++)
-            survivors[i] = Instantiate(survivors[i], Vector3.zero, Quaternion.identity);
+            survivors[i] = Instantiate(survivors[i], Vector3.zero, Quaternion.identity, root);
     }
 
     void PlaceSurvivorsAtStart()
