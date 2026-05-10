@@ -131,6 +131,8 @@ public class GameManager : MonoBehaviour
 
         remainingDays = selectedLevel.totalDays;
 
+        Debug.Log($"there is {selectedLevel.totalDays} in the map {selectedLevel.name} and {remainingDays} in the game");
+
     }
 
     #endregion

@@ -17,6 +17,7 @@ MonoBehaviour:
   canHaveEvent: 1
   cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
   propSpawn: 0
-  eventSpawn: 0
+  eventSpawn: 0.25
   potentialProps: []
-  potentialEvents: []
+  potentialEvents:
+  - {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}

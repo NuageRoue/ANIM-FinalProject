@@ -164,7 +164,10 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     void PerformEvent()
     {
         if (survivors[_activeSurvivorIndex].currentCell.HasEvent())
-            Debug.Log("The current tile has an event");
+        {
+            ActiveSurvivor.currentCell.CallEvent();
+
+        }
         NextSurvivor();
     }
     #endregion

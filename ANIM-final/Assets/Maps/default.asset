@@ -12,23 +12,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cd01305f5afa14a94b0f0bfa39247c, type: 3}
   m_Name: default
   m_EditorClassIdentifier: Assembly-CSharp::IslandMapData
+  levelName: 
+  totalDays: 100
   keys:
-  - {x: 1, y: -18, z: 17}
+  - {x: 2, y: -18, z: 16}
+  - {x: 1, y: -19, z: 18}
+  - {x: 1, y: -20, z: 19}
+  - {x: 1, y: -15, z: 14}
+  - {x: 6, y: -24, z: 18}
+  - {x: 6, y: -23, z: 17}
+  - {x: 7, y: -23, z: 16}
+  - {x: 8, y: -24, z: 16}
+  - {x: 2, y: -21, z: 19}
+  - {x: 8, y: -23, z: 15}
+  - {x: 9, y: -24, z: 15}
+  - {x: 5, y: -24, z: 19}
+  - {x: 9, y: -23, z: 14}
+  - {x: 10, y: -24, z: 14}
+  - {x: 10, y: -23, z: 13}
+  - {x: 9, y: -22, z: 13}
+  - {x: 9, y: -21, z: 12}
+  - {x: 2, y: -15, z: 13}
+  - {x: 8, y: -20, z: 12}
+  - {x: 7, y: -19, z: 12}
+  - {x: 4, y: -24, z: 20}
+  - {x: 6, y: -18, z: 12}
+  - {x: 5, y: -17, z: 12}
+  - {x: 3, y: -23, z: 20}
+  - {x: 5, y: -16, z: 11}
+  - {x: 4, y: -15, z: 11}
+  - {x: 4, y: -14, z: 10}
+  - {x: 3, y: -22, z: 19}
+  - {x: 3, y: -14, z: 11}
+  - {x: 3, y: -13, z: 10}
+  - {x: 2, y: -13, z: 11}
+  - {x: 1, y: -13, z: 12}
+  - {x: 8, y: -22, z: 14}
+  - {x: 0, y: -13, z: 13}
+  - {x: 0, y: -14, z: 14}
+  - {x: 2, y: -17, z: 15}
+  - {x: 0, y: -15, z: 15}
+  - {x: 3, y: -18, z: 15}
+  - {x: 1, y: -16, z: 15}
+  - {x: 3, y: -19, z: 16}
   - {x: 2, y: -19, z: 17}
+  - {x: 5, y: -22, z: 17}
+  - {x: 1, y: -14, z: 13}
+  - {x: 3, y: -15, z: 12}
+  - {x: 2, y: -14, z: 12}
+  - {x: 4, y: -16, z: 12}
+  - {x: 5, y: -18, z: 13}
+  - {x: 6, y: -19, z: 13}
+  - {x: 7, y: -20, z: 13}
+  - {x: 8, y: -21, z: 13}
+  - {x: 7, y: -22, z: 15}
+  - {x: 6, y: -22, z: 16}
+  - {x: 5, y: -23, z: 18}
+  - {x: 4, y: -23, z: 19}
+  - {x: 4, y: -22, z: 18}
+  - {x: 3, y: -21, z: 18}
+  - {x: 2, y: -20, z: 18}
   - {x: 3, y: -20, z: 17}
   - {x: 4, y: -21, z: 17}
   - {x: 4, y: -20, z: 16}
-  - {x: 3, y: -19, z: 16}
-  - {x: 3, y: -18, z: 15}
-  - {x: 2, y: -18, z: 16}
-  - {x: 4, y: -19, z: 15}
   - {x: 5, y: -20, z: 15}
+  - {x: 6, y: -21, z: 15}
   - {x: 5, y: -21, z: 16}
-  - {x: 1, y: -17, z: 16}
-  - {x: 2, y: -17, z: 15}
-  - {x: 3, y: -17, z: 14}
-  - {x: 4, y: -18, z: 14}
+  - {x: 7, y: -21, z: 14}
+  - {x: 6, y: -20, z: 14}
   - {x: 5, y: -19, z: 14}
+  - {x: 4, y: -19, z: 15}
+  - {x: 4, y: -18, z: 14}
+  - {x: 4, y: -17, z: 13}
+  - {x: 3, y: -17, z: 14}
+  - {x: 3, y: -16, z: 13}
+  - {x: 2, y: -16, z: 14}
+  - {x: 5, y: -15, z: 10}
+  - {x: 6, y: -16, z: 10}
+  - {x: 6, y: -17, z: 11}
+  - {x: 7, y: -18, z: 11}
+  - {x: 7, y: -24, z: 17}
+  - {x: 7, y: -25, z: 18}
+  - {x: 6, y: -25, z: 19}
+  - {x: 5, y: -25, z: 20}
+  - {x: 1, y: -18, z: 17}
+  - {x: 1, y: -17, z: 16}
+  - {x: 0, y: -16, z: 16}
   values:
   - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
     selectedEvent: {fileID: 0}
@@ -37,67 +106,13 @@ MonoBehaviour:
     isStartPos: 0
     isTraversable: 1
   - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
-    selectedProp: {fileID: 0}
-    hasEvent: 1
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
     selectedEvent: {fileID: 0}
     selectedProp: {fileID: 0}
     hasEvent: 0
     isStartPos: 0
     isTraversable: 1
   - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
-    selectedProp: {fileID: 0}
-    hasEvent: 1
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 0}
-    selectedProp: {fileID: 0}
-    hasEvent: 0
-    isStartPos: 0
-    isTraversable: 1
-  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
-    selectedEvent: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
+    selectedEvent: {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
     selectedProp: {fileID: 0}
     hasEvent: 1
     isStartPos: 0
@@ -114,10 +129,424 @@ MonoBehaviour:
     hasEvent: 0
     isStartPos: 0
     isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: bf79c58d7759ffa459022ecafff76038, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: 6c36271681c954f44b6efbf6864fee78, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00bd221e616c9a642b74dad1484d24b3, type: 2}
+    selectedProp: {fileID: 7382740561823812314, guid: c4bf00b797c117b46b8a8ff9d0299211, type: 3}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 11400000, guid: bf79c58d7759ffa459022ecafff76038, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 5636091927098177984, guid: cb8bdce847365b919b71d66f812124a8, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 11400000, guid: fb05e3cfb7a7ad0449b01cf9755e2fa6, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
   - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
     selectedEvent: {fileID: 0}
     selectedProp: {fileID: 0}
     hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
     isStartPos: 0
     isTraversable: 1
   - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
@@ -125,4 +554,46 @@ MonoBehaviour:
     selectedProp: {fileID: 6415448571470057907, guid: 9f0cb6d101b75bb408c6471ce6562e8b, type: 3}
     hasEvent: 0
     isStartPos: 1
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 11400000, guid: 00844ba71f04dbc4490e9d63286d2992, type: 2}
+    selectedProp: {fileID: 0}
+    hasEvent: 1
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
+    isTraversable: 1
+  - cell: {fileID: 8301484702580942352, guid: 6e20631fca59b5341b0fd48db3712871, type: 3}
+    selectedEvent: {fileID: 0}
+    selectedProp: {fileID: 0}
+    hasEvent: 0
+    isStartPos: 0
     isTraversable: 1

@@ -17,12 +17,12 @@ MonoBehaviour:
   canHaveEvent: 1
   cell: {fileID: 148196259286234575, guid: 8c490f765edda634dae69e4c9214b3cb, type: 3}
   propSpawn: 0.8
-  eventSpawn: 0.25
+  eventSpawn: 0.33
   potentialProps:
   - {fileID: 919132149155446097, guid: 24d48357f52d51c4887851bed7454609, type: 3}
   - {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
   potentialEvents:
-  - {fileID: 11400000, guid: f88c8b3d05a005646b83a2cf8724ff38, type: 2}
-  - {fileID: 11400000, guid: bdd8f66e5db9a944495e10f37dcdb687, type: 2}
-  - {fileID: 11400000, guid: c4586337edd85534986757e888c9581a, type: 2}
-  - {fileID: 11400000, guid: 75f0dd57fe58a524097f064840cd511c, type: 2}
+  - {fileID: 11400000, guid: fb05e3cfb7a7ad0449b01cf9755e2fa6, type: 2}
+  - {fileID: 11400000, guid: 2f6a4ac8b831cfa45b5b60ee5cc5c12a, type: 2}
+  - {fileID: 11400000, guid: 2dda0b3d0a1a0ab4089113cf3c34c211, type: 2}
+  - {fileID: 11400000, guid: f4f80b724195b2b499c0f1172fde5af3, type: 2}

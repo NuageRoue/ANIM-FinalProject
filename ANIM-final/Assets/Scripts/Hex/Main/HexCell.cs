@@ -95,8 +95,11 @@ public class HexCell : MonoBehaviour
         if (selectedEvent != null) {
             name += $"(event: {selectedEvent.name})";
             callEvent = selectedEvent;
-            _eventUI = Instantiate(eventUI, new Vector3(transform.position.x, UIOffset, transform.position.z), Quaternion.Euler(50, 0, 0), canvas.transform);
-            _eventUI.sprite = callEvent.sprite;
+            if (callEvent.sprite != null)
+            {
+                _eventUI = Instantiate(eventUI, new Vector3(transform.position.x, UIOffset, transform.position.z), Quaternion.Euler(50, 0, 0), canvas.transform);
+                _eventUI.sprite = callEvent.sprite;
+            }
         }
 
         if (startingCell) 
@@ -205,6 +208,18 @@ public class HexCell : MonoBehaviour
         {
             neighbor?.CleanFog(dist - 1);
         }
+    }
+
+    public void ClearEvent() 
+    {
+        callEvent = null;
+        Destroy(_eventUI);
+    }
+
+    internal void CallEvent()
+    {
+        if (callEvent.Trigger())
+            ClearEvent();
     }
 }
 

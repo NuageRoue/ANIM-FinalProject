@@ -21,4 +21,4 @@ MonoBehaviour:
   potentialProps:
   - {fileID: 7382740561823812314, guid: c4bf00b797c117b46b8a8ff9d0299211, type: 3}
   potentialEvents:
-  - {fileID: 11400000, guid: b0172eec5e7179f428bc068c768ae0c7, type: 2}
+  - {fileID: 11400000, guid: 00bd221e616c9a642b74dad1484d24b3, type: 2}
