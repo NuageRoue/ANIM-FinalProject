@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56bd373e4e771e87934ceac358bbbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Survivor
-  moveRange: 2
+  moveRange: 3
   foodPerTurn: 0
   visionRadius: 2
-  remainingMoves: 0
   currentCell: {fileID: 0}
   state: 0
   moveDuration: 0.6

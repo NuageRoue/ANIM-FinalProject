@@ -18,7 +18,7 @@ public class ListMap<T>
     where T : Enum
 {
     [SerializeField]
-    public List<ListMapItem<T>> items;
+    public List<ListMapItem<T>> items = new();
 
     public void Add(T type, int amount)
     {

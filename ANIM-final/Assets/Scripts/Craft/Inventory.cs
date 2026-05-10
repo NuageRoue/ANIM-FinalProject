@@ -31,4 +31,9 @@ public class Inventory
 
         return true;
     }
+
+    public void AddItem(ResourceType item, int amount = 1) 
+    { 
+        baseResources.Add(item, amount);
+    }
 }
