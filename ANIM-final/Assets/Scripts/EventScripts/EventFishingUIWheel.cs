@@ -1,4 +1,4 @@
 using System;
 
 [Serializable]
-public class EventFishingUIWheel : UIWheel<EventBeeTag> { }
+public class EventFishingUIWheel : UIWheel<EventFishingTag> { }

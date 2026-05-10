@@ -48,4 +48,15 @@ public class TaggedWheelSegments<T>
     {
         return new(items.Select((item) => item.segment));
     }
+
+    public void ModifyWithConstrains(T tag, Func<float, float> modifier)
+    {
+        foreach (var item in items)
+        {
+            if (EqualityComparer<T>.Default.Equals(item.tag, tag))
+            {
+                item.segment.coef = modifier(item.segment.coef);
+            }
+        }
+    }
 }

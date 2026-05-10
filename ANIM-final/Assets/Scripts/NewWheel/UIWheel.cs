@@ -62,6 +62,8 @@ public class UIWheel<T> : MonoBehaviour
         this.segments.Normalize();
 
         wheelMesh.Create(this.segments.AsListOfSegments());
+
+        wheelMesh.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public TagSegment<T> Launch(UnityAction onFinish)
