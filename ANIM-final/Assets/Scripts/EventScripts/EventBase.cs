@@ -39,6 +39,12 @@ public abstract class EventBase : MonoBehaviour
         else
         {
             this.survivor = gameObject.AddComponent<Survivor>();
+
+            this.inventory.objectResources.Add(RessourceObjectType.BOW, 1);
+
+            this.survivor.hasSneakyAbility = false;
+            this.survivor.hasStrongAbility = false;
+            this.survivor.hasFishingAbility = false;
         }
 
         InternalStartEvent();

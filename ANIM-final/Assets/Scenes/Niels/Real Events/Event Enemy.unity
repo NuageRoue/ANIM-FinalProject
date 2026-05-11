@@ -207,6 +207,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1925928752902504586, guid: bff31a48b497afe84b356e5b36ceb38c, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5963114884145709384, guid: bff31a48b497afe84b356e5b36ceb38c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -222,6 +226,10 @@ PrefabInstance:
     - target: {fileID: 7958100643457484737, guid: bff31a48b497afe84b356e5b36ceb38c, type: 3}
       propertyPath: m_Name
       value: UIWheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8647447736626265754, guid: bff31a48b497afe84b356e5b36ceb38c, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -517,6 +525,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8512757463245928988, guid: d757c9ef43119a02e95646b4eef03798, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -755,6 +767,7 @@ MonoBehaviour:
         name: hurt
         sprite: {fileID: 597226733, guid: ec4f706d33bdc326197ff2e96b623286, type: 3}
   sneakyAbilitySprite: {fileID: -1840635698, guid: 46b53af855096e9f28d5eba362b290a1, type: 3}
+  strongAbilitySprite: {fileID: 0}
 --- !u!4 &1232656755
 Transform:
   m_ObjectHideFlags: 0

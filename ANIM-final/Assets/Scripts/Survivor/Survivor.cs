@@ -1,12 +1,12 @@
-using DigitalRuby.Tween;
 using System;
+using DigitalRuby.Tween;
 using UnityEngine;
 
 public enum SurvivorState
 {
     Idle,
     Moving,
-    InEvent
+    InEvent,
 }
 
 public class Survivor : MonoBehaviour
@@ -21,6 +21,9 @@ public class Survivor : MonoBehaviour
 
     public bool isHurt = false; // si battu par un ennemi, son tour prend fin + ne joue pas au tour suivant
     public bool isIncapacitated = false; // si coinc� dans un trou, son tour prend fin
+
+    public bool hasStrongAbility = false;
+
     #endregion
 
     #region Runtime
@@ -34,13 +37,17 @@ public class Survivor : MonoBehaviour
     public bool CanMove => _moveRange > 0;
 
     public void ResetMoveRange() => _moveRange = moveRange;
+
     private void DecreaseMoveRange() => _moveRange--;
     #endregion
 
     #region Movement
     [Header("Movement")]
-    [SerializeField] private float moveDuration = 0.6f;
-    [SerializeField] private float arcHeight = 1.5f;
+    [SerializeField]
+    private float moveDuration = 0.6f;
+
+    [SerializeField]
+    private float arcHeight = 1.5f;
 
     public void MoveTo(HexCell target, Action onComplete)
     {
