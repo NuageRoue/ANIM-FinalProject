@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 485114522205948750}
   - component: {fileID: 366019752900257321}
   m_Layer: 0
-  m_Name: Survivor
+  m_Name: Survivor 1
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -45,9 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56bd373e4e771e87934ceac358bbbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Survivor
-  moveRange: 3
+  moveRange: 5
   foodPerTurn: 0
-  visionRadius: 2
+  visionRadius: 4
+  hasFishingAbility: 1
+  hasSneakyAbility: 0
+  isHurt: 0
+  isIncapacitated: 0
+  hasStrongAbility: 0
   currentCell: {fileID: 0}
   state: 0
   moveDuration: 0.6

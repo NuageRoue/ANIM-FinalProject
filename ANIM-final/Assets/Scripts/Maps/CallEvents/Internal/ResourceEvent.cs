@@ -1,3 +1,4 @@
+using NUnit;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ResourceEvent", menuName = "Scriptable Objects/CallEvents/ResourceEvent")]
@@ -7,10 +8,13 @@ public class ResourceEvent : CallEvent
     ResourceType resourceType;
     int amount = 1;
 
-    protected override void OnTrigger(System.Action unloadEvent)
+    protected override void OnTrigger(Survivor s, System.Action<bool> unloadEvent)
     {
         Debug.Log($"adding {amount} {resourceType} to the inventory");
         GameManager.Instance.AddItem(resourceType, amount);
-        unloadEvent?.Invoke();
+        PopUp.Instance.Display($"you found one {resourceType}!");
+        unloadEvent?.Invoke(true);
+
+        InfoBar.Instance.UpdateInventory(GameManager.Instance.inv);
     }
 }

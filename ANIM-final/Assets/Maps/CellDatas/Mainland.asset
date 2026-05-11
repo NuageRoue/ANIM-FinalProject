@@ -20,5 +20,8 @@ MonoBehaviour:
   eventSpawn: 0.1
   potentialProps: []
   potentialEvents:
-  - {fileID: 11400000, guid: bf79c58d7759ffa459022ecafff76038, type: 2}
   - {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+  - {fileID: 11400000, guid: f345ca7d3fdcdc647b6c9cc453365a78, type: 2}
+  - {fileID: 11400000, guid: bf79c58d7759ffa459022ecafff76038, type: 2}
+  - {fileID: 11400000, guid: bf79c58d7759ffa459022ecafff76038, type: 2}
+  - {fileID: 11400000, guid: ce2fa05bf095d4e45826e60651b5161c, type: 2}

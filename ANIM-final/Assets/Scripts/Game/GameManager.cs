@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EventManager eventManager;
     [SerializeField] private HexGrid hexGrid;
 
-    [SerializeField] private Inventory inv;
+    [SerializeField] public Inventory inv;
     // [SerializeField] private CampManager campManager;
     #endregion
 
@@ -120,6 +120,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Day ended");
         startingCell = nightController.UpdateStartingCell();
+
+        InfoBar.Instance.IncreaseDay();
+        InfoBar.Instance.UpdateInventory(inv);
+
         UpdateState();
     }
     #endregion
@@ -132,13 +136,14 @@ public class GameManager : MonoBehaviour
     {
         SetSingleton();
 
-        inv = new Inventory();
+        // inv = new Inventory();
 
         startingCell = hexGrid?.Setup(selectedLevel);
 
         remainingDays = selectedLevel.totalDays;
 
-        Debug.Log($"there is {selectedLevel.totalDays} in the map {selectedLevel.name} and {remainingDays} in the game");
+        InfoBar.Instance.SetDays(remainingDays);
+        InfoBar.Instance.UpdateInventory(inv);
 
     }
 

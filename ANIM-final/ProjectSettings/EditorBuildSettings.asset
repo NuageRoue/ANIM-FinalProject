@@ -14,5 +14,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Niels/Real Events/Food Event.unity
     guid: 499f162c38cba59499da785f5956c30d
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Bee Event.unity
+    guid: fffb16d9d5749095586e3777e3114135
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Event Enemy.unity
+    guid: 3375ff18687b12e0b92a9183446ee096
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Event Hole.unity
+    guid: de8cafdc526f2b775af8e5707de9bbb7
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Fishing Event.unity
+    guid: 1d1baeb0ef8a4005389bea5c02de7b3f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

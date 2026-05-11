@@ -33,11 +33,34 @@ public class Survivor : MonoBehaviour
     #endregion
 
     #region Move Range
+    [SerializeField]
     private int _moveRange;
-    public bool CanMove => _moveRange > 0;
 
-    public void ResetMoveRange() => _moveRange = moveRange;
+    public bool CanMove()
+    {
+        if (_moveRange <= 0)
+            return false;
 
+        if (isIncapacitated)
+        {
+            isIncapacitated = false;
+            return false;
+        }
+
+        if (isHurt)
+        {
+            if (_moveRange == moveRange)
+                isHurt = false;
+            return false;
+        }
+
+        return true;
+    }
+    public void ResetMoveRange() 
+    {
+        _moveRange = moveRange;
+        isIncapacitated = false; // in case we are incapacitated at the end of our moveRange
+    }
     private void DecreaseMoveRange() => _moveRange--;
     #endregion
 

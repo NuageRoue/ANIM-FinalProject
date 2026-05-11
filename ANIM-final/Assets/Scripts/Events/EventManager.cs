@@ -16,7 +16,7 @@ public class EventManager : MonoBehaviour
 
     private CallEvent _currentEvent;
     private Survivor _currentSurvivor;
-    private System.Action _onUnloadComplete;
+    private System.Action<bool> _onUnloadComplete;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class EventManager : MonoBehaviour
     {
     }
 
-    public void LoadEventScene(string sceneName, System.Action unloadCompleted = null)
+    public void LoadEventScene(string sceneName, Survivor s = null, System.Action<bool> unloadCompleted = null)
     {
         loadedScene = sceneName;
         _onUnloadComplete = unloadCompleted;
@@ -51,7 +51,7 @@ public class EventManager : MonoBehaviour
         System.Action<ITween<float>> onFadeOpenComplete = (t) =>
         {
             Debug.Log("chargement ok");
-            GameObject.FindAnyObjectByType<EventBase>()?.StartEvent();
+            GameObject.FindAnyObjectByType<EventBase>()?.StartEvent(GameManager.Instance.inv, s);
         };
 
         gameObject.Tween("loadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
@@ -63,7 +63,7 @@ public class EventManager : MonoBehaviour
             onFadeOpenComplete));
     }
 
-    public void UnloadEventScene()
+    public void UnloadEventScene(bool result)
     {
         Debug.Log("unload event scene");
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
@@ -77,7 +77,7 @@ public class EventManager : MonoBehaviour
         System.Action<ITween<float>> onFadeOpenComplete = (t) =>
         {
             Debug.Log("unload ok");
-            _onUnloadComplete?.Invoke();
+            _onUnloadComplete?.Invoke(result);
             _onUnloadComplete = null;
         };
 

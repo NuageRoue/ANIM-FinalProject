@@ -24,7 +24,7 @@ public abstract class EventBase : MonoBehaviour
 
     void Start()
     {
-        StartEvent(); // Debug
+        //StartEvent(); // Debug
     }
 
     public void StartEvent(Inventory inventory = null, Survivor survivor = null)
@@ -56,7 +56,7 @@ public abstract class EventBase : MonoBehaviour
 
         Debug.Log("Finished");
 
-        // EventManager.Instance.UnloadEventScene();
+        EventManager.Instance.UnloadEventScene(isCompleted);
     }
 
     protected abstract void InternalStartEvent();

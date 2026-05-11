@@ -23,6 +23,5 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 1a363506f07d66b409aa97f256521be3, type: 3}
   potentialEvents:
   - {fileID: 11400000, guid: fb05e3cfb7a7ad0449b01cf9755e2fa6, type: 2}
-  - {fileID: 11400000, guid: 2f6a4ac8b831cfa45b5b60ee5cc5c12a, type: 2}
   - {fileID: 11400000, guid: 2dda0b3d0a1a0ab4089113cf3c34c211, type: 2}
   - {fileID: 11400000, guid: f4f80b724195b2b499c0f1172fde5af3, type: 2}

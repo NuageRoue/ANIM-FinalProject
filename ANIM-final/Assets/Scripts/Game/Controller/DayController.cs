@@ -96,7 +96,7 @@ public class DayController : MonoBehaviour, MainController.IMapActions
         ResetMoveRanges();
         cam.SnapTo(survivors[0].currentCell.transform.position);
         visitedCells.Add(survivors[0].currentCell);
-        SetTurnState(TurnState.Survivor1Turn);
+        SelectSurvivor(-1);
     }
 
     public void EndTurn()
@@ -144,25 +144,30 @@ public class DayController : MonoBehaviour, MainController.IMapActions
         }
     }
 
-    void NextSurvivor()
+
+    void SelectSurvivor(int currentIndex)
     {
-        if (survivors[_activeSurvivorIndex].CanMove)
+        // Debug.Log($"index: {currentIndex}, perso: {survivors[currentIndex].CanMove()}");
+        if (currentIndex >= 0 && survivors[currentIndex].CanMove()) // si on est au début ou que le perso peut se déplacer
         {
-            switch (_activeSurvivorIndex)
+            switch (currentIndex)
             {
-                case 0: SetTurnState(TurnState.Survivor1Turn); break;
+                case 0: SetTurnState(TurnState.Survivor1Turn); break; //sinon, le perso considéré peut se déplacer : on va sur ce perso
                 case 1: SetTurnState(TurnState.Survivor2Turn); break;
                 case 2: SetTurnState(TurnState.Survivor3Turn); break;
                 default: throw new IndexOutOfRangeException();
             }
         }
-        else
+        else // si le perso considéré peut pas se déplacer : on va au suivant
         {
-            switch (_activeSurvivorIndex)
+            switch (currentIndex)
             {
-                case 0: SetTurnState(TurnState.Survivor2Turn); break;
-                case 1: SetTurnState(TurnState.Survivor3Turn); break;
-                case 2: SetTurnState(TurnState.NightTransition); break;
+                case -1:
+                case 0: 
+                case 1:
+                    PopUp.Instance.Display($"survivor {currentIndex + 2}'s turn");
+                    SelectSurvivor(currentIndex + 1); break;
+                case 2: SetTurnState(TurnState.NightTransition); break; // ou on skip à la nuit si on peut pas
                 default: throw new IndexOutOfRangeException();
             }
         }
@@ -173,19 +178,21 @@ public class DayController : MonoBehaviour, MainController.IMapActions
         if (survivors[_activeSurvivorIndex].currentCell.HasEvent())
         {
             DisableControls();
-            ActiveSurvivor.currentCell.CallEvent(() => EndEvent());
+            ActiveSurvivor.currentCell.CallEvent(ActiveSurvivor, (bool b) => EndEvent(b));
         }
         else 
         {
-            NextSurvivor();
+            SelectSurvivor(_activeSurvivorIndex);
         }
     }
 
-    void EndEvent()
+    void EndEvent(bool eventFinished)
     {
         Debug.Log("event completed");
+        if (eventFinished)
+            ActiveSurvivor.currentCell.ClearEvent();
         EnableControls();
-        NextSurvivor();
+        SelectSurvivor(_activeSurvivorIndex);
     }
     #endregion
 

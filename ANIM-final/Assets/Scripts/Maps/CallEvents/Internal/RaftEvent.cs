@@ -3,9 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RaftEvent", menuName = "Scriptable Objects/CallEvents/RaftEvent")]
 public class RaftEvent : CallEvent
 {
-    protected override void OnTrigger(System.Action unloadEvent) 
+    protected override void OnTrigger(Survivor s, System.Action<bool> unloadEvent) 
     {
         Debug.Log($"adding a raft part to the inventory");
-        unloadEvent?.Invoke();
+        PopUp.Instance.Display("you found a part of the raft!");
+        unloadEvent?.Invoke(true);
+
+        InfoBar.Instance.UpdateInventory(GameManager.Instance.inv);
     }
 }

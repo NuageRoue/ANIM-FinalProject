@@ -5,9 +5,11 @@ public class TowerEvent : CallEvent
 {
     int view = 10;
 
-    protected override void OnTrigger(System.Action unloadEvent)
+    protected override void OnTrigger(Survivor s, System.Action<bool> unloadEvent)
     {
+        s.currentCell.CleanFog(10);
         Debug.Log($"Unveilling a {view} radius around the tower");
-        unloadEvent?.Invoke();
+        PopUp.Instance.Display("the tower reveals its surroundings.");
+        unloadEvent?.Invoke(false);
     }
 }

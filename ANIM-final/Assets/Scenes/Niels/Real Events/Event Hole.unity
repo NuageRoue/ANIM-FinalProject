@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &240677868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,8 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20ecd52495ef8fab80f846ef5fdb8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventHole
-  wheel: {fileID: 1942318157}
-  dialog: {fileID: 1474069009}
   inventory:
     baseResources:
       items: []
@@ -559,6 +557,9 @@ MonoBehaviour:
       items:
       - type: 1
         count: 1
+  survivor: {fileID: 0}
+  wheel: {fileID: 1942318157}
+  dialog: {fileID: 1474069009}
   defaultSegments:
     items:
     - tag: 0
