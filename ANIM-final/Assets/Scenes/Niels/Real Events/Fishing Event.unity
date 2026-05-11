@@ -805,15 +805,13 @@ MonoBehaviour:
     baseResources:
       items: []
     objectResources:
-      items:
-      - type: 0
-        count: 1
+      items: []
   survivor: {fileID: 0}
   wheel: {fileID: 773448726}
   dialog: {fileID: 2073158955}
   fishingRodSegments:
     items:
-    - tag: 0
+    - tag: 1
       segment:
         coef: 2
         color: {r: 0.4481132, g: 0.5452962, b: 1, a: 0}
@@ -825,7 +823,7 @@ MonoBehaviour:
         color: {r: 0.2991723, g: 0.38496074, b: 0.7830189, a: 0}
         name: 2 fish
         sprite: {fileID: -1001079744, guid: d1a7c61571352d15eaf94b28eadf1557, type: 3}
-    - tag: 1
+    - tag: 2
       segment:
         coef: 2
         color: {r: 0.75960106, g: 0.4470588, b: 1, a: 0}

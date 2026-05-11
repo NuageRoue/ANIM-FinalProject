@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,9 +10,45 @@ public class FoodTree : MonoBehaviour
 {
     private class RigidbodyTransform
     {
-        public Rigidbody rigidbody;
-        public Vector3 position;
-        public Quaternion rotation;
+        private Rigidbody rigidbody;
+        private Vector3 position;
+        private Quaternion rotation;
+
+        private bool init = false;
+
+        public RigidbodyTransform(Rigidbody r)
+        {
+            rigidbody = r;
+            position = r.position;
+            rotation = r.rotation;
+        }
+
+        public void Init()
+        {
+            init = true;
+            rigidbody.isKinematic = true;
+            rigidbody.transform.SetPositionAndRotation(position, rotation);
+        }
+
+        public bool CanStart()
+        {
+            return init;
+        }
+
+        public IEnumerator Start(float delay)
+        {
+            init = false;
+
+            Transform transform = rigidbody.transform.parent;
+
+            rigidbody.transform.SetParent(null);
+            rigidbody.isKinematic = false;
+
+            yield return new WaitForSeconds(delay);
+
+            rigidbody.isKinematic = true;
+            rigidbody.transform.SetParent(transform);
+        }
     }
 
     [SerializeField]
@@ -19,6 +56,9 @@ public class FoodTree : MonoBehaviour
 
     [SerializeField]
     GameObject food;
+
+    [SerializeField]
+    float physicAnimationDuration = 3.0f;
 
     UnityAction onFinish;
 
@@ -29,65 +69,28 @@ public class FoodTree : MonoBehaviour
     void Start()
     {
         initals = food.GetComponentsInChildren<Rigidbody>()
-            .Select(
-                (r) =>
-                    new RigidbodyTransform
-                    {
-                        position = r.position,
-                        rotation = r.rotation,
-                        rigidbody = r,
-                    }
-            )
+            .Select((r) => new RigidbodyTransform(r))
             .ToList();
     }
 
     public void Launch(UnityAction onFinish)
     {
+        fallenIndex = 0;
         this.onFinish = onFinish;
-        initals.ForEach(
-            (r) =>
-            {
-                r.rigidbody.isKinematic = true;
-                r.rigidbody.linearVelocity = Vector3.zero;
-                r.rigidbody.angularVelocity = Vector3.zero;
-                r.rigidbody.position = r.position;
-                r.rigidbody.rotation = r.rotation;
-            }
-        );
+        initals.ForEach((r) => r.Init());
         tree.Launch(
             () => StartCoroutine(OnTreeAniamationEnd()),
-            () => StartCoroutine(OnTreeAnimationCycle())
+            () => StartCoroutine(initals[fallenIndex++].Start(physicAnimationDuration))
         );
-    }
-
-    private IEnumerator OnTreeAnimationCycle()
-    {
-        if (fallenIndex < initals.Count)
-        {
-            initals[fallenIndex].rigidbody.transform.SetParent(null);
-            initals[fallenIndex].rigidbody.isKinematic = false;
-            yield return new WaitForSeconds(3.0f);
-            initals[fallenIndex].rigidbody.isKinematic = true;
-
-            fallenIndex++;
-        }
     }
 
     private IEnumerator OnTreeAniamationEnd()
     {
-        for (int i = fallenIndex; i < initals.Count; ++i)
-        {
-            initals[i].rigidbody.isKinematic = false;
-        }
+        initals
+            .FindAll((r) => r.CanStart())
+            .ForEach((r) => StartCoroutine(r.Start(physicAnimationDuration)));
 
-        yield return new WaitForSeconds(3.0f);
-
-        for (int i = fallenIndex; i < initals.Count; ++i)
-        {
-            initals[i].rigidbody.isKinematic = true;
-        }
-
-        initals.ForEach((i) => i.rigidbody.transform.SetParent(food.transform));
+        yield return new WaitForSeconds(physicAnimationDuration);
 
         onFinish.Invoke();
     }

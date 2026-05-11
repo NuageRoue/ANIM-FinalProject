@@ -28,8 +28,10 @@ public class EventBee : EventBase
 
     bool hasBow = false;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         wheel.Hide();
         dialog.Hide();
     }

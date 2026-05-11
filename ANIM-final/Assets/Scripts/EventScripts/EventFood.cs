@@ -22,6 +22,14 @@ public class EventFood : EventBase
 
     TagSegment<EventFoodTag> result;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        wheel.Hide();
+        dialog.Hide();
+    }
+
     protected override void InternalStartEvent()
     {
         StartCoroutine(OnEventStarted());

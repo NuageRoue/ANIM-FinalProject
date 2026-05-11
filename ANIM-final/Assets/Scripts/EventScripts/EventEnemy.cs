@@ -34,6 +34,14 @@ public class EventEnemy : EventBase
 
     bool hasBow = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        wheel.Hide();
+        dialog.Hide();
+    }
+
     protected override void InternalStartEvent()
     {
         wheel.Hide();

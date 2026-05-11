@@ -26,6 +26,14 @@ public class EventHole : EventBase
 
     bool hasLadder = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        wheel.Hide();
+        dialog.Hide();
+    }
+
     protected override void InternalStartEvent()
     {
         dialog.Hide();

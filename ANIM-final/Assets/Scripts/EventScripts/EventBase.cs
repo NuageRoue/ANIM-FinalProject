@@ -12,7 +12,7 @@ public abstract class EventBase : MonoBehaviour
 
     public bool isCompleted { get; private set; }
 
-    void Awake()
+    protected virtual void Awake()
     {
         if (instance != null && instance != this)
         {

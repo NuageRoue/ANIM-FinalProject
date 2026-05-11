@@ -31,6 +31,14 @@ public class EventFishing : EventBase
 
     bool hasFishingRod = false;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        wheel.Hide();
+        dialog.Hide();
+    }
+
     protected override void InternalStartEvent()
     {
         hasFishingRod = inventory.objectResources.Contains(RessourceObjectType.FISHING_ROD, 1);
