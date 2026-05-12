@@ -19,14 +19,12 @@ public class CharacterAniamation : MonoBehaviour
 
     Transform look = null;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
-
     public void Set(int survivorIndex)
     {
-        Debug.Log(animator);
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
 
         if (survivor != null)
         {
@@ -43,39 +41,52 @@ public class CharacterAniamation : MonoBehaviour
         container.LookAt(this.look, Vector3.up);
     }
 
-    public void Walk(UnityAction onFinish, Transform destination)
+    public void ResetRotation()
     {
-        StartCoroutine(InternalWalk(onFinish, destination));
+        container.rotation = Quaternion.Euler(0, container.rotation.eulerAngles.y, 0);
     }
 
-    public void Run(UnityAction onFinish, Transform destination)
+    public void Walk(UnityAction onFinish, Transform destination, bool keepLooking = true)
     {
-        StartCoroutine(InternalRun(onFinish, destination));
+        StartCoroutine(InternalWalk(onFinish, destination, keepLooking));
     }
 
-    private IEnumerator InternalWalk(UnityAction onFinish, Transform destination)
+    public void Run(UnityAction onFinish, Transform destination, bool keepLooking = true)
+    {
+        StartCoroutine(InternalRun(onFinish, destination, keepLooking));
+    }
+
+    private IEnumerator InternalWalk(
+        UnityAction onFinish,
+        Transform destination,
+        bool keepLooking = true
+    )
     {
         StartWalk();
 
-        yield return InternalMove(destination, walkSpeed);
+        yield return InternalMove(destination, walkSpeed, keepLooking);
 
         StopWalk();
 
         onFinish.Invoke();
     }
 
-    private IEnumerator InternalRun(UnityAction onFinish, Transform destination)
+    private IEnumerator InternalRun(
+        UnityAction onFinish,
+        Transform destination,
+        bool keepLooking = true
+    )
     {
         StartRunning();
 
-        yield return InternalMove(destination, runSpeed);
+        yield return InternalMove(destination, runSpeed, keepLooking);
 
         StopRunning();
 
         onFinish.Invoke();
     }
 
-    private IEnumerator InternalMove(Transform destination, float speed)
+    private IEnumerator InternalMove(Transform destination, float speed, bool keepLooking)
     {
         container.LookAt(destination, Vector3.up);
 
@@ -95,7 +106,7 @@ public class CharacterAniamation : MonoBehaviour
             yield return null;
         }
 
-        if (look != null)
+        if (look != null && keepLooking)
         {
             container.LookAt(look, Vector3.up);
         }
@@ -121,5 +132,22 @@ public class CharacterAniamation : MonoBehaviour
     private void StopRunning()
     {
         animator.SetBool("IsRunning", false);
+    }
+
+    public void Attack(UnityAction onFinish)
+    {
+        StartCoroutine(InternalAttack(onFinish));
+    }
+
+    private IEnumerator InternalAttack(UnityAction onFinish)
+    {
+        animator.SetBool("IsAttacking", true);
+
+        animator.Play("Attack");
+        yield return new WaitForSeconds(2);
+
+        animator.SetBool("IsAttacking", false);
+
+        onFinish?.Invoke();
     }
 }

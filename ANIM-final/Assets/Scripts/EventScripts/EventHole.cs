@@ -11,6 +11,18 @@ public enum EventHoleTag
 public class EventHole : EventBase
 {
     [SerializeField]
+    CharacterAniamation character;
+
+    [SerializeField]
+    Transform breforeHole;
+
+    [SerializeField]
+    Transform inHole;
+
+    [SerializeField]
+    Transform afterHole;
+
+    [SerializeField]
     EventHoleUIWHeel wheel;
 
     [SerializeField]
@@ -36,6 +48,9 @@ public class EventHole : EventBase
 
     protected override void InternalStartEvent()
     {
+        character.Set(GetSurvivorIndex());
+        character.Look(breforeHole);
+
         dialog.Hide();
         wheel.Hide();
         hasLadder = inventory.objectResources.Contains(RessourceObjectType.LADDER, 1);
@@ -49,7 +64,7 @@ public class EventHole : EventBase
             wheel.Create(defaultSegments);
         }
 
-        OnFirstMessage();
+        OnWalkingAndFalling();
     }
 
     protected override void InernalEndEvent()
@@ -71,8 +86,14 @@ public class EventHole : EventBase
         }
     }
 
+    private void OnWalkingAndFalling()
+    {
+        character.Walk(() => character.Walk(OnFirstMessage, inHole, false), breforeHole, false);
+    }
+
     private void OnFirstMessage()
     {
+        character.ResetRotation();
         UnityAction next = OnWheelStart;
 
         if (hasLadder)
@@ -113,8 +134,14 @@ public class EventHole : EventBase
         }
         else
         {
-            dialog.Launch(EndEvent, "You are free!");
+            character.Walk(FreeMessage, afterHole, false);
         }
+    }
+
+    private void FreeMessage()
+    {
+        character.ResetRotation();
+        dialog.Launch(EndEvent, "You are free!");
     }
 
     private bool IsStuck()

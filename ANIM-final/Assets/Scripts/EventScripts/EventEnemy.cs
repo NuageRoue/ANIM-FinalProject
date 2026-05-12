@@ -15,6 +15,24 @@ public enum EventEnemyTag
 public class EventEnemy : EventBase
 {
     [SerializeField]
+    CharacterAniamation character;
+
+    [SerializeField]
+    Transform sneakDestination;
+
+    [SerializeField]
+    Transform combatDestinationCharacter;
+
+    [SerializeField]
+    CharacterAniamation enemy;
+
+    [SerializeField]
+    Transform combatDestinationEnemy;
+
+    [SerializeField]
+    MoovingTree tree;
+
+    [SerializeField]
     EventEnemyUIWheel wheel;
 
     [SerializeField]
@@ -52,9 +70,12 @@ public class EventEnemy : EventBase
         wheel.Hide();
         dialog.Hide();
 
+        character.Set(GetSurvivorIndex());
+        character.Look(tree.transform);
+
         hasBow = inventory.objectResources.Contains(RessourceObjectType.BOW, 1);
 
-        OnFirstMessage();
+        tree.Launch(OnFirstMessage);
     }
 
     protected override void InernalEndEvent()
@@ -117,7 +138,7 @@ public class EventEnemy : EventBase
 
         if (IsSneakyEnough())
         {
-            dialog.Launch(EndEvent, "You avoid successfully the fight.", sneakyAbilitySprite);
+            dialog.Launch(OnAvoidCombat, "You avoid successfully the fight.", sneakyAbilitySprite);
         }
         else
         {
@@ -125,9 +146,39 @@ public class EventEnemy : EventBase
         }
     }
 
+    private void OnAvoidCombat()
+    {
+        dialog.Hide();
+        character.Run(EndEvent, sneakDestination, false);
+    }
+
     private void OnStartFighting()
     {
-        dialog.Launch(OnSelectBow, "Oh no, the enemy saw you!");
+        enemy.Set(GetEnemyIndex());
+        dialog.Launch(OnAnimationCombatStart, "Oh no, the enemy saw you!");
+    }
+
+    private void OnAnimationCombatStart()
+    {
+        dialog.Hide();
+        enemy.Run(
+            () =>
+            {
+                enemy.Look(combatDestinationCharacter);
+            },
+            combatDestinationEnemy,
+            false
+        );
+
+        character.Walk(
+            () =>
+            {
+                character.Look(combatDestinationEnemy);
+                OnSelectBow();
+            },
+            combatDestinationCharacter,
+            false
+        );
     }
 
     private void OnSelectBow()
@@ -187,11 +238,13 @@ public class EventEnemy : EventBase
 
         if (IsHurt())
         {
-            dialog.Launch(EndEvent, "The enemy hurt you.", result.segment.sprite);
+            enemy.Attack(() =>
+                dialog.Launch(EndEvent, "The enemy hurt you.", result.segment.sprite)
+            );
         }
         else
         {
-            dialog.Launch(EndEvent, "You won!", result.segment.sprite);
+            character.Attack(() => dialog.Launch(EndEvent, "You won!", result.segment.sprite));
         }
     }
 
@@ -204,120 +257,4 @@ public class EventEnemy : EventBase
     {
         return result != null && result.tag == EventEnemyTag.HURT;
     }
-
-    /*
-
-    private void OnSelectSneaky()
-    {
-        if (survivor.hasSneakyAbility)
-        {
-            wheel.Create(sneakySegments);
-            dialog.Launch(
-                OnStartSneakWheel,
-                "You are sneaky, you can avoid fighting.",
-                sneakyAbilitySprite
-            );
-        }
-        else if (hasBow)
-        {
-            dialog.Launch(
-                OnStartFightingWheel,
-                "You have the perfect tool for this kind of situation!",
-                ResouceLoader.instance.FindByType(RessourceObjectType.BOW).sprite
-            );
-        }
-        else
-        {
-            OnStartFightingWheel();
-        }
-    }
-
-    private void OnStartSneakWheel()
-    {
-        dialog.Hide();
-
-        result = wheel.Launch(() =>
-        {
-            StartCoroutine(OnEndSneakWheel());
-        });
-    }
-
-    private IEnumerator OnEndSneakWheel()
-    {
-        yield return new WaitForSeconds(2.0f);
-        wheel.Hide();
-
-        if (IsSneakyEnough())
-        {
-            dialog.Launch(EndEvent, "You avoid successfully the fight.", sneakyAbilitySprite);
-        }
-        else
-        {
-            if (hasBow)
-            {
-                wheel.Create(bowSegments);
-                dialog.Launch(
-                    OnStartFightingWheel,
-                    "Oh no, the enemy saw you! But you have the perfect tool for this kind of situation.",
-                    ResouceLoader.instance.FindByType(RessourceObjectType.BOW).sprite
-                );
-            }
-            else
-            {
-                wheel.Create(defaultSegments);
-                dialog.Launch(OnStartFightingWheel, "Oh no, the enemy saw you!");
-            }
-        }
-    }
-
-    private void OnStartFightingWheel()
-    {
-        TaggedWheelSegments<EventEnemyTag> choosenSegments = defaultSegments;
-
-        if (hasBow)
-        {
-            choosenSegments = bowSegments;
-        }
-
-        if (survivor.isStrong)
-        {
-            choosenSegments = choosenSegments.Copy();
-            choosenSegments.ModifyWithConstrains(EventEnemyTag.HURT, (f) => f * 0.5f);
-        }
-
-        wheel.Create(choosenSegments);
-
-        dialog.Hide();
-
-        result = wheel.Launch(() =>
-        {
-            StartCoroutine(OnEndFightingWheel());
-        });
-    }
-
-    private IEnumerator OnEndFightingWheel()
-    {
-        yield return new WaitForSeconds(2.0f);
-        wheel.Hide();
-
-        if (IsHurt())
-        {
-            dialog.Launch(EndEvent, "The enemy hurt you.", result.segment.sprite);
-        }
-        else
-        {
-            dialog.Launch(EndEvent, "You won!", result.segment.sprite);
-        }
-    }
-
-    private bool IsSneakyEnough()
-    {
-        return result != null && result.tag == EventEnemyTag.SKIP;
-    }
-
-    private bool IsHurt()
-    {
-        return result != null && result.tag == EventEnemyTag.HURT;
-    }
-    */
 }

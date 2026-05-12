@@ -77,7 +77,7 @@ public class EventFood : EventBase
     private void OnWalkAnimation()
     {
         dialog.Hide();
-        character.Walk(OnTreeAnimation, destination);
+        character.Walk(OnTreeAnimation, destination, false);
     }
 
     private void OnTreeAnimation()
