@@ -4,14 +4,21 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the crafting UI: displays available recipes and current resources,
+/// handles recipe selection, and triggers crafting on confirmation.
+/// </summary>
 public class NewUICraftingSystem : MonoBehaviour
 {
+    [Header("Recipes")]
     [SerializeField]
     List<CraftingRecipe> recipes;
 
+    [Header("Inventory")]
     [SerializeField]
     public Inventory inventory;
 
+    [Header("Containers")]
     [SerializeField]
     GameObject ressourcesContainer;
 
@@ -21,6 +28,7 @@ public class NewUICraftingSystem : MonoBehaviour
     [SerializeField]
     GameObject neededRessourceContainer;
 
+    [Header("References")]
     [SerializeField]
     ToggleGroup toggleGroup;
 
@@ -33,15 +41,17 @@ public class NewUICraftingSystem : MonoBehaviour
     [SerializeField]
     Button craftButton;
 
-    public CraftingRecipe craft { get; private set; } = null;
-
-    UnityAction onFinish;
-
     [SerializeField]
     CanvasGroup canva;
 
+    public CraftingRecipe craft { get; private set; } = null;
+
+    UnityAction onFinish;
     bool isHidden = false;
 
+    /// <summary>
+    /// Hides the crafting UI and disables all interaction. Does nothing if already hidden.
+    /// </summary>
     public void Hide()
     {
         if (isHidden)
@@ -53,6 +63,9 @@ public class NewUICraftingSystem : MonoBehaviour
         canva.blocksRaycasts = false;
     }
 
+    /// <summary>
+    /// Reveals the crafting UI and re-enables interaction. Does nothing if already visible.
+    /// </summary>
     public void Reveal()
     {
         if (!isHidden)
@@ -64,6 +77,10 @@ public class NewUICraftingSystem : MonoBehaviour
         canva.blocksRaycasts = true;
     }
 
+    /// <summary>
+    /// Reveals the UI, resets the selected recipe, and refreshes all panels.
+    /// Stores the callback to invoke when the player finishes or cancels.
+    /// </summary>
     public void Launch(UnityAction onFinish)
     {
         craft = null;
@@ -77,12 +94,19 @@ public class NewUICraftingSystem : MonoBehaviour
         this.onFinish = onFinish;
     }
 
+    /// <summary>
+    /// Cancels crafting without performing any action and invokes the finish callback.
+    /// </summary>
     public void Finish()
     {
         craft = null;
         onFinish?.Invoke();
     }
 
+    /// <summary>
+    /// Crafts the currently selected recipe if one is selected,
+    /// refreshes all UI panels, then invokes the finish callback.
+    /// </summary>
     public void Craft()
     {
         if (craft != null)
@@ -90,7 +114,6 @@ public class NewUICraftingSystem : MonoBehaviour
             inventory.Craft(craft);
         }
 
-        // Debug
         UpdateCrafts();
         UpdateRessources();
         UpdateNeeds();
@@ -98,12 +121,15 @@ public class NewUICraftingSystem : MonoBehaviour
         onFinish?.Invoke();
     }
 
+    /// <summary>
+    /// Destroys all existing resource entries and rebuilds them from the current inventory.
+    /// </summary>
     private void UpdateRessources()
     {
         ressourcesContainer
             .GetComponentsInChildren<UIRessourceComponent>()
             .ToList()
-            .ForEach((e) => Destroy(e.gameObject));
+            .ForEach((e) => Destroy(e.gameObject)); // Clear existing entries before rebuilding
 
         inventory.baseResources.items.ForEach(
             (item) =>
@@ -113,14 +139,18 @@ public class NewUICraftingSystem : MonoBehaviour
         );
     }
 
+    /// <summary>
+    /// Destroys all existing recipe entries, disables the craft button,
+    /// and rebuilds the list with only currently craftable recipes.
+    /// </summary>
     private void UpdateCrafts()
     {
         objectsContainer
             .GetComponentsInChildren<UIObjectComponent>()
             .ToList()
-            .ForEach((e) => Destroy(e.gameObject));
+            .ForEach((e) => Destroy(e.gameObject)); // Clear existing entries before rebuilding
 
-        craftButton.interactable = false;
+        craftButton.interactable = false; // Disable until a recipe is selected
 
         recipes
             .FindAll((r) => inventory.CanCraft(r))
@@ -132,12 +162,16 @@ public class NewUICraftingSystem : MonoBehaviour
             );
     }
 
+    /// <summary>
+    /// Destroys all existing need entries and rebuilds them from the selected recipe's inputs.
+    /// Does nothing if no recipe is selected.
+    /// </summary>
     private void UpdateNeeds()
     {
         neededRessourceContainer
             .GetComponentsInChildren<UIRessourceComponent>()
             .ToList()
-            .ForEach((e) => Destroy(e.gameObject));
+            .ForEach((e) => Destroy(e.gameObject)); // Clear existing entries before rebuilding
 
         if (craft == null)
             return;
@@ -150,6 +184,10 @@ public class NewUICraftingSystem : MonoBehaviour
         );
     }
 
+    /// <summary>
+    /// Called when the recipe toggle selection changes. Updates the craft button state
+    /// and refreshes the needed resources panel for the newly selected recipe.
+    /// </summary>
     private void OnCraftChange()
     {
         var current = toggleGroup.ActiveToggles().FirstOrDefault();
@@ -169,9 +207,12 @@ public class NewUICraftingSystem : MonoBehaviour
 
         craft = recipe;
         current.Select();
-        UpdateNeeds();
+        UpdateNeeds(); // Refresh required resources for the newly selected recipe
     }
 
+    /// <summary>
+    /// Returns true if at least one recipe in the list can currently be crafted.
+    /// </summary>
     public bool CanBuild()
     {
         return recipes.FindAll((r) => inventory.CanCraft(r)).Count != 0;

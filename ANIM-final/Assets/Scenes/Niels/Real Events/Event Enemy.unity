@@ -857,9 +857,9 @@ MonoBehaviour:
       items: []
   survivor: {fileID: 0}
   character: {fileID: 1616807713}
+  enemy: {fileID: 54343773}
   sneakDestination: {fileID: 99947046}
   combatDestinationCharacter: {fileID: 1371208965}
-  enemy: {fileID: 54343773}
   combatDestinationEnemy: {fileID: 1148008877}
   tree: {fileID: 1712233595}
   wheel: {fileID: 370705752}

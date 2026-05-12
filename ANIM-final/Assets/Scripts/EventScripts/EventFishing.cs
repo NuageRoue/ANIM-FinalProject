@@ -10,8 +10,13 @@ public enum EventFishingTag
     NO_FISH,
 }
 
+/// <summary>
+/// Handles the fishing event sequence: checking for a fishing rod or ability,
+/// spinning the wheel, and awarding food if the survivor catches a fish.
+/// </summary>
 public class EventFishing : EventBase
 {
+    [Header("References")]
     [SerializeField]
     Fish fish;
 
@@ -21,25 +26,30 @@ public class EventFishing : EventBase
     [SerializeField]
     Transform fishEnd;
 
+    [Header("UI")]
     [SerializeField]
     EventFishingUIWheel wheel;
 
     [SerializeField]
     NewUIDialog dialog;
 
+    [Header("Wheel Segments")]
     [SerializeField]
     TaggedWheelSegments<EventFishingTag> fishingRodSegments = new();
 
     [SerializeField]
     TaggedWheelSegments<EventFishingTag> abilitySegments = new();
 
-    TagSegment<EventFishingTag> result = null;
-
+    [Header("Ability Sprites")]
     [SerializeField]
     Sprite fishingAbilitySprite;
 
+    TagSegment<EventFishingTag> result = null;
     bool hasFishingRod = false;
 
+    /// <summary>
+    /// Hides the wheel and dialog on initialization.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -48,6 +58,10 @@ public class EventFishing : EventBase
         dialog.Hide();
     }
 
+    /// <summary>
+    /// Sets up the character, starts the fish loop, checks for fishing rod and ability,
+    /// builds the appropriate wheel, and begins the dialogue sequence.
+    /// </summary>
     protected override void InternalStartEvent()
     {
         character.Set(GetSurvivorIndex());
@@ -60,6 +74,7 @@ public class EventFishing : EventBase
         wheel.Hide();
         dialog.Hide();
 
+        // Pick segments based on ability or item availability
         if (survivor.hasFishingAbility)
         {
             wheel.Create(abilitySegments);
@@ -72,6 +87,9 @@ public class EventFishing : EventBase
         OnFirstMessage();
     }
 
+    /// <summary>
+    /// Hides the UI and applies the wheel result, adding food if the survivor caught a fish.
+    /// </summary>
     protected override void InernalEndEvent()
     {
         wheel.Hide();
@@ -95,6 +113,10 @@ public class EventFishing : EventBase
         }
     }
 
+    /// <summary>
+    /// Shows the opening dialogue and routes to the appropriate next step
+    /// based on ability or item availability.
+    /// </summary>
     private void OnFirstMessage()
     {
         UnityAction next = OnHasNoFishingRod;
@@ -111,11 +133,17 @@ public class EventFishing : EventBase
         dialog.Launch(next, "You found a fish!");
     }
 
+    /// <summary>
+    /// Shows a dialogue informing the survivor they cannot fish without a rod, then ends the event.
+    /// </summary>
     private void OnHasNoFishingRod()
     {
         dialog.Launch(EndEvent, "You don't have a fishing rod, you can't get it.");
     }
 
+    /// <summary>
+    /// Shows a dialogue confirming the fishing rod is available, then spins the wheel.
+    /// </summary>
     private void OnHasFishingRod()
     {
         dialog.Launch(
@@ -125,6 +153,9 @@ public class EventFishing : EventBase
         );
     }
 
+    /// <summary>
+    /// Shows a dialogue confirming the fishing ability is active, then spins the wheel.
+    /// </summary>
     private void OnHasAbility()
     {
         dialog.Launch(
@@ -134,6 +165,9 @@ public class EventFishing : EventBase
         );
     }
 
+    /// <summary>
+    /// Hides the dialog and launches the wheel spin.
+    /// </summary>
     private void OnSpinningWheel()
     {
         dialog.Hide();
@@ -143,13 +177,18 @@ public class EventFishing : EventBase
         });
     }
 
+    /// <summary>
+    /// Waits after the wheel stops, snaps the fish to the end position if caught,
+    /// then shows the outcome dialogue.
+    /// </summary>
     private IEnumerator OnWheelFinish()
     {
         bool gotFish = GotFish();
+
         if (gotFish)
         {
             fish.LoopStop();
-            fish.SetPosition(fishEnd);
+            fish.SetPosition(fishEnd); // Snap fish to the caught position
         }
 
         yield return new WaitForSeconds(2.0f);
@@ -165,6 +204,9 @@ public class EventFishing : EventBase
         }
     }
 
+    /// <summary>
+    /// Returns true if the wheel result is any fish outcome.
+    /// </summary>
     private bool GotFish()
     {
         return result != null

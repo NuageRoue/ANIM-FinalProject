@@ -10,23 +10,27 @@ public enum EventBeeTag
     FOOD_3,
 }
 
+/// <summary>
+/// Handles the bee event sequence: walking to the tree, spinning the wheel,
+/// and applying the outcome (food gain or poisoning) to the survivor.
+/// </summary>
 public class EventBee : EventBase
 {
+    [Header("UI")]
     [SerializeField]
     EventBeeUIWheel wheel;
 
     [SerializeField]
     NewUIDialog dialog;
 
-    [SerializeField]
-    TaggedWheelSegments<EventBeeTag> defaultSegments = new();
-
+    [Header("References")]
     [SerializeField]
     BeeTree tree;
 
     [SerializeField]
     CharacterAniamation character;
 
+    [Header("Keypoints")]
     [SerializeField]
     Transform keyPointEntry;
 
@@ -36,13 +40,19 @@ public class EventBee : EventBase
     [SerializeField]
     Transform beeAttack;
 
+    [Header("Wheel Segments")]
+    [SerializeField]
+    TaggedWheelSegments<EventBeeTag> defaultSegments = new();
+
     [SerializeField]
     TaggedWheelSegments<EventBeeTag> bowSegments = new();
 
     TagSegment<EventBeeTag> result = null;
-
     bool hasBow = false;
 
+    /// <summary>
+    /// Hides the wheel and dialog on initialization.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -51,6 +61,10 @@ public class EventBee : EventBase
         dialog.Hide();
     }
 
+    /// <summary>
+    /// Sets up the character, checks for a bow in the inventory,
+    /// builds the appropriate wheel, and starts the event dialogue.
+    /// </summary>
     protected override void InternalStartEvent()
     {
         character.Set(GetSurvivorIndex());
@@ -61,6 +75,7 @@ public class EventBee : EventBase
 
         hasBow = inventory.objectResources.Contains(RessourceObjectType.BOW, 1);
 
+        // Use bow-specific segments if the survivor has a bow
         if (hasBow)
         {
             wheel.Create(bowSegments);
@@ -73,6 +88,10 @@ public class EventBee : EventBase
         OnFirstMessage();
     }
 
+    /// <summary>
+    /// Hides the UI and applies the wheel result to the survivor:
+    /// poisoning them or adding the appropriate amount of food.
+    /// </summary>
     protected override void InernalEndEvent()
     {
         wheel.Hide();
@@ -104,19 +123,26 @@ public class EventBee : EventBase
         }
     }
 
+    /// <summary>
+    /// Shows the opening dialogue. If the survivor has a bow, routes to the bow message first.
+    /// </summary>
     private void OnFirstMessage()
     {
         UnityAction next = OnStartWalking;
 
         if (hasBow)
         {
-            next = OnBowMessage;
+            next = OnBowMessage; // Insert bow message before walking
         }
 
         wheel.Hide();
         dialog.Launch(next, "You have discovered a beehive!");
     }
 
+    /// <summary>
+    /// Shows a dialogue informing the survivor they can use their bow,
+    /// then proceeds to walking.
+    /// </summary>
     private void OnBowMessage()
     {
         tree.StopBee();
@@ -127,17 +153,26 @@ public class EventBee : EventBase
         );
     }
 
+    /// <summary>
+    /// Hides the dialog and walks the character to the tree entry point.
+    /// </summary>
     private void OnStartWalking()
     {
         dialog.Hide();
         character.Walk(OnStartTree, keyPointEntry);
     }
 
+    /// <summary>
+    /// Launches the tree shake animation, which triggers the wheel on completion.
+    /// </summary>
     private void OnStartTree()
     {
         tree.Launch(OnWheelTurn);
     }
 
+    /// <summary>
+    /// Launches the wheel spin and stores the result for use at the end of the event.
+    /// </summary>
     private void OnWheelTurn()
     {
         result = wheel.Launch(() =>
@@ -146,6 +181,9 @@ public class EventBee : EventBase
         });
     }
 
+    /// <summary>
+    /// Waits briefly after the wheel stops, then routes to the poisoned or food outcome.
+    /// </summary>
     private IEnumerator OnWheelFinish()
     {
         yield return new WaitForSeconds(2.0f);
@@ -153,7 +191,7 @@ public class EventBee : EventBase
 
         if (IsPoisened())
         {
-            tree.StartFollow(beeAttack);
+            tree.StartFollow(beeAttack); // Bees follow the character as they flee
             character.Look(keyPointPoisoned);
             character.Run(OnPoisened, keyPointPoisoned);
         }
@@ -163,17 +201,26 @@ public class EventBee : EventBase
         }
     }
 
+    /// <summary>
+    /// Shows a dialogue confirming the food reward and ends the event.
+    /// </summary>
     private void OnGainFood()
     {
         dialog.Launch(EndEvent, "You won " + result.segment.name + "!", result.segment.sprite);
     }
 
+    /// <summary>
+    /// Stops the bee follow, shows the poisoned dialogue, and ends the event.
+    /// </summary>
     private void OnPoisened()
     {
         tree.StopFollow();
         dialog.Launch(EndEvent, "How no, you are poisoned!", result.segment.sprite);
     }
 
+    /// <summary>
+    /// Returns true if the wheel result is the poisoned outcome.
+    /// </summary>
     private bool IsPoisened()
     {
         return result != null && result.tag == EventBeeTag.POISONED;

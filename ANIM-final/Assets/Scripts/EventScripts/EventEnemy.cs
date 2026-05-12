@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,11 +10,20 @@ public enum EventEnemyTag
     NOSK,
 }
 
+/// <summary>
+/// Handles the enemy encounter event: optionally attempting a sneak,
+/// then entering combat with ability-based wheel modifiers and applying the outcome.
+/// </summary>
 public class EventEnemy : EventBase
 {
+    [Header("Characters")]
     [SerializeField]
     CharacterAniamation character;
 
+    [SerializeField]
+    CharacterAniamation enemy;
+
+    [Header("Keypoints")]
     [SerializeField]
     Transform sneakDestination;
 
@@ -24,20 +31,20 @@ public class EventEnemy : EventBase
     Transform combatDestinationCharacter;
 
     [SerializeField]
-    CharacterAniamation enemy;
-
-    [SerializeField]
     Transform combatDestinationEnemy;
 
+    [Header("References")]
     [SerializeField]
     MoovingTree tree;
 
+    [Header("UI")]
     [SerializeField]
     EventEnemyUIWheel wheel;
 
     [SerializeField]
     NewUIDialog dialog;
 
+    [Header("Wheel Segments")]
     [SerializeField]
     TaggedWheelSegments<EventEnemyTag> defaultSegments = new();
 
@@ -47,16 +54,19 @@ public class EventEnemy : EventBase
     [SerializeField]
     TaggedWheelSegments<EventEnemyTag> bowSegments = new();
 
-    TagSegment<EventEnemyTag> result = null;
-
+    [Header("Ability Sprites")]
     [SerializeField]
     Sprite sneakyAbilitySprite;
 
     [SerializeField]
     Sprite strongAbilitySprite;
 
+    TagSegment<EventEnemyTag> result = null;
     bool hasBow = false;
 
+    /// <summary>
+    /// Hides the wheel and dialog on initialization.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -65,6 +75,10 @@ public class EventEnemy : EventBase
         dialog.Hide();
     }
 
+    /// <summary>
+    /// Sets up the character, checks for a bow, launches the tree animation,
+    /// then begins the event dialogue sequence.
+    /// </summary>
     protected override void InternalStartEvent()
     {
         wheel.Hide();
@@ -78,6 +92,10 @@ public class EventEnemy : EventBase
         tree.Launch(OnFirstMessage);
     }
 
+    /// <summary>
+    /// Hides the UI and applies the wheel result: marking the event complete,
+    /// skipping, or hurting the survivor.
+    /// </summary>
     protected override void InernalEndEvent()
     {
         wheel.Hide();
@@ -99,18 +117,20 @@ public class EventEnemy : EventBase
         }
     }
 
+    /// <summary>
+    /// Shows the opening dialogue. Routes to sneak if the survivor has the sneaky ability,
+    /// otherwise goes straight to combat.
+    /// </summary>
     private void OnFirstMessage()
     {
-        UnityAction next = OnStartFighting;
-
-        if (survivor.hasSneakyAbility)
-        {
-            next = OnStartSneak;
-        }
+        UnityAction next = survivor.hasSneakyAbility ? OnStartSneak : OnStartFighting;
 
         dialog.Launch(next, "Oh no, something is moving in the bush.");
     }
 
+    /// <summary>
+    /// Builds the sneak wheel and shows the sneak ability dialogue before spinning.
+    /// </summary>
     private void OnStartSneak()
     {
         wheel.Create(sneakySegments);
@@ -122,6 +142,9 @@ public class EventEnemy : EventBase
         );
     }
 
+    /// <summary>
+    /// Hides the dialog and launches the sneak wheel spin.
+    /// </summary>
     private void OnStartSneakWheel()
     {
         dialog.Hide();
@@ -131,6 +154,9 @@ public class EventEnemy : EventBase
         });
     }
 
+    /// <summary>
+    /// Waits after the sneak wheel stops, then either avoids combat or falls through to fighting.
+    /// </summary>
     private IEnumerator OnEndSneakWheel()
     {
         yield return new WaitForSeconds(2.0f);
@@ -142,30 +168,38 @@ public class EventEnemy : EventBase
         }
         else
         {
-            OnStartFighting();
+            OnStartFighting(); // Sneak failed, proceed to combat
         }
     }
 
+    /// <summary>
+    /// Runs the character away from the encounter to avoid combat.
+    /// </summary>
     private void OnAvoidCombat()
     {
         dialog.Hide();
         character.Run(EndEvent, sneakDestination, false);
     }
 
+    /// <summary>
+    /// Sets up the enemy character and shows the combat start dialogue.
+    /// </summary>
     private void OnStartFighting()
     {
         enemy.Set(GetEnemyIndex());
         dialog.Launch(OnAnimationCombatStart, "Oh no, the enemy saw you!");
     }
 
+    /// <summary>
+    /// Hides the dialog and plays the approach animations for both characters,
+    /// then proceeds to bow or default segment selection.
+    /// </summary>
     private void OnAnimationCombatStart()
     {
         dialog.Hide();
+
         enemy.Run(
-            () =>
-            {
-                enemy.Look(combatDestinationCharacter);
-            },
+            () => enemy.Look(combatDestinationCharacter), // Enemy faces the character on arrival
             combatDestinationEnemy,
             false
         );
@@ -173,7 +207,7 @@ public class EventEnemy : EventBase
         character.Walk(
             () =>
             {
-                character.Look(combatDestinationEnemy);
+                character.Look(combatDestinationEnemy); // Character faces the enemy on arrival
                 OnSelectBow();
             },
             combatDestinationCharacter,
@@ -181,6 +215,10 @@ public class EventEnemy : EventBase
         );
     }
 
+    /// <summary>
+    /// Shows a bow dialogue if the survivor has one, then proceeds to strong ability selection.
+    /// Otherwise skips directly to strong ability selection with default segments.
+    /// </summary>
     private void OnSelectBow()
     {
         if (hasBow)
@@ -197,12 +235,16 @@ public class EventEnemy : EventBase
         }
     }
 
+    /// <summary>
+    /// Applies the strong ability modifier to the HURT segment if applicable,
+    /// builds the combat wheel, and optionally shows the strong ability dialogue.
+    /// </summary>
     private void OnSelectStrong(TaggedWheelSegments<EventEnemyTag> segments)
     {
         if (survivor.hasStrongAbility)
         {
             segments = segments.Copy();
-            segments.ModifyWithConstrains(EventEnemyTag.HURT, (f) => 0.5f * f);
+            segments.ModifyWithConstrains(EventEnemyTag.HURT, (f) => 0.5f * f); // Halve the hurt chance
         }
 
         wheel.Create(segments);
@@ -221,6 +263,9 @@ public class EventEnemy : EventBase
         }
     }
 
+    /// <summary>
+    /// Hides the dialog and launches the combat wheel spin.
+    /// </summary>
     private void OnStartFightingWheel()
     {
         dialog.Hide();
@@ -231,6 +276,10 @@ public class EventEnemy : EventBase
         });
     }
 
+    /// <summary>
+    /// Waits after the combat wheel stops, then plays the winner's attack animation
+    /// and shows the outcome dialogue.
+    /// </summary>
     private IEnumerator OnEndFightingWheel()
     {
         yield return new WaitForSeconds(2.0f);
@@ -248,11 +297,17 @@ public class EventEnemy : EventBase
         }
     }
 
+    /// <summary>
+    /// Returns true if the sneak wheel result allows skipping combat.
+    /// </summary>
     private bool IsSneakyEnough()
     {
         return result != null && result.tag == EventEnemyTag.SKIP;
     }
 
+    /// <summary>
+    /// Returns true if the combat wheel result is the hurt outcome.
+    /// </summary>
     private bool IsHurt()
     {
         return result != null && result.tag == EventEnemyTag.HURT;

@@ -9,8 +9,13 @@ public enum EventFoodTag
     FOOD_3,
 }
 
+/// <summary>
+/// Handles the food tree event: walking the character to the tree,
+/// shaking it, spinning the wheel, and awarding the resulting food amount.
+/// </summary>
 public class EventFood : EventBase
 {
+    [Header("References")]
     [SerializeField]
     CharacterAniamation character;
 
@@ -20,17 +25,22 @@ public class EventFood : EventBase
     [SerializeField]
     FoodTree food;
 
+    [Header("UI")]
     [SerializeField]
     NewUIDialog dialog;
 
     [SerializeField]
     EventFoodUIWheel wheel;
 
+    [Header("Wheel Segments")]
     [SerializeField]
     TaggedWheelSegments<EventFoodTag> foodSegments = new();
 
     TagSegment<EventFoodTag> result;
 
+    /// <summary>
+    /// Hides the wheel and dialog on initialization.
+    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -39,6 +49,9 @@ public class EventFood : EventBase
         dialog.Hide();
     }
 
+    /// <summary>
+    /// Builds the wheel, sets up the character, and shows the opening dialogue.
+    /// </summary>
     protected override void InternalStartEvent()
     {
         wheel.Create(foodSegments);
@@ -47,6 +60,9 @@ public class EventFood : EventBase
         dialog.Launch(OnWalkAnimation, "You found food !");
     }
 
+    /// <summary>
+    /// Hides the UI and adds food to the inventory based on the wheel result.
+    /// </summary>
     protected override void InernalEndEvent()
     {
         dialog.Hide();
@@ -74,17 +90,26 @@ public class EventFood : EventBase
         }
     }
 
+    /// <summary>
+    /// Hides the dialog and walks the character toward the food tree.
+    /// </summary>
     private void OnWalkAnimation()
     {
         dialog.Hide();
         character.Walk(OnTreeAnimation, destination, false);
     }
 
+    /// <summary>
+    /// Triggers the food tree shake animation, which calls the wheel spin on completion.
+    /// </summary>
     private void OnTreeAnimation()
     {
         food.Launch(OnWheelStartSpinning);
     }
 
+    /// <summary>
+    /// Launches the wheel spin and stores the result for use at the end of the event.
+    /// </summary>
     private void OnWheelStartSpinning()
     {
         result = wheel.Launch(() =>
@@ -93,6 +118,9 @@ public class EventFood : EventBase
         });
     }
 
+    /// <summary>
+    /// Waits after the wheel stops, hides it, then shows the reward dialogue.
+    /// </summary>
     private IEnumerator OnWheelEndSpinning()
     {
         yield return new WaitForSeconds(2.0f);

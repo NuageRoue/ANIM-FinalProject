@@ -3,8 +3,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a single craftable object entry in the crafting UI.
+/// Displays the recipe's output name and sprite, and notifies the parent when selected.
+/// </summary>
 public class UIObjectComponent : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField]
     TextMeshProUGUI UIName;
 
@@ -16,6 +21,10 @@ public class UIObjectComponent : MonoBehaviour
 
     public CraftingRecipe receipe { get; private set; }
 
+    /// <summary>
+    /// Initializes the component with a recipe, assigns it to a toggle group,
+    /// and registers the callback to invoke when this entry is selected.
+    /// </summary>
     public void Set(CraftingRecipe receipe, ToggleGroup group, UnityAction onToggled)
     {
         toggle.onValueChanged.RemoveAllListeners();
@@ -24,7 +33,7 @@ public class UIObjectComponent : MonoBehaviour
             {
                 if (isOn)
                 {
-                    onToggled.Invoke();
+                    onToggled.Invoke(); // Notify parent only when this toggle is turned on
                 }
             }
         );

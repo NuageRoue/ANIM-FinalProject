@@ -1166,6 +1166,11 @@ MonoBehaviour:
   survivor: {fileID: 0}
   wheel: {fileID: 1761279658}
   dialog: {fileID: 1048673636}
+  tree: {fileID: 73072399}
+  character: {fileID: 215329540}
+  keyPointEntry: {fileID: 1725846601}
+  keyPointPoisoned: {fileID: 1917498729}
+  beeAttack: {fileID: 1436697394}
   defaultSegments:
     items:
     - tag: 0
@@ -1186,11 +1191,6 @@ MonoBehaviour:
         color: {r: 1, g: 0.6947953, b: 0.23113209, a: 0}
         name: 1 food
         sprite: {fileID: 418961059, guid: b8ddfd74c8476548784cf32a3e1e9785, type: 3}
-  tree: {fileID: 73072399}
-  character: {fileID: 215329540}
-  keyPointEntry: {fileID: 1725846601}
-  keyPointPoisoned: {fileID: 1917498729}
-  beeAttack: {fileID: 1436697394}
   bowSegments:
     items:
     - tag: 1

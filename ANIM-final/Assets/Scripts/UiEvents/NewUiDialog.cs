@@ -5,13 +5,15 @@ using UnityEngine.Assertions;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages a dialog UI panel that animates text in character by character,
+/// optionally displays a sprite, and waits for a button press to invoke a callback.
+/// </summary>
 public class NewUIDialog : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField]
     Image image;
-
-    [SerializeField]
-    CanvasGroup imageCanva;
 
     [SerializeField]
     Button button;
@@ -20,8 +22,16 @@ public class NewUIDialog : MonoBehaviour
     TextMeshProUGUI text;
 
     [SerializeField]
+    RectTransform animatedPopDestination;
+
+    [Header("Canvas Groups")]
+    [SerializeField]
+    CanvasGroup imageCanva;
+
+    [SerializeField]
     CanvasGroup canva;
 
+    [Header("Animation Settings")]
     [SerializeField]
     float timeToShowText = 1.0f;
 
@@ -31,16 +41,14 @@ public class NewUIDialog : MonoBehaviour
     [SerializeField]
     AnimationCurve animatedPopCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [SerializeField]
-    RectTransform animatedPopDestination;
-
     RectTransform rectTransform;
-
     Vector3 originalPosition;
     Vector3 targetPosition;
-
     bool isHidden = false;
 
+    /// <summary>
+    /// Caches the RectTransform and stores the original and target positions for the pop animation.
+    /// </summary>
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -48,6 +56,9 @@ public class NewUIDialog : MonoBehaviour
         targetPosition = animatedPopDestination.position;
     }
 
+    /// <summary>
+    /// Hides the dialog and disables all interaction. Does nothing if already hidden.
+    /// </summary>
     public void Hide()
     {
         if (isHidden)
@@ -59,6 +70,9 @@ public class NewUIDialog : MonoBehaviour
         canva.blocksRaycasts = false;
     }
 
+    /// <summary>
+    /// Hides the sprite image panel and disables its interaction.
+    /// </summary>
     private void HideSnippet()
     {
         imageCanva.alpha = 0;
@@ -66,6 +80,9 @@ public class NewUIDialog : MonoBehaviour
         imageCanva.blocksRaycasts = false;
     }
 
+    /// <summary>
+    /// Reveals the dialog and re-enables interaction. Does nothing if already visible.
+    /// </summary>
     public void Reveal()
     {
         if (!isHidden)
@@ -77,6 +94,9 @@ public class NewUIDialog : MonoBehaviour
         canva.blocksRaycasts = true;
     }
 
+    /// <summary>
+    /// Reveals the sprite image panel and enables its interaction.
+    /// </summary>
     private void RevealSnippet()
     {
         imageCanva.alpha = 1;
@@ -84,29 +104,35 @@ public class NewUIDialog : MonoBehaviour
         imageCanva.blocksRaycasts = true;
     }
 
+    /// <summary>
+    /// Reveals the dialog, animates the text and pop effect, then waits for a button press
+    /// before invoking the callback. An optional sprite is shown alongside the text.
+    /// </summary>
     public void Launch(UnityAction onFinish, string text, Sprite sprite = null)
     {
         StartCoroutine(InternalDraw(onFinish, text, sprite));
     }
 
+    /// <summary>
+    /// Runs the dialog animation: reveals the panel, shows or hides the sprite,
+    /// animates the text typewriter and pop effect, then switches the button to call onFinish.
+    /// Clicking the button during animation skips to the full text immediately.
+    /// </summary>
     private IEnumerator InternalDraw(UnityAction onFinish, string text, Sprite sprite)
     {
-        Assert.IsTrue(timeToAnimatedPop <= timeToShowText);
+        Assert.IsTrue(timeToAnimatedPop <= timeToShowText); // Pop must finish before text does
 
         Reveal();
 
+        // Show or hide the sprite panel based on whether a sprite was provided
         if (sprite != null)
         {
             RevealSnippet();
+            image.sprite = sprite;
         }
         else
         {
             HideSnippet();
-        }
-
-        if (sprite != null)
-        {
-            image.sprite = sprite;
         }
 
         bool byPassed = false;
@@ -114,7 +140,7 @@ public class NewUIDialog : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            byPassed = true;
+            byPassed = true; // Skip animation on button press
         });
 
         float currentTime = 0.0f;
@@ -127,25 +153,33 @@ public class NewUIDialog : MonoBehaviour
             yield return null;
         }
 
-        this.text.SetText(text);
+        this.text.SetText(text); // Ensure full text is shown after animation or skip
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            onFinish.Invoke();
+            onFinish.Invoke(); // Button now advances to the next step
         });
     }
 
+    /// <summary>
+    /// Progressively reveals the text character by character based on elapsed time.
+    /// Appends "..." to indicate the text is still being revealed.
+    /// </summary>
     private void AnimateText(float time, ref string text)
     {
         if (time >= timeToShowText)
             return;
 
-        int index = Mathf.FloorToInt(text.Length * time / timeToShowText);
+        int index = Mathf.FloorToInt(text.Length * time / timeToShowText); // Characters revealed so far
         string current = text[..index] + "...";
         this.text.SetText(current);
     }
 
+    /// <summary>
+    /// Animates the dialog's position with a bounce pop effect during the opening phase.
+    /// Uses a mirrored curve so the panel bounces out and back to its original position.
+    /// </summary>
     private void AnimatePop(float time)
     {
         if (time >= timeToAnimatedPop)
@@ -153,6 +187,7 @@ public class NewUIDialog : MonoBehaviour
 
         float t = time / timeToAnimatedPop;
 
+        // Mirror t so the animation goes out then returns: 0 -> 1 -> 0
         if (t < 0.5)
         {
             t *= 2;
