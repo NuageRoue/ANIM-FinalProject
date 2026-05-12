@@ -30,6 +30,9 @@ public class NewUICraftingSystem : MonoBehaviour
     [SerializeField]
     GameObject objectPrefab;
 
+    [SerializeField]
+    Button craftButton;
+
     public CraftingRecipe craft { get; private set; } = null;
 
     UnityAction onFinish;
@@ -117,6 +120,8 @@ public class NewUICraftingSystem : MonoBehaviour
             .ToList()
             .ForEach((e) => Destroy(e.gameObject));
 
+        craftButton.interactable = false;
+
         recipes
             .FindAll((r) => inventory.CanCraft(r))
             .ForEach(
@@ -150,7 +155,12 @@ public class NewUICraftingSystem : MonoBehaviour
         var current = toggleGroup.ActiveToggles().FirstOrDefault();
 
         if (current == null)
+        {
+            craftButton.interactable = false;
             return;
+        }
+
+        craftButton.interactable = true;
 
         CraftingRecipe recipe = current.GetComponent<UIObjectComponent>().receipe;
 

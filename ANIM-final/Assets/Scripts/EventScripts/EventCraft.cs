@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EventCraft : EventBase
 {
@@ -51,7 +52,14 @@ public class EventCraft : EventBase
         {
             RessourceObject ressource = ResouceLoader.instance.FindByType(uics.craft.outputObject);
 
-            dialog.Launch(OnStartCrafting, "You craft a " + ressource.name, ressource.sprite);
+            UnityAction next = OnStartCrafting;
+
+            if (!uics.CanBuild())
+            {
+                next = OnEating;
+            }
+
+            dialog.Launch(next, "You craft a " + ressource.name + ".", ressource.sprite);
         }
         else
         {

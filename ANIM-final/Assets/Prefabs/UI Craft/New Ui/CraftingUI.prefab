@@ -117,6 +117,7 @@ MonoBehaviour:
   toggleGroup: {fileID: 8160782134760527491}
   ressourcePrefab: {fileID: 2354637033732828673, guid: f2c9db7efca40173db79b46e2410cdaa, type: 3}
   objectPrefab: {fileID: 8134714192488738576, guid: b64f099c83a879c3786aa17107b31bfe, type: 3}
+  craftButton: {fileID: 4996183585523081545}
   canva: {fileID: 1764930978556785828}
 --- !u!225 &1764930978556785828
 CanvasGroup:
@@ -995,7 +996,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
