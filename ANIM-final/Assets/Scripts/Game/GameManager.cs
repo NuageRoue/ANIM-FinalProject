@@ -108,7 +108,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Phases
-    private void Start() => SetState(GameState.StartPhase);
 
     void StartPhase()
     {
@@ -119,13 +118,32 @@ public class GameManager : MonoBehaviour
     public void EndDay()
     {
         Debug.Log("Day ended");
+        EventManager.Instance.LoadCraftingScene(unloadCompleted: (bool b) => OnNightPhaseEnded(b));
+    }
+
+
+    public void OnNightPhaseEnded(bool gameFinished)
+    {
         startingCell = nightController.UpdateStartingCell();
-
-        InfoBar.Instance.IncreaseDay();
-        InfoBar.Instance.UpdateInventory(inv);
-
         UpdateState();
     }
+
+    public void UpdateDayUI() 
+    {
+        InfoBar.Instance.IncreaseDay();
+    }
+
+    public void UpdateFoodUI()
+    {
+        InfoBar.Instance.UpdateInventory(inv);
+    }
+    public void ResetDay()
+    {
+        UpdateDayUI();
+        startingCell = nightController.UpdateStartingCell();
+        PlaceSurvivorsAtStart();
+    }
+
     #endregion
 
 
@@ -137,7 +155,10 @@ public class GameManager : MonoBehaviour
         SetSingleton();
 
         // inv = new Inventory();
+    }
 
+    void Start()
+    {
         startingCell = hexGrid?.Setup(selectedLevel);
 
         remainingDays = selectedLevel.totalDays;
@@ -145,6 +166,7 @@ public class GameManager : MonoBehaviour
         InfoBar.Instance.SetDays(remainingDays);
         InfoBar.Instance.UpdateInventory(inv);
 
+        SetState(GameState.StartPhase);
     }
 
 

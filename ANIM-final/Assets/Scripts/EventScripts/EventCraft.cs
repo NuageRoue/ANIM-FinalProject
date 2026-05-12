@@ -74,7 +74,7 @@ public class EventCraft : EventBase
         if (!inventory.baseResources.Contains(ResourceType.Food, needed))
         {
             SetCompletion(true);
-            dialog.Launch(EndEvent, "Oh no, it seems like you don't have enough food");
+            dialog.Launch(EventManager.Instance.LoadDefeatScene, "Oh no, it seems like you don't have enough food");
         }
         else
         {

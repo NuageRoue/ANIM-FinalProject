@@ -1,6 +1,8 @@
 using DigitalRuby.Tween;
+using NUnit;
 using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -70,6 +72,7 @@ public class EventManager : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync(loadedScene).completed += (_) =>
             {
+                GameManager.Instance.UpdateFoodUI();
                 mainSceneRoot.SetActive(true);
             };
         };
@@ -86,6 +89,64 @@ public class EventManager : MonoBehaviour
             onFadeCloseComplete
         ).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
             (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeOpenComplete));
+    }
+
+    public void LoadCraftingScene(System.Action<bool> unloadCompleted)
+    {
+        loadedScene = "Crafting Event";
+        _onUnloadComplete = unloadCompleted;
+
+        System.Action<ITween<float>> onFadeCloseComplete = (t) =>
+        {
+            SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive).completed += (_) =>
+            {
+                mainSceneRoot.SetActive(false);
+                GameManager.Instance.ResetDay();
+            };
+        };
+
+        System.Action<ITween<float>> test = null;
+
+        System.Action<ITween<float>> onFadeOpenComplete = (t) =>
+        {
+            Debug.Log("chargement ok");
+            GameObject.FindAnyObjectByType<EventBase>()?.StartEvent(GameManager.Instance.inv);
+        };
+
+        gameObject.Tween("loadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
+            (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeCloseComplete
+        ).ContinueWith(new FloatTween().Setup(0f, 0f, .25f, TweenScaleFunctions.CubicEaseOut,
+        test)).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
+        (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeOpenComplete));
+    }
+
+    public void LoadDefeatScene()
+    {
+        loadedScene = "Defeat";
+        
+        System.Action<ITween<float>> onFadeCloseComplete = (t) =>
+        {
+            SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("Crafting Event");
+            SceneManager.UnloadSceneAsync("HexMapLoader");
+        };
+
+        System.Action<ITween<float>> test = null;
+
+        System.Action<ITween<float>> onFadeOpenComplete = (t) =>
+        {
+            Debug.Log("chargement ok");
+        };
+
+        gameObject.Tween("loadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
+            (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeCloseComplete
+        ).ContinueWith(new FloatTween().Setup(0f, 0f, .25f, TweenScaleFunctions.CubicEaseOut,
+        test)).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
+        (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
             onFadeOpenComplete));
     }
 }

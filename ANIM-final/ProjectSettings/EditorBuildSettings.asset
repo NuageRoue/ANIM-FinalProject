@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Niels/Real Events/Fishing Event.unity
     guid: 1d1baeb0ef8a4005389bea5c02de7b3f
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Crafting Event.unity
+    guid: cee41d139c9ab46fb8070bed1102dddf
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
