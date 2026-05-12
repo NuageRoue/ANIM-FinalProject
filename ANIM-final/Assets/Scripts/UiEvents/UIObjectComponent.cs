@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIObjectComponent : MonoBehaviour
@@ -13,38 +14,31 @@ public class UIObjectComponent : MonoBehaviour
     [SerializeField]
     Toggle toggle;
 
-    [SerializeField]
-    UICraftingSystem uics;
+    public CraftingRecipe receipe { get; private set; }
 
-    CraftingRecipe receipe;
-
-    public void Set(CraftingRecipe receipe, RessourceObject ressourceObject)
+    public void Set(CraftingRecipe receipe, ToggleGroup group, UnityAction onToggled)
     {
-        UIName.SetText(ressourceObject.name);
-
-        this.receipe = receipe;
-
-        if (ressourceObject != null)
-        {
-            UISprite.sprite = ressourceObject.sprite;
-        }
-
         toggle.onValueChanged.RemoveAllListeners();
         toggle.onValueChanged.AddListener(
             (isOn) =>
             {
                 if (isOn)
                 {
-                    uics.OnToggleChanged(receipe);
+                    onToggled.Invoke();
                 }
             }
         );
-    }
 
-    public CraftingRecipe Finish()
-    {
-        toggle.SetIsOnWithoutNotify(false);
-        toggle.group = null;
-        return receipe;
+        toggle.group = group;
+        this.receipe = receipe;
+
+        RessourceObject ressource = ResouceLoader.instance.FindByType(receipe.outputObject);
+
+        UIName.SetText(ressource.name);
+
+        if (ressource != null)
+        {
+            UISprite.sprite = ressource.sprite;
+        }
     }
 }

@@ -121,7 +121,7 @@ public class UICraftingSystem : MonoBehaviour
         {
             var map = inventory.baseResources.items[i];
             var refer = ResouceLoader.instance.FindByType(map.type);
-            ressourcesContainerList[i].Set(map.count, refer);
+            // ressourcesContainerList[i].Set(map.count, refer);
         }
     }
 
@@ -140,7 +140,7 @@ public class UICraftingSystem : MonoBehaviour
         {
             var recipe = recipes[i];
             var refer = ResouceLoader.instance.FindByType(recipe.outputObject);
-            objectsContainerList[i].Set(recipe, refer);
+            // objectsContainerList[i].Set(recipe, refer);
         }
 
         EventSystem.current.SetSelectedGameObject(null);
@@ -171,15 +171,15 @@ public class UICraftingSystem : MonoBehaviour
             var map = recipe.inputResources.items[i];
             var refer = ResouceLoader.instance.FindByType(map.type);
 
-            craftingNeedsContainerList[i].Set(map.count, refer);
+            // craftingNeedsContainerList[i].Set(map.count, refer);
         }
     }
 
     public void Crafting()
     {
-        var receipe = activeToggle.Finish();
+        // var receipe = activeToggle.Finish();
 
-        inventory.Craft(receipe);
+        // inventory.Craft(receipe);
 
         UpdateRessource();
         UpdateCraft();

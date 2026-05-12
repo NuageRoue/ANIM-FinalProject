@@ -13,8 +13,10 @@ public class UIRessourceComponent : MonoBehaviour
     [SerializeField]
     Image UISprite;
 
-    public void Set(int count, RessourceBase ressource)
+    public void Set(int count, ResourceType type)
     {
+        RessourceBase ressource = ResouceLoader.instance.FindByType(type);
+
         UICount.SetText(count.ToString());
         UIName.SetText(ressource.name);
 
