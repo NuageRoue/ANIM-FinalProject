@@ -18,6 +18,9 @@ public class DemoAnimation : MonoBehaviour
     [SerializeField]
     CharacterAniamation character;
 
+    [SerializeField]
+    Transform destination;
+
     public void StartMoovingTree()
     {
         Debug.Log("Mooving Tree Start");
@@ -54,7 +57,13 @@ public class DemoAnimation : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        character.Launch(() => Debug.Log("Finish"));
+        character.Walk(
+            () =>
+            {
+                character.Run(() => Debug.Log("Finish"), beeTarget);
+            },
+            destination
+        );
     }
 
     private IEnumerator FollowCoroutine()

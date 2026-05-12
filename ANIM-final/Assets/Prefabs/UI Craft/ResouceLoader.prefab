@@ -64,3 +64,7 @@ MonoBehaviour:
   - name: bow
     type: 2
     sprite: {fileID: 266630274, guid: 5a25bc98527a4cf66822f9d74799d2fa, type: 3}
+  survivors:
+  - {fileID: 919132149155446097, guid: 873dc9471ed312c90a381150121f2569, type: 3}
+  - {fileID: 919132149155446097, guid: 38becd968ce00e21f8ddf62b42db2401, type: 3}
+  - {fileID: 919132149155446097, guid: 44c8e48b8939d3eaa8720a376affb949, type: 3}

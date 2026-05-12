@@ -8,10 +8,10 @@ public class CharacterAniamation : MonoBehaviour
     Transform container;
 
     [SerializeField]
-    Transform destination;
+    float walkSpeed = 0.4f;
 
     [SerializeField]
-    float speed = 1;
+    float runSpeed = 1f;
 
     Animator animator = null;
 
@@ -21,14 +21,13 @@ public class CharacterAniamation : MonoBehaviour
 
     void Start()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
+        animator = GetComponent<Animator>();
     }
 
     public void Set(int survivorIndex)
     {
+        Debug.Log(animator);
+
         if (survivor != null)
         {
             Destroy(survivor);
@@ -41,21 +40,46 @@ public class CharacterAniamation : MonoBehaviour
     public void Look(Transform look)
     {
         this.look = look;
-        survivor.gameObject.transform.LookAt(this.look, Vector3.up);
+        container.LookAt(this.look, Vector3.up);
     }
 
-    public void Launch(UnityAction onFinish)
+    public void Walk(UnityAction onFinish, Transform destination)
     {
-        StartCoroutine(InternalWalk(onFinish));
+        StartCoroutine(InternalWalk(onFinish, destination));
     }
 
-    private IEnumerator InternalWalk(UnityAction onFinish)
+    public void Run(UnityAction onFinish, Transform destination)
+    {
+        StartCoroutine(InternalRun(onFinish, destination));
+    }
+
+    private IEnumerator InternalWalk(UnityAction onFinish, Transform destination)
     {
         StartWalk();
 
-        survivor.gameObject.transform.LookAt(destination, Vector3.up);
+        yield return InternalMove(destination, walkSpeed);
 
-        Vector3 start = survivor.transform.position;
+        StopWalk();
+
+        onFinish.Invoke();
+    }
+
+    private IEnumerator InternalRun(UnityAction onFinish, Transform destination)
+    {
+        StartRunning();
+
+        yield return InternalMove(destination, runSpeed);
+
+        StopRunning();
+
+        onFinish.Invoke();
+    }
+
+    private IEnumerator InternalMove(Transform destination, float speed)
+    {
+        container.LookAt(destination, Vector3.up);
+
+        Vector3 start = container.position;
         Vector3 end = destination.position;
 
         float distance = (start - end).sqrMagnitude;
@@ -65,20 +89,16 @@ public class CharacterAniamation : MonoBehaviour
 
         while (time < endTime)
         {
-            survivor.gameObject.transform.position = Vector3.Lerp(start, end, time / endTime);
+            container.position = Vector3.Lerp(start, end, time / endTime);
 
             time += Time.deltaTime;
             yield return null;
         }
 
-        StopWalk();
-
         if (look != null)
         {
-            survivor.gameObject.transform.LookAt(look, Vector3.up);
+            container.LookAt(look, Vector3.up);
         }
-
-        onFinish.Invoke();
     }
 
     private void StartWalk()
@@ -90,5 +110,16 @@ public class CharacterAniamation : MonoBehaviour
     private void StopWalk()
     {
         animator.SetBool("IsWalking", false);
+    }
+
+    private void StartRunning()
+    {
+        animator.SetBool("IsRunning", true);
+        animator.Play("Running");
+    }
+
+    private void StopRunning()
+    {
+        animator.SetBool("IsRunning", false);
     }
 }

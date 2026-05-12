@@ -60,7 +60,7 @@ public class FoodTree : MonoBehaviour
     [SerializeField]
     float physicAnimationDuration = 3.0f;
 
-    UnityAction onFinish;
+    UnityAction onFinish = null;
 
     List<RigidbodyTransform> initals;
 
@@ -92,6 +92,6 @@ public class FoodTree : MonoBehaviour
 
         yield return new WaitForSeconds(physicAnimationDuration);
 
-        onFinish.Invoke();
+        onFinish?.Invoke();
     }
 }

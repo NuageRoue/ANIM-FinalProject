@@ -12,6 +12,15 @@ public enum EventFoodTag
 public class EventFood : EventBase
 {
     [SerializeField]
+    CharacterAniamation character;
+
+    [SerializeField]
+    Transform destination;
+
+    [SerializeField]
+    FoodTree food;
+
+    [SerializeField]
     NewUIDialog dialog;
 
     [SerializeField]
@@ -32,7 +41,10 @@ public class EventFood : EventBase
 
     protected override void InternalStartEvent()
     {
-        StartCoroutine(OnEventStarted());
+        wheel.Create(foodSegments);
+        character.Set(GetSurvivorIndex());
+        character.Look(food.transform);
+        dialog.Launch(OnWalkAnimation, "You found food !");
     }
 
     protected override void InernalEndEvent()
@@ -62,27 +74,19 @@ public class EventFood : EventBase
         }
     }
 
-    private IEnumerator OnEventStarted()
+    private void OnWalkAnimation()
     {
         dialog.Hide();
-        wheel.Hide();
+        character.Walk(OnTreeAnimation, destination);
+    }
 
-        wheel.Create(foodSegments);
-
-        float time = 0;
-
-        while (time < 1.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        dialog.Launch(OnWheelStartSpinning, "You found food !");
+    private void OnTreeAnimation()
+    {
+        food.Launch(OnWheelStartSpinning);
     }
 
     private void OnWheelStartSpinning()
     {
-        dialog.Hide();
         result = wheel.Launch(() =>
         {
             StartCoroutine(OnWheelEndSpinning());

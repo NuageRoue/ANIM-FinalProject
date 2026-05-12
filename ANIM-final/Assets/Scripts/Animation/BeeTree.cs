@@ -27,6 +27,11 @@ public class BeeTree : MonoBehaviour
         tree.Launch(onFinish);
     }
 
+    public void StopBee()
+    {
+        bees.Stop();
+    }
+
     public void StartFollow(Transform transform)
     {
         angryBees.Play();

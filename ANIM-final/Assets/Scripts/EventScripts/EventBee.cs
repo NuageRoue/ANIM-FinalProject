@@ -22,6 +22,21 @@ public class EventBee : EventBase
     TaggedWheelSegments<EventBeeTag> defaultSegments = new();
 
     [SerializeField]
+    BeeTree tree;
+
+    [SerializeField]
+    CharacterAniamation character;
+
+    [SerializeField]
+    Transform keyPointEntry;
+
+    [SerializeField]
+    Transform keyPointPoisoned;
+
+    [SerializeField]
+    Transform beeAttack;
+
+    [SerializeField]
     TaggedWheelSegments<EventBeeTag> bowSegments = new();
 
     TagSegment<EventBeeTag> result = null;
@@ -38,6 +53,9 @@ public class EventBee : EventBase
 
     protected override void InternalStartEvent()
     {
+        character.Set(GetSurvivorIndex());
+        character.Look(tree.transform);
+
         wheel.Hide();
         dialog.Hide();
 
@@ -88,7 +106,7 @@ public class EventBee : EventBase
 
     private void OnFirstMessage()
     {
-        UnityAction next = OnWheelTurn;
+        UnityAction next = OnStartWalking;
 
         if (hasBow)
         {
@@ -101,16 +119,27 @@ public class EventBee : EventBase
 
     private void OnBowMessage()
     {
+        tree.StopBee();
         dialog.Launch(
-            OnWheelTurn,
+            OnStartWalking,
             "You can use your bow.",
             ResouceLoader.instance.FindByType(RessourceObjectType.BOW).sprite
         );
     }
 
-    private void OnWheelTurn()
+    private void OnStartWalking()
     {
         dialog.Hide();
+        character.Walk(OnStartTree, keyPointEntry);
+    }
+
+    private void OnStartTree()
+    {
+        tree.Launch(OnWheelTurn);
+    }
+
+    private void OnWheelTurn()
+    {
         result = wheel.Launch(() =>
         {
             StartCoroutine(OnWheelFinish());
@@ -124,7 +153,9 @@ public class EventBee : EventBase
 
         if (IsPoisened())
         {
-            StartCoroutine(OnPoisened());
+            tree.StartFollow(beeAttack);
+            character.Look(keyPointPoisoned);
+            character.Run(OnPoisened, keyPointPoisoned);
         }
         else
         {
@@ -137,10 +168,9 @@ public class EventBee : EventBase
         dialog.Launch(EndEvent, "You won " + result.segment.name + "!", result.segment.sprite);
     }
 
-    private IEnumerator OnPoisened()
+    private void OnPoisened()
     {
-        yield return new WaitForSeconds(1.0f);
-
+        tree.StopFollow();
         dialog.Launch(EndEvent, "How no, you are poisoned!", result.segment.sprite);
     }
 

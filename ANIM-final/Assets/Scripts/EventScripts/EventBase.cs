@@ -40,7 +40,7 @@ public abstract class EventBase : MonoBehaviour
         {
             this.survivor = gameObject.AddComponent<Survivor>();
 
-            this.inventory.objectResources.Add(RessourceObjectType.BOW, 1);
+            // this.inventory.objectResources.Add(RessourceObjectType.BOW, 1);
             this.inventory.objectResources.Add(RessourceObjectType.FISHING_ROD, 1);
             this.inventory.objectResources.Add(RessourceObjectType.LADDER, 1);
 
@@ -75,5 +75,10 @@ public abstract class EventBase : MonoBehaviour
     protected int GetFoodNeeded()
     {
         return 10;
+    }
+
+    protected int GetSurvivorIndex()
+    {
+        return 0;
     }
 }
