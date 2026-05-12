@@ -21,6 +21,9 @@ public class DemoAnimation : MonoBehaviour
     [SerializeField]
     Transform destination;
 
+    [SerializeField]
+    Fish fish;
+
     public void StartMoovingTree()
     {
         Debug.Log("Mooving Tree Start");
@@ -49,6 +52,11 @@ public class DemoAnimation : MonoBehaviour
         character.Set(1);
 
         StartCoroutine(SurvivorSequence());
+    }
+
+    public void StartFish()
+    {
+        fish.LoopStart();
     }
 
     private IEnumerator SurvivorSequence()

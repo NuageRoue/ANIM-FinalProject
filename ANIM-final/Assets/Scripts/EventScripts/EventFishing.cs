@@ -13,6 +13,15 @@ public enum EventFishingTag
 public class EventFishing : EventBase
 {
     [SerializeField]
+    Fish fish;
+
+    [SerializeField]
+    CharacterAniamation character;
+
+    [SerializeField]
+    Transform fishEnd;
+
+    [SerializeField]
     EventFishingUIWheel wheel;
 
     [SerializeField]
@@ -41,6 +50,11 @@ public class EventFishing : EventBase
 
     protected override void InternalStartEvent()
     {
+        character.Set(GetSurvivorIndex());
+        character.Look(fish.transform);
+
+        fish.LoopStart();
+
         hasFishingRod = inventory.objectResources.Contains(RessourceObjectType.FISHING_ROD, 1);
 
         wheel.Hide();
@@ -131,16 +145,19 @@ public class EventFishing : EventBase
 
     private IEnumerator OnWheelFinish()
     {
+        bool gotFish = GotFish();
+        if (gotFish)
+        {
+            fish.LoopStop();
+            fish.SetPosition(fishEnd);
+        }
+
         yield return new WaitForSeconds(2.0f);
         wheel.Hide();
 
-        if (GotFish())
+        if (gotFish)
         {
-            dialog.Launch(
-                EndEvent,
-                "You got a " + result.segment.name + "!",
-                result.segment.sprite
-            );
+            dialog.Launch(EndEvent, "You got " + result.segment.name + "!", result.segment.sprite);
         }
         else
         {
