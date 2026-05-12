@@ -11,6 +11,9 @@ class ResouceLoader : MonoBehaviour
     [SerializeField]
     List<RessourceObject> resourcesObject;
 
+    [SerializeField]
+    List<GameObject> survivors;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -40,5 +43,10 @@ class ResouceLoader : MonoBehaviour
                 return ro;
         }
         return null;
+    }
+
+    public GameObject GetSurvivor(int survivorIndex)
+    {
+        return survivors[survivorIndex];
     }
 }

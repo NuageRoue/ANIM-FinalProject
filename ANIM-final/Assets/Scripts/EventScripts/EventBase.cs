@@ -24,7 +24,7 @@ public abstract class EventBase : MonoBehaviour
 
     void Start()
     {
-        // StartEvent(); // Debug
+        StartEvent(); // Debug
     }
 
     public void StartEvent(Inventory inventory = null, Survivor survivor = null)
@@ -41,10 +41,12 @@ public abstract class EventBase : MonoBehaviour
             this.survivor = gameObject.AddComponent<Survivor>();
 
             this.inventory.objectResources.Add(RessourceObjectType.BOW, 1);
+            this.inventory.objectResources.Add(RessourceObjectType.FISHING_ROD, 1);
+            this.inventory.objectResources.Add(RessourceObjectType.LADDER, 1);
 
             this.inventory.AddItem(ResourceType.Wood, 100);
             this.inventory.AddItem(ResourceType.Stone, 100);
-            // this.inventory.AddItem(ResourceType.Food, 0);
+            this.inventory.AddItem(ResourceType.Food, 100);
 
             this.survivor.hasSneakyAbility = false;
             this.survivor.hasStrongAbility = false;
@@ -57,8 +59,6 @@ public abstract class EventBase : MonoBehaviour
     protected void EndEvent()
     {
         InernalEndEvent();
-
-        Debug.Log("Finished");
 
         EventManager.Instance.UnloadEventScene(isCompleted);
     }
