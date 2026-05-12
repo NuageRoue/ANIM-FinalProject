@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -111,6 +112,25 @@ public class HexGrid : MonoBehaviour
         return startCell;
     }
 
+    void InstantiateStartingCell()
+    {
+        foreach (var kvp in mapData.GetDict())
+        {
+            Vector3Int coords = kvp.Key;
+            Cell cellData = kvp.Value;
+
+            if (cellData.isStartPos)
+            {
+                Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
+                HexCell cell = cellData.Instantiate(worldPos, transform, canvas);
+                cell.coordinates = new HexCoordinates(coords.x, coords.z);
+                cellMap[coords] = cell;
+                return;
+            }
+        }
+    }
+    
+
     void InstantiateMap() 
     {
         foreach (var kvp in mapData.GetDict())
@@ -125,6 +145,7 @@ public class HexGrid : MonoBehaviour
             cellMap[coords] = cell;
         }
     }
+    
 
     void SetNeighbors()
     {
@@ -140,5 +161,55 @@ public class HexGrid : MonoBehaviour
             }
         }
     }
+
+    /*
+    IEnumerator InstantiateMapAsync()
+    {
+        int i = 0;
+        foreach (var kvp in mapData.GetDict())
+        {
+            Vector3Int coords = kvp.Key;
+            Cell cellData = kvp.Value;
+            if (cellData.isStartPos)
+                continue;
+            Vector3 worldPos = HexCoordinates.CoordsToWorldPosition(coords);
+            HexCell cell = cellData.Instantiate(worldPos, transform, canvas);
+            cell.coordinates = new HexCoordinates(coords.x, coords.z);
+            cellMap[coords] = cell;
+
+            if (++i % 10 == 0) yield return null;
+        }
+
+        yield return StartCoroutine(SetNeighborsAsync());
+    }
+
+    IEnumerator SetNeighborsAsync()
+    {
+        int i = 0;
+        foreach (var kvp in cellMap)
+        {
+            Vector3Int coords = kvp.Key;
+            HexCell cell = kvp.Value;
+            for (int d = 0; d < 6; d++)
+            {
+                Vector3Int neighborCoords = coords + neighborOffsets[d];
+                if (cellMap.TryGetValue(neighborCoords, out HexCell neighbor) && neighbor.IsTraversable)
+                    cell.SetNeighbor((HexDirection)d, neighbor);
+            }
+
+            if (++i % 10 == 0) yield return null;
+        }
+    }
+
+    void InstantiateMap()
+    {
+        StartCoroutine(InstantiateMapThenSetNeighbors());
+    }
+
+    IEnumerator InstantiateMapThenSetNeighbors()
+    {
+        yield return StartCoroutine(InstantiateMapAsync());
+        yield return StartCoroutine(SetNeighborsAsync());
+    }*/
 
 }

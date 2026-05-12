@@ -7,8 +7,11 @@ public class RaftEvent : CallEvent
     {
         Debug.Log($"adding a raft part to the inventory");
         PopUp.Instance.Display("you found a part of the raft!");
+
+        GameManager.Instance.AddRaftPart();
         unloadEvent?.Invoke(true);
 
         InfoBar.Instance.UpdateInventory(GameManager.Instance.inv);
+
     }
 }

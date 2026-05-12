@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IslandMapData
   levelName: 
   totalDays: 5
+  inventory:
+    baseResources:
+      items: []
+    objectResources:
+      items: []
+    raftParts: 0
+  music: {fileID: 8300000, guid: 4b20d69a294a628418b7ce100db64aea, type: 3}
   keys:
   - {x: 11, y: -31, z: 20}
   - {x: 10, y: -30, z: 20}

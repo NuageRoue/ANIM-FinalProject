@@ -126,12 +126,14 @@ public class EventManager : MonoBehaviour
     public void LoadDefeatScene()
     {
         loadedScene = "Defeat";
-        
+
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
         {
-            SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync("Crafting Event");
-            SceneManager.UnloadSceneAsync("HexMapLoader");
+            mainEventSystem?.SetActive(false);
+            SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive).completed += (_) => SceneManager.UnloadSceneAsync("Crafting Event");
+
+            
+
         };
 
         System.Action<ITween<float>> test = null;
@@ -139,6 +141,35 @@ public class EventManager : MonoBehaviour
         System.Action<ITween<float>> onFadeOpenComplete = (t) =>
         {
             Debug.Log("chargement ok");
+            SceneManager.UnloadSceneAsync("HexMapLoader");
+        };
+
+        gameObject.Tween("loadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
+            (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeCloseComplete
+        ).ContinueWith(new FloatTween().Setup(0f, 0f, .25f, TweenScaleFunctions.CubicEaseOut,
+        test)).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
+        (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeOpenComplete));
+    }
+
+    public void LoadVictoryScene()
+    {
+        loadedScene = "Victory";
+
+        System.Action<ITween<float>> onFadeCloseComplete = (t) =>
+        {
+            SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive).completed += (_) =>           
+            // SceneManager.UnloadSceneAsync("Crafting Event");
+            mainSceneRoot.SetActive(false);
+        };
+
+        System.Action<ITween<float>> test = null;
+
+        System.Action<ITween<float>> onFadeOpenComplete = (t) =>
+        {
+            Debug.Log("chargement ok");
+            SceneManager.UnloadSceneAsync("HexMapLoader");
         };
 
         gameObject.Tween("loadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,

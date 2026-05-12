@@ -7,6 +7,9 @@ public class IslandMapData : ScriptableObject
 {
     public string levelName;
     public int totalDays;
+    public Inventory inventory;
+
+    public AudioClip music;
 
     public List<Vector3Int> keys = new();
     public List<Cell> values = new();

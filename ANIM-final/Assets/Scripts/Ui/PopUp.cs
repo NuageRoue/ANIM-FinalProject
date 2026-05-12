@@ -60,4 +60,9 @@ public class PopUp : MonoBehaviour
                 }
             ));
     }
+
+    private void OnDestroy()
+    {
+        TweenFactory.RemoveTweenKey("PopUpWait", TweenStopBehavior.DoNotModify);
+    }
 }

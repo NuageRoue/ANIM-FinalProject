@@ -19,6 +19,11 @@ public class Inventory
     /// Returns true if the inventory has all required input resources for the recipe
     /// and does not already own the output object.
     /// </summary>
+
+    public int raftParts = 0;
+
+    public bool hasRaft { get => (raftParts == 3); }
+
     public bool CanCraft(CraftingRecipe recipe)
     {
         return baseResources.ContainsAll(recipe.inputResources)

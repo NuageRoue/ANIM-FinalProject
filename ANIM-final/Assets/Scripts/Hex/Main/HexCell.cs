@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -199,14 +201,32 @@ public class HexCell : MonoBehaviour
         return callEvent != null;
     }
 
-    public void CleanFog(int dist) 
+    public void CleanFog(int dist)
     {
-        if (dist < 0) return;
-        if (_cloud != null) _cloud.CleanCloud();
+        StartCoroutine(CleanFogAsync(dist));
+    }
 
-        foreach (var neighbor in neighbors)
+    IEnumerator CleanFogAsync(int dist)
+    {
+        HashSet<HexCell> visited = new HashSet<HexCell>();
+        Queue<(HexCell cell, int remaining)> queue = new Queue<(HexCell, int)>();
+        queue.Enqueue((this, dist));
+
+        int i = 0;
+        while (queue.Count > 0)
         {
-            neighbor?.CleanFog(dist - 1);
+            var (cell, remaining) = queue.Dequeue();
+            if (remaining < 0 || visited.Contains(cell)) continue;
+
+            visited.Add(cell);
+            if (cell._cloud != null) cell._cloud.CleanCloud();
+
+            if (remaining > 0)
+                foreach (var neighbor in cell.neighbors)
+                    if (neighbor != null && !visited.Contains(neighbor))
+                        queue.Enqueue((neighbor, remaining - 1));
+
+            if (++i % 10 == 0) yield return null;
         }
     }
 

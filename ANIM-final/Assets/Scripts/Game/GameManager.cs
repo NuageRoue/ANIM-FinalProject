@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum GameState
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private NightController nightController;
     [SerializeField] private EventManager eventManager;
     [SerializeField] private HexGrid hexGrid;
+    [SerializeField] AudioSource musicSource;
 
     [SerializeField] public Inventory inv;
     // [SerializeField] private CampManager campManager;
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviour
             case GameState.Victory:
                 break;
             case GameState.Defeat:
+                EventManager.Instance.LoadDefeatScene();
                 break;
         }
     }
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("plus de jours...");
+            PopUp.Instance.Display("you have no remaining days...");
             SetState(GameState.Defeat);
         }
     }
@@ -153,19 +157,31 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         SetSingleton();
-
         // inv = new Inventory();
     }
 
-    void Start()
+    public void Setup(IslandMapData map)
     {
+        selectedLevel = map;
+
+        if (map.music != null)
+        {
+            musicSource.clip = map.music;
+            musicSource.Play();
+            musicSource.loop = true;
+        }
+        
         startingCell = hexGrid?.Setup(selectedLevel);
 
         remainingDays = selectedLevel.totalDays;
+        if (selectedLevel.inventory != null)
+            inv = selectedLevel.inventory;
 
         InfoBar.Instance.SetDays(remainingDays);
         InfoBar.Instance.UpdateInventory(inv);
-
+    }
+    public void StartGame()
+    {
         SetState(GameState.StartPhase);
     }
 
@@ -174,7 +190,14 @@ public class GameManager : MonoBehaviour
     {
         inv.AddItem(res, amount);
     }
-    
+
+    internal void AddRaftPart()
+    {
+        inv.raftParts++;
+        if (inv.hasRaft)
+            EventManager.Instance.LoadVictoryScene();
+    }
+
 
     #endregion
 }
