@@ -29,8 +29,6 @@ public abstract class EventBase : MonoBehaviour
 
     public void StartEvent(Inventory inventory = null, Survivor survivor = null)
     {
-        Debug.Log("Started");
-
         if (inventory != null)
             this.inventory = inventory;
 

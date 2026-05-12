@@ -49,4 +49,9 @@ class ResouceLoader : MonoBehaviour
     {
         return survivors[survivorIndex];
     }
+
+    public List<GameObject> GetSurvivors()
+    {
+        return survivors.GetRange(0, 3);
+    }
 }

@@ -1,8 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class EventCraft : EventBase
 {
+    [SerializeField]
+    List<CharacterAniamation> aniamations;
+
+    [SerializeField]
+    Transform fire;
+
     [SerializeField]
     NewUICraftingSystem uics;
 
@@ -21,6 +28,12 @@ public class EventCraft : EventBase
     {
         uics.inventory = inventory;
         uics.Hide();
+
+        for (int i = 0; i < aniamations.Count; ++i)
+        {
+            aniamations[i].Set(i);
+            aniamations[i].Look(fire);
+        }
 
         if (uics.CanBuild())
         {
@@ -74,7 +87,10 @@ public class EventCraft : EventBase
         if (!inventory.baseResources.Contains(ResourceType.Food, needed))
         {
             SetCompletion(true);
-            dialog.Launch(EventManager.Instance.LoadDefeatScene, "Oh no, it seems like you don't have enough food");
+            dialog.Launch(
+                EventManager.Instance.LoadDefeatScene,
+                "Oh no, it seems like you don't have enough food"
+            );
         }
         else
         {
