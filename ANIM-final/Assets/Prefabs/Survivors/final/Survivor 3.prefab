@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Survivor
   moveRange: 3
   foodPerTurn: 0
-  visionRadius: 1
+  visionRadius: 2
   hasFishingAbility: 0
   hasSneakyAbility: 0
   isHurt: 0

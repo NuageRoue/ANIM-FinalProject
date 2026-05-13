@@ -38,8 +38,7 @@ public class IslandMapData : ScriptableObject
         foreach (Vector3Int pos in raftPos)
         {
             Debug.Log($"raft pos: {pos}");
-            if (!keys.Contains(pos))
-                Debug.Log("fak");
+            if (!keys.Contains(pos)) Debug.Log("Impossible.");
             else
                 values[keys.IndexOf(pos)].SetAsRaftPos();
             values[keys.IndexOf(pos)].SetEvent(raftEvent);
