@@ -118,6 +118,15 @@ public partial class @MainController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef12f75d-c282-4910-8469-4612df17af70"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -219,6 +228,17 @@ public partial class @MainController: IInputActionCollection2, IDisposable
                     ""action"": ""ConfirmationMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""703b04d0-e1de-46b7-925f-2b5e13b3da9d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -230,6 +250,7 @@ public partial class @MainController: IInputActionCollection2, IDisposable
         m_Map_Move = m_Map.FindAction("Move", throwIfNotFound: true);
         m_Map_MoveModifier = m_Map.FindAction("MoveModifier", throwIfNotFound: true);
         m_Map_ConfirmationMovement = m_Map.FindAction("ConfirmationMovement", throwIfNotFound: true);
+        m_Map_Pause = m_Map.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@MainController()
@@ -313,6 +334,7 @@ public partial class @MainController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Map_Move;
     private readonly InputAction m_Map_MoveModifier;
     private readonly InputAction m_Map_ConfirmationMovement;
+    private readonly InputAction m_Map_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Map".
     /// </summary>
@@ -336,6 +358,10 @@ public partial class @MainController: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Map/ConfirmationMovement".
         /// </summary>
         public InputAction @ConfirmationMovement => m_Wrapper.m_Map_ConfirmationMovement;
+        /// <summary>
+        /// Provides access to the underlying input action "Map/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_Map_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -371,6 +397,9 @@ public partial class @MainController: IInputActionCollection2, IDisposable
             @ConfirmationMovement.started += instance.OnConfirmationMovement;
             @ConfirmationMovement.performed += instance.OnConfirmationMovement;
             @ConfirmationMovement.canceled += instance.OnConfirmationMovement;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -391,6 +420,9 @@ public partial class @MainController: IInputActionCollection2, IDisposable
             @ConfirmationMovement.started -= instance.OnConfirmationMovement;
             @ConfirmationMovement.performed -= instance.OnConfirmationMovement;
             @ConfirmationMovement.canceled -= instance.OnConfirmationMovement;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -452,5 +484,12 @@ public partial class @MainController: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnConfirmationMovement(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
 }

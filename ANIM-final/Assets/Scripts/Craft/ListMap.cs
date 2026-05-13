@@ -27,6 +27,14 @@ public class ListMap<T>
     [SerializeField]
     public List<ListMapItem<T>> items = new();
 
+    public ListMap<T> Clone()
+    {
+        ListMap<T> clone = new();
+        foreach (var item in items)
+            clone.items.Add(new ListMapItem<T> { type = item.type, count = item.count });
+        return clone;
+    }
+
     /// <summary>
     /// Adds the given amount to an existing entry of the matching type,
     /// or creates a new entry if none exists.

@@ -65,7 +65,7 @@ public abstract class EventBase : MonoBehaviour
 
     protected int GetSurvivorIndex()
     {
-        return 0;
+        return survivor.id;
     }
 
     protected int GetEnemyIndex()

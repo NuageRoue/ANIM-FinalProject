@@ -5,18 +5,24 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Finished/Main Menu.unity
+    guid: cb8feae5a82c13743a2e9f8cf9fd77d6
+  - enabled: 1
+    path: Assets/Scenes/Finished/Victory.unity
+    guid: e05fcda21d1a8c04e87864500d000131
+  - enabled: 1
+    path: Assets/Scenes/Finished/Defeat.unity
+    guid: ab9280ca91beaeb4b9b6c11d78321648
   - enabled: 1
     path: Assets/Scenes/Clement/HexMapLoader.unity
     guid: 5d7c5977de649aa4d9bd3c93139986a4
   - enabled: 1
-    path: Assets/Scenes/Niels/Real Events/Food Event.unity
-    guid: 499f162c38cba59499da785f5956c30d
-  - enabled: 1
     path: Assets/Scenes/Niels/Real Events/Bee Event.unity
     guid: fffb16d9d5749095586e3777e3114135
+  - enabled: 1
+    path: Assets/Scenes/Niels/Real Events/Crafting Event.unity
+    guid: ab3b8ba60ea92ce03ac10daeeec0eac4
   - enabled: 1
     path: Assets/Scenes/Niels/Real Events/Event Enemy.unity
     guid: 3375ff18687b12e0b92a9183446ee096
@@ -27,13 +33,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Niels/Real Events/Fishing Event.unity
     guid: 1d1baeb0ef8a4005389bea5c02de7b3f
   - enabled: 1
-    path: Assets/Scenes/Niels/Real Events/Crafting Event.unity
-    guid: cee41d139c9ab46fb8070bed1102dddf
-  - enabled: 1
-    path: Assets/Scenes/Clement/Defeat.unity
-    guid: 1c6447a194064634b80c9ffa2f8a4473
-  - enabled: 1
-    path: Assets/Scenes/Clement/Victory.unity
-    guid: 40fc3315c328ca740856462e312d84e3
+    path: Assets/Scenes/Niels/Real Events/Food Event.unity
+    guid: 499f162c38cba59499da785f5956c30d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

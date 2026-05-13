@@ -71,15 +71,18 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     #endregion
 
     #region Controls
-    public void EnableControls()
-    {
-        Debug.Log("enabling the controls");
-        _controls.Map.Enable();
-    }
+    private bool _blockedByPause = false;
+
     public void DisableControls()
     {
-        Debug.Log("disabling the controls");
+        if (!_controls.Map.enabled) _blockedByPause = true;
         _controls.Map.Disable();
+    }
+
+    public void EnableControls()
+    {
+        if (_blockedByPause) { _blockedByPause = false; return; }
+        _controls.Map.Enable();
     }
     public void SetSurvivors(Survivor[] s)
     {
@@ -197,6 +200,7 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     #endregion
 
     #region Input Handlers
+    public void OnPause(InputAction.CallbackContext context) { }
     public void OnMove(InputAction.CallbackContext ctx)
     {
         if (CurrentTurnState != TurnState.DirectionSelection) return;

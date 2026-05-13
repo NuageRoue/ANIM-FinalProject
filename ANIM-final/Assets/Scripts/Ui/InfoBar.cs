@@ -89,7 +89,7 @@ public class InfoBar : MonoBehaviour
             }
         }
 
-        raft.text = "RAFT: 1/3";
+        raft.text = $"RAFT: {inv.raftParts}/3";
 
     }
 

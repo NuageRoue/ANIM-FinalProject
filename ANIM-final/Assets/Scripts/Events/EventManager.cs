@@ -23,7 +23,7 @@ public class EventManager : MonoBehaviour
     private void Awake()
     {
       // singleton
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this) { Debug.Log("what in the fuck"); Destroy(gameObject); return; }
         Instance = this;
     }
 
@@ -39,6 +39,7 @@ public class EventManager : MonoBehaviour
     {
         loadedScene = sceneName;
         _onUnloadComplete = unloadCompleted;
+        GameManager.Instance.DisablePause();
 
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
         {
@@ -82,6 +83,7 @@ public class EventManager : MonoBehaviour
             Debug.Log("unload ok");
             _onUnloadComplete?.Invoke(result);
             _onUnloadComplete = null;
+            GameManager.Instance.EnablePause();
         };
 
         gameObject.Tween("unloadScene", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
@@ -96,6 +98,7 @@ public class EventManager : MonoBehaviour
     {
         loadedScene = "Crafting Event";
         _onUnloadComplete = unloadCompleted;
+        GameManager.Instance.DisablePause();
 
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
         {
@@ -126,14 +129,12 @@ public class EventManager : MonoBehaviour
     public void LoadDefeatScene()
     {
         loadedScene = "Defeat";
-
+        GameManager.Instance.DisablePause();
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
         {
             mainEventSystem?.SetActive(false);
             SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive).completed += (_) => SceneManager.UnloadSceneAsync("Crafting Event");
-
-            
-
+            Destroy(GameManager.Instance.gameObject);
         };
 
         System.Action<ITween<float>> test = null;
@@ -156,12 +157,13 @@ public class EventManager : MonoBehaviour
     public void LoadVictoryScene()
     {
         loadedScene = "Victory";
-
+        GameManager.Instance.DisablePause();
         System.Action<ITween<float>> onFadeCloseComplete = (t) =>
         {
             SceneManager.LoadSceneAsync(loadedScene, LoadSceneMode.Additive).completed += (_) =>           
             // SceneManager.UnloadSceneAsync("Crafting Event");
             mainSceneRoot.SetActive(false);
+            Destroy(GameManager.Instance.gameObject);
         };
 
         System.Action<ITween<float>> test = null;
@@ -179,5 +181,29 @@ public class EventManager : MonoBehaviour
         test)).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
         (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
             onFadeOpenComplete));
+    }
+
+    public void BackToMainMenu()
+    {
+        System.Action<ITween<float>> onFadeCloseComplete = (t) =>
+        {
+            SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Additive).completed += (_) =>
+            mainSceneRoot.SetActive(false);
+            Destroy(GameManager.Instance.gameObject);
+        };
+
+        System.Action<ITween<float>> onFadeOpenComplete = (t) =>
+        {
+            SceneManager.UnloadSceneAsync("HexMapLoader");
+        };
+
+        gameObject.Tween("loadLevel", 3200f, 0f, 1f, TweenScaleFunctions.CubicEaseIn,
+            (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeCloseComplete
+        ).ContinueWith(new FloatTween().Setup(0f, 0f, .25f, TweenScaleFunctions.Linear,
+        null)).ContinueWith(new FloatTween().Setup(0f, 3200f, 1f, TweenScaleFunctions.CubicEaseOut,
+            (t) => fader.rectTransform.sizeDelta = Vector2.one * t.CurrentValue,
+            onFadeOpenComplete));
+
     }
 }

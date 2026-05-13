@@ -454,7 +454,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd10617981da2e509835aa70232cc125, type: 2}
   - {fileID: 11400000, guid: 200a4d18f0cd751478fe38d00fb0689e, type: 2}
   - {fileID: 11400000, guid: cf9086b36bf608be08061ed90dbeee95, type: 2}
-  raftPart: {fileID: 11400000, guid: 3730d3d8b4a1a844ca8d8a8ec2c89efd, type: 2}
+  raftPart: {fileID: 11400000, guid: eb8967fd4f668f64997cc468446da245, type: 2}
   hexMesh: {fileID: 1110130455}
   waypoint: {fileID: 865210945698804416, guid: e8d6da94cce3cc9169ea5f7a3df76f9e, type: 3}
   inputField: {fileID: 187498662}

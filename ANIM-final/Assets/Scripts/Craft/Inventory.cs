@@ -30,6 +30,17 @@ public class Inventory
             && !objectResources.Contains(recipe.outputObject, 1); // Prevent crafting duplicates
     }
 
+
+    public Inventory Clone()
+    {
+        return new Inventory
+        {
+            baseResources = baseResources.Clone(),
+            objectResources = objectResources.Clone(),
+            raftParts = 0
+        };
+    }
+
     /// <summary>
     /// Attempts to craft the given recipe by consuming its input resources
     /// and adding the output object. Returns false if crafting requirements are not met.

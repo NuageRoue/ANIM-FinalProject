@@ -6,8 +6,8 @@ public class MainMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (GameManager.Instance != null)
-            Destroy(GameManager.Instance.gameObject);
+        // if (GameManager.Instance != null)
+        //     Destroy(GameManager.Instance.gameObject);
     }
 
     public void OpenPanel(GameObject panel)
@@ -24,11 +24,23 @@ public class MainMenu : MonoBehaviour
 
     public void ClosePanel(GameObject panel)
     {
+        if (!panel.activeSelf)
+            return;
         TweenFactory.RemoveTweenKey("Open" + panel.name, TweenStopBehavior.Complete);
 
         gameObject.Tween("Close" + panel.name, 1f, 0f, 0.5f, TweenScaleFunctions.CubicEaseIn,
             (t) => panel.transform.localScale = Vector3.one * t.CurrentValue,
             (t) => panel.SetActive(false)
         );
+    }
+
+    public void LoadLevel(int index)
+    {
+        LevelLoader.Instance.LoadLevel(index);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

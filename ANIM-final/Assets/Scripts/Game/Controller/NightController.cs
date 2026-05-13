@@ -57,8 +57,19 @@ public class NightController : MonoBehaviour, MainController.IMapActions
     #endregion
 
     #region Controls
-    public void EnableControls() => _controls.Map.Enable();
-    public void DisableControls() => _controls.Map.Disable();
+    private bool _blockedByPause = false;
+
+    public void DisableControls()
+    {
+        if (!_controls.Map.enabled) _blockedByPause = true;
+        _controls.Map.Disable();
+    }
+
+    public void EnableControls()
+    {
+        if (_blockedByPause) { _blockedByPause = false; return; }
+        _controls.Map.Enable();
+    }
     #endregion
 
     #region Night Flow
@@ -135,6 +146,8 @@ public class NightController : MonoBehaviour, MainController.IMapActions
 
         return null;
     }
+
+    public void OnPause(InputAction.CallbackContext context) { }
     #endregion
 
     #region Highlight

@@ -1,5 +1,7 @@
+using DigitalRuby.Tween;
 using System;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public enum GameState
 {
@@ -20,7 +22,8 @@ public class GameManager : MonoBehaviour
 
     private void SetSingleton()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this) { Destroy(gameObject);
+            Debug.Log("what in the fuck");  return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -97,6 +100,7 @@ public class GameManager : MonoBehaviour
     [Header("Survivors")]
     public HexCell startingCell;
     public Survivor[] survivors;
+    internal MainController _input;
 
     void InstantiateSurvivors()
     {
@@ -156,8 +160,12 @@ public class GameManager : MonoBehaviour
     public IslandMapData selectedLevel;
     private void Awake()
     {
+        Debug.Log($"name: {name}");
         SetSingleton();
         // inv = new Inventory();
+        _input = new MainController();
+        _input.Map.Pause.performed += _ => Pause();
+        _input.Enable();
     }
 
     public void Setup(IslandMapData map)
@@ -175,7 +183,7 @@ public class GameManager : MonoBehaviour
 
         remainingDays = selectedLevel.totalDays;
         if (selectedLevel.inventory != null)
-            inv = selectedLevel.inventory;
+            inv = selectedLevel.inventory.Clone();
 
         InfoBar.Instance.SetDays(remainingDays);
         InfoBar.Instance.UpdateInventory(inv);
@@ -198,6 +206,48 @@ public class GameManager : MonoBehaviour
             EventManager.Instance.LoadVictoryScene();
     }
 
+    bool paused = false;
+
+    public UnityEngine.Events.UnityEvent onPause;
+    public UnityEngine.Events.UnityEvent onUnpause;
+    public void Pause()
+    {
+        Debug.Log("Pause");
+        if (paused) 
+                DoUnPause();
+        else
+            DoPause();
+    }
+
+    void DoPause()
+    {
+        TweenFactory.DefaultTimeFunc = TweenFactory.TimeFuncUnscaledDeltaTimeFunc;
+        paused = true;
+        Time.timeScale = 0;
+
+        nightController.DisableControls();
+        turnController.DisableControls();
+        onPause?.Invoke();
+    }
+
+    void DoUnPause() 
+    {
+        TweenFactory.DefaultTimeFunc = TweenFactory.TimeFuncDeltaTimeFunc;
+        paused = false;
+        Time.timeScale = 1;
+        nightController.EnableControls();
+        turnController.EnableControls();
+        onUnpause?.Invoke();
+    }
 
     #endregion
+
+    public void EnablePause() 
+    {
+        _input.Enable();
+    }
+    public void DisablePause() 
+    { 
+        _input.Disable();
+    }
 }

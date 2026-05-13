@@ -16,7 +16,9 @@ MonoBehaviour:
   totalDays: 5
   inventory:
     baseResources:
-      items: []
+      items:
+      - type: 2
+        count: 999
     objectResources:
       items: []
     raftParts: 0

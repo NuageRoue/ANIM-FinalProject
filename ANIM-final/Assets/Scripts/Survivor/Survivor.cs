@@ -23,6 +23,7 @@ public class Survivor : MonoBehaviour
     public bool isIncapacitated = false; // si coinc� dans un trou, son tour prend fin
 
     public bool hasStrongAbility = false;
+    public int id;
 
     #endregion
 
