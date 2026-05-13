@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_3
   m_EditorClassIdentifier: Assembly-CSharp::IslandMapData
   levelName: HARD
-  totalDays: 0
+  totalDays: 10
   inventory:
     baseResources:
       items:
