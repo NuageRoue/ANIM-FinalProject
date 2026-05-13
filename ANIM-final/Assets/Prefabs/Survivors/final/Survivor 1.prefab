@@ -50,6 +50,7 @@ MonoBehaviour:
   visionRadius: 1
   hasFishingAbility: 0
   hasSneakyAbility: 1
+  sName: Philemon
   isHurt: 0
   isIncapacitated: 0
   hasStrongAbility: 0

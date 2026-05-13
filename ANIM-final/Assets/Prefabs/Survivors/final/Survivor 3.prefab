@@ -50,6 +50,7 @@ MonoBehaviour:
   visionRadius: 2
   hasFishingAbility: 0
   hasSneakyAbility: 0
+  sName: Nils
   isHurt: 0
   isIncapacitated: 0
   hasStrongAbility: 1

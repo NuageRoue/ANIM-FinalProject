@@ -106,6 +106,7 @@ public class DayController : MonoBehaviour, MainController.IMapActions
     {
         DisableControls();
         Debug.Log("Turn ended");
+        PopUp.Instance.Display("Where will you camp tonight?");
         nightController.StartNightPhase(visitedCells, ActiveSurvivor.currentCell);
     }
 
@@ -168,7 +169,7 @@ public class DayController : MonoBehaviour, MainController.IMapActions
                 case -1:
                 case 0: 
                 case 1:
-                    PopUp.Instance.Display($"survivor {currentIndex + 2}'s turn");
+                    PopUp.Instance.Display($"{survivors[currentIndex + 1].sName}'s turn");
                     SelectSurvivor(currentIndex + 1); break;
                 case 2: SetTurnState(TurnState.NightTransition); break; // ou on skip à la nuit si on peut pas
                 default: throw new IndexOutOfRangeException();

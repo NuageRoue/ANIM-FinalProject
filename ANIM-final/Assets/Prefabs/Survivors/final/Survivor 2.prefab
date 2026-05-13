@@ -50,6 +50,7 @@ MonoBehaviour:
   visionRadius: 3
   hasFishingAbility: 1
   hasSneakyAbility: 0
+  sName: Linow
   isHurt: 0
   isIncapacitated: 0
   hasStrongAbility: 0
