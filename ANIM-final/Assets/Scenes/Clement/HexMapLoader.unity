@@ -2939,8 +2939,8 @@ MonoBehaviour:
   startingCell: {fileID: 0}
   survivors:
   - {fileID: 5234563378209919843, guid: e7782851c75120e4198f5459bce9d462, type: 3}
-  - {fileID: 4693390173304097051, guid: 7183c97f357fe5c49aec14297ed79598, type: 3}
   - {fileID: 4693390173304097051, guid: b6a026ed50183ce419e14de2c9b809b2, type: 3}
+  - {fileID: 4693390173304097051, guid: 7183c97f357fe5c49aec14297ed79598, type: 3}
   selectedLevel: {fileID: 11400000, guid: 91bd93b0016105a42a805ea17c98d963, type: 2}
   onPause:
     m_PersistentCalls:
